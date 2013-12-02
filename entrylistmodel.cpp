@@ -27,7 +27,8 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     if(role == Qt::DisplayRole)
     {
         //return "eee";
-        return entries.at(index.row())->title;
+        Entry *e = entries.at(index.row());
+        return "<b>"+e->title + "</b>(Display)";
     }
 
     if(role == Qt::DecorationRole)
@@ -46,12 +47,14 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::EditRole)
     {
-        return entries.at(index.row())->title;
+//        return entries.at(index.row())->title;
+        Entry *e = entries.at(index.row());
+        return e->title;
     }
 
     if(role == Qt::ToolTipRole)
     {
-        return "Hex code: " + entries.at(index.row())->color.name();
+        return "<b>Hex code:</b> " + entries.at(index.row())->color.name();
     }
 
     return QVariant();
@@ -115,7 +118,11 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
         int row = index.row();
 
         Entry* eToEdit = entries[row];
-        eToEdit->title = value.toString();//"lll";//value.value<Entry*>;
+        eToEdit->title = value.toString();
+
+
+
+        //"lll";//value.value<Entry*>;
         //eToEdit->title =  static_cast<QString>(value);
 
         //Entry *e = Entry(value.value<Entry*>());
@@ -127,6 +134,17 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
     }
 
     return false;
+}
+
+Entry* EntryListModel::GetEntryAtIndex(const QModelIndex &index)
+{
+    if (index.isValid())
+    {
+        int row = index.row();
+        Entry* eToReturn = entries[row];
+
+        return eToReturn;
+    }
 }
 
 Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const

@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
+#include "entrylistmodel.h"
+
 namespace Ui {
 class Dialog;
 }
@@ -21,7 +23,7 @@ private slots:
 
 private:
     Ui::Dialog *ui;
-    QStandardItemModel *model;
+    EntryListModel *model;
 };
 
 #endif // DIALOG_H

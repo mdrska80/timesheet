@@ -20,6 +20,8 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent);
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
+    Entry* GetEntryAtIndex(const QModelIndex &index);
+
     Qt::ItemFlags flags(const QModelIndex &index) const;
     
 signals:

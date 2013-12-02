@@ -27,9 +27,7 @@ Dialog::Dialog(QWidget *parent) :
        items.append(e2);
        items.append(e);
 
-       EntryListModel* elm = new EntryListModel(items, this);
-
-
+       model = new EntryListModel(items, this);
 
 //    model = new QStandardItemModel(2, 1, this);
 //    QStandardItem *qsi = new QStandardItem(QString("test"));
@@ -39,7 +37,7 @@ Dialog::Dialog(QWidget *parent) :
   //  model->appendRow(new QStandardItem(QString("John Smith\nSalary: %1, %2\n")));
     //model->appendRow(new QStandardItem(QString("Max Mustermann\nSalary: %1, ") + QString("000\n")));
 
-    ui->listView->setModel(elm);
+    ui->listView->setModel(model);
 }
 
 Dialog::~Dialog()
@@ -49,6 +47,12 @@ Dialog::~Dialog()
 
 void Dialog::on_listView_clicked(const QModelIndex &index)
 {
+    QVariant q = index.model();
+    QString qs = q.toString();
+
+    Entry * e = model->GetEntryAtIndex(index);
+    ui->textEdit->setText(e->title);
+    //model->
     //index.data().value();
     //Entry* p = static_cast<Entry*>(index.data().value());
     //qDebug() << p->title;

@@ -16,12 +16,12 @@ SOURCES += main.cpp\
         dialog.cpp \
     timesheetlist.cpp \
     entrylistmodel.cpp \
-    entry.cpp
+    Data/entry.cpp
 
 HEADERS  += dialog.h \
     timesheetlist.h \
     entrylistmodel.h \
-    entry.h
+    Data/entry.h
 
 FORMS    += dialog.ui \
     timesheetlist.ui

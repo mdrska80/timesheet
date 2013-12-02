@@ -2,7 +2,7 @@
 #define ENTRYLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "entry.h"
+#include "Data/entry.h"
 
 class EntryListModel : public QAbstractListModel
 {

@@ -23,5 +23,4 @@ HEADERS  += dialog.h \
     entrylistmodel.h \
     Data/entry.h
 
-FORMS    += dialog.ui \
-    timesheetlist.ui
+FORMS    += dialog.ui

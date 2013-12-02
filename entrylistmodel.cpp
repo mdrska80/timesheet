@@ -14,10 +14,6 @@ EntryListModel::EntryListModel(QList<Entry*> items, QObject* parent)
     entries = items;
 }
 
-//EntryListModel::~EntryListModel()
-//{
-//}
-
 int EntryListModel::rowCount(const QModelIndex& ) const
 {
     return entries.size();

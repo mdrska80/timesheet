@@ -17,9 +17,14 @@ Dialog::Dialog(QWidget *parent) :
     e->title = "titulek";
     e->color = QColor(255, 0, 0, 255);
 
+    Entry *e2 = new Entry();
+    e2->title = "titulek 2";
+    e2->color = QColor(255, 0, 255, 255);
+
+
     QList<Entry*> items;
        items.append(e);
-       items.append(e);
+       items.append(e2);
        items.append(e);
 
        EntryListModel* elm = new EntryListModel(items, this);

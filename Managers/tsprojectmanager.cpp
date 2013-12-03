@@ -2,8 +2,11 @@
 #include <QSettings>
 #include <QtCore>
 
-TSProjectManager::TSProjectManager()
+TSProjectManager::TSProjectManager(TSManager* mgr)
 {
+    //store reference
+    manager = mgr;
+
     tspColl = new QHash<QString, TSProject*>();
     InitConfig();
 }

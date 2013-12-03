@@ -9,13 +9,15 @@ TSManager::~TSManager()
     delete projects;
     delete computations;
     delete entries;
+    delete tsfile;
 }
 
 void TSManager::Init(void)
 {
-    projects = new TSProjectManager();
-    computations = new CompManager();
-    entries = new EntryManager() ;
+    projects = new TSProjectManager(this);
+    computations = new CompManager(this);
+    entries = new EntryManager(this) ;
+    tsfile = new TSFile();
 }
 
 

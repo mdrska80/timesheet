@@ -4,12 +4,18 @@
 #include <QHash>
 #include <QSettings>
 #include "Data/tsproject.h"
+#include "Managers/tsmanager.h"
+
+class TSManager;
 
 class TSProjectManager
 {
 public:
-    TSProjectManager();
+    TSProjectManager(TSManager* mgr);
     ~TSProjectManager();
+
+    TSManager* manager;
+    QSettings* settings;
 
     bool CheckUniqness(QString uniqueId);
     TSProject* GetProject(QString uniqueId);
@@ -21,12 +27,11 @@ public:
 
     void InitConfig();
 
+
 private:
     QHash<QString, TSProject*> *tspColl;
     void Load(QString filename);
     void Save(QString filename);
-
-    QSettings* settings;
 };
 
 #endif // TSPROJECTMANAGER_H

@@ -1,5 +1,7 @@
 #include "compmanager.h"
 
-CompManager::CompManager()
+CompManager::CompManager(TSManager* mgr)
 {
+    //store reference
+    manager = mgr;
 }

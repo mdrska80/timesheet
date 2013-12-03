@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    timesheetlist.cpp \
     entrylistmodel.cpp \
     Data/entry.cpp \
     Data/tsproject.cpp \
@@ -22,11 +21,9 @@ SOURCES += main.cpp\
     Managers/compmanager.cpp \
     Managers/entrymanager.cpp \
     Managers/tsmanager.cpp \
-    Managers/tsprojectmanager.cpp \
-    Managers/imanager.cpp
+    Managers/tsprojectmanager.cpp
 
 HEADERS  += dialog.h \
-    timesheetlist.h \
     entrylistmodel.h \
     Data/entry.h \
     Data/tsproject.h \
@@ -34,7 +31,6 @@ HEADERS  += dialog.h \
     Managers/compmanager.h \
     Managers/entrymanager.h \
     Managers/tsmanager.h \
-    Managers/tsprojectmanager.h \
-    Managers/imanager.h
+    Managers/tsprojectmanager.h
 
 FORMS    += dialog.ui

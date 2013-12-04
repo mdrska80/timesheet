@@ -23,6 +23,9 @@ public:
 
     // Color of the project
     QColor color;
+
+    //methods
+    QString ConvertToXml();
 };
 
 #endif // TSPROJECT_H

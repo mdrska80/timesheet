@@ -23,6 +23,9 @@ public:
     QString description;
 
     QColor color;
+
+    //methods
+    QString ConvertToXml();
 };
 
 #endif // ENTRY_H

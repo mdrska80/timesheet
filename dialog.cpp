@@ -20,6 +20,10 @@ Dialog::Dialog(QWidget *parent) :
     Entry *e2 = new Entry();
     e2->title = "titulek 2";
     e2->color = QColor(255, 0, 255, 255);
+    e2->date = QDate::currentDate();
+    e2->from = QTime::currentTime().addSecs(-3600);
+    e2->to = QTime::currentTime();
+    e2->description = "popis pozadavku, komplexni popis";
 
 
     QList<Entry*> items;
@@ -52,6 +56,8 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
 
     Entry * e = model->GetEntryAtIndex(index);
     ui->textEdit->setText(e->title);
+
+    ui->textEdit_2->setText(e->ConvertToXml());
     //model->
     //index.data().value();
     //Entry* p = static_cast<Entry*>(index.data().value());

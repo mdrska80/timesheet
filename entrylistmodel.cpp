@@ -2,6 +2,7 @@
 
 #include <QIcon>
 #include <QPixmap>
+#include <QDebug>
 
 EntryListModel::EntryListModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -19,21 +20,29 @@ int EntryListModel::rowCount(const QModelIndex& ) const
     return entries.size();
 }
 
+int EntryListModel::columnCount(const QModelIndex& ) const
+{
+    return 5;
+}
+
 QVariant EntryListModel::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid())
         return QVariant();
 
+    int row = index.row();
+    int column = index.column();
+
     if(role == Qt::DisplayRole)
     {
+        qDebug() << "Column: " << column;
         //return "eee";
-        Entry *e = entries.at(index.row());
+        Entry *e = entries.at(row);
         return "<b>"+e->title + "</b>(Display)";
     }
 
     if(role == Qt::DecorationRole)
     {
-        int row = index.row();
         Entry *e = entries.value(row);
         QColor color = e->color;//colors.value(row);
 

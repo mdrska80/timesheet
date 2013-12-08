@@ -42,6 +42,7 @@ Dialog::Dialog(QWidget *parent) :
     //model->appendRow(new QStandardItem(QString("Max Mustermann\nSalary: %1, ") + QString("000\n")));
 
     ui->listView->setModel(model);
+    ui->tableView->setModel(model);
 }
 
 Dialog::~Dialog()

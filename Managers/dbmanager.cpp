@@ -14,7 +14,7 @@ QList<Entry*> *DBManager::GetAllEntries()
 {
 }
 
-bool DBManager::CheckDb()
+QString DBManager::CheckDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
@@ -25,11 +25,10 @@ bool DBManager::CheckDb()
     if (db.open())
     {
         db.close();
-        return true;
+        return "";
     }
     else
     {
-        qDebug() << "error: " << db.lastError();
-        return false;
+        return db.lastError().text();
     }
 }

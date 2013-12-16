@@ -67,5 +67,15 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
     //Entry* p = static_cast<Entry*>(index.data().value());
     //qDebug() << p->title;
 
-    manager->db->CheckDb();
+    QString DBStatus = manager->db->CheckDb();
+    ui->DBStatus_label->setToolTip(DBStatus);
+
+    if (DBStatus == NULL)
+        ui->DBStatus_label->setText("<font color='green'>ONLINE</font>");
+    else
+    {
+        ui->DBStatus_label->setText("<font color='red'>OFFLINE</font>");
+    }
+
+
 }

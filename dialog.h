@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QString>
 #include <QStandardItemModel>
 #include "Managers/tsmanager.h"
 #include "entrylistmodel.h"

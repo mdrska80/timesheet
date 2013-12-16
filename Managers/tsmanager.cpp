@@ -2,6 +2,7 @@
 
 TSManager::TSManager()
 {
+    Init();
 }
 
 TSManager::~TSManager()

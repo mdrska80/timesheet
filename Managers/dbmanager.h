@@ -2,6 +2,7 @@
 #define DBMANAGER_H
 
 #include <QList>
+#include <QString>
 #include "Data/entry.h"
 #include "Managers/tsmanager.h"
 
@@ -33,7 +34,7 @@ public:
     bool DeleteEntry(int id);
 
     // test
-    bool CheckDb();
+    QString CheckDb();
 };
 
 #endif // DBMANAGER_H

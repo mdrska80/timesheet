@@ -35,7 +35,7 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::DisplayRole)
     {
-        qDebug() << "Column: " << column;
+        //qDebug() << "Column: " << column;
         //return "eee";
         Entry *e = entries.at(row);
         return "<b>"+e->title + "</b>(Display)";

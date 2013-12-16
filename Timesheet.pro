@@ -8,6 +8,10 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+INCLUDEPATH += %mysql%/include
+LIBS        += "c:\Program Files\MariaDB 10.0\lib\libmysql.lib"
+
+
 TARGET = Timesheet
 TEMPLATE = app
 

@@ -11,6 +11,9 @@ class Entry
 public:
     Entry();
 
+    // id of entry from DB
+    int id;
+
     // Zakladni casove udaje.
     QDate date;
     QTime from;
@@ -23,6 +26,9 @@ public:
     QString description;
 
     QColor color;
+
+    //parent entry, mostly empty
+    Entry* parent;
 
     //methods
     QString ConvertToXml();

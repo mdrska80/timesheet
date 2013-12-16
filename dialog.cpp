@@ -43,11 +43,14 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->listView->setModel(model);
     ui->tableView->setModel(model);
+
+    manager = new TSManager();
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+    delete manager;
 }
 
 void Dialog::on_listView_clicked(const QModelIndex &index)
@@ -63,4 +66,6 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
     //index.data().value();
     //Entry* p = static_cast<Entry*>(index.data().value());
     //qDebug() << p->title;
+
+    manager->db->CheckDb();
 }

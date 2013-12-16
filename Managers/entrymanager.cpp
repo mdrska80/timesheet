@@ -4,7 +4,7 @@ EntryManager::EntryManager(TSManager* mgr)
 {
     //store reference
     manager = mgr;
-
+    entries = new QList<Entry*>();
 }
 
 EntryManager::~EntryManager()

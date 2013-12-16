@@ -2,8 +2,9 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QString>
 #include <QStandardItemModel>
-
+#include "Managers/tsmanager.h"
 #include "entrylistmodel.h"
 
 namespace Ui {
@@ -24,6 +25,8 @@ private slots:
 private:
     Ui::Dialog *ui;
     EntryListModel *model;
+    TSManager* manager;
+
 };
 
 #endif // DIALOG_H

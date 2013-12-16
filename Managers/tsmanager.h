@@ -4,11 +4,13 @@
 #include "tsprojectmanager.h"
 #include "compmanager.h"
 #include "entrymanager.h"
+#include "dbmanager.h"
 #include "Data/tsfile.h"
 
 class TSProjectManager;
 class CompManager;
 class EntryManager;
+class DBManager;
 
 // Manager of managers.
 class TSManager
@@ -20,6 +22,7 @@ public:
     TSProjectManager* projects;
     CompManager* computations;
     EntryManager* entries;
+    DBManager* db;
 
     TSFile* tsfile;
 

@@ -45,11 +45,14 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->listView->setModel(model);
     ui->tableView->setModel(model);
+
+    manager = new TSManager();
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+    delete manager;
 }
 
 void Dialog::on_listView_clicked(const QModelIndex &index)
@@ -59,10 +62,15 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
 
     Entry * e = model->GetEntryAtIndex(index);
     ui->textEdit->setText(e->title);
-
     ui->textEdit_2->setText(e->ConvertToXml());
-    //model->
-    //index.data().value();
-    //Entry* p = static_cast<Entry*>(index.data().value());
-    //qDebug() << p->title;
+
+    QString DBStatus = manager->db->CheckDb();
+    ui->DBStatus_label->setToolTip(DBStatus);
+
+    if (DBStatus == NULL)
+        ui->DBStatus_label->setText("<font color='green'>ONLINE</font>");
+    else
+    {
+        ui->DBStatus_label->setText("<font color='red'>OFFLINE</font>");
+    }
 }

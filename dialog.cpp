@@ -33,6 +33,8 @@ Dialog::Dialog(QWidget *parent) :
 
        model = new EntryListModel(items, this);
 
+       model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
+
 //    model = new QStandardItemModel(2, 1, this);
 //    QStandardItem *qsi = new QStandardItem(QString("test"));
   //  qsi->setData(QVariant(QVariant::UserType, e));

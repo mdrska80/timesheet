@@ -16,7 +16,8 @@ QList<Entry*> *DBManager::GetAllEntries()
 
 QString DBManager::CheckDb()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL3");
+
     db.setHostName("localhost");
     db.setDatabaseName("timesheetdb");
     db.setUserName("ts");

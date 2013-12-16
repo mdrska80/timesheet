@@ -8,10 +8,6 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-INCLUDEPATH += %mysql%/include
-LIBS        += "c:\Program Files\MariaDB 10.0\lib\libmysql.lib"
-
-
 TARGET = Timesheet
 TEMPLATE = app
 
@@ -26,7 +22,8 @@ SOURCES += main.cpp\
     Managers/entrymanager.cpp \
     Managers/tsmanager.cpp \
     Managers/tsprojectmanager.cpp \
-    Managers/dbmanager.cpp
+    Managers/dbmanager.cpp \
+    Data/company.cpp
 
 HEADERS  += dialog.h \
     entrylistmodel.h \
@@ -37,6 +34,7 @@ HEADERS  += dialog.h \
     Managers/entrymanager.h \
     Managers/tsmanager.h \
     Managers/tsprojectmanager.h \
-    Managers/dbmanager.h
+    Managers/dbmanager.h \
+    Data/company.h
 
 FORMS    += dialog.ui

@@ -7,11 +7,17 @@
 #include <QDebug>
 #include "entrylistmodel.h"
 
+#include "style.h"
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+
+    // set up style
+    QString style = Style::get_style(true);
+    this->setStyleSheet(style);
 
     Entry *e = new Entry();
     e->title = "titulek";
@@ -27,21 +33,13 @@ Dialog::Dialog(QWidget *parent) :
 
 
     QList<Entry*> items;
-       items.append(e);
-       items.append(e2);
-       items.append(e);
+    items.append(e);
+    items.append(e2);
+    items.append(e);
 
-       model = new EntryListModel(items, this);
+    model = new EntryListModel(items, this);
 
-       model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
-
-//    model = new QStandardItemModel(2, 1, this);
-//    QStandardItem *qsi = new QStandardItem(QString("test"));
-  //  qsi->setData(QVariant(QVariant::UserType, e));
-
-//    model->appendRow(qsi);
-  //  model->appendRow(new QStandardItem(QString("John Smith\nSalary: %1, %2\n")));
-    //model->appendRow(new QStandardItem(QString("Max Mustermann\nSalary: %1, ") + QString("000\n")));
+    model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
 
     ui->listView->setModel(model);
     ui->tableView->setModel(model);

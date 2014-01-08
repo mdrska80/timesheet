@@ -1,0 +1,29 @@
+QListView, QTableView{
+        background: #FFFFFF;
+        alternate-background-color: #DADADA;
+}
+
+QListView:focus, QTableView:focus{
+
+        border: 2px solid #424e72;
+}
+
+
+
+QPushButton[flat=true]{
+    color: white;
+     border-radius: 7;
+     padding: 1px;
+     padding-left: 1px;
+     padding-right: 1px;
+ }
+
+
+
+QPushButton[flat=true]:checked{
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.50, fx:0.502, fy:0.500876, stop:0.7 rgba(243, 132, 26, 255), stop:1 rgba(255, 255, 255, 0));
+}
+
+QPushButton[flat=true]:pressed{
+    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.50, fx:0.502, fy:0.500876, stop:0.7 rgba(243, 132, 26, 255), stop:1 rgba(255, 255, 255, 0));
+}

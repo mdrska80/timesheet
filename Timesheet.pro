@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     Managers/tsmanager.cpp \
     Managers/tsprojectmanager.cpp \
     Managers/dbmanager.cpp \
-    Data/company.cpp
+    Data/company.cpp \
+    helper.cpp \
+    style.cpp
 
 HEADERS  += dialog.h \
     entrylistmodel.h \
@@ -35,6 +37,8 @@ HEADERS  += dialog.h \
     Managers/tsmanager.h \
     Managers/tsprojectmanager.h \
     Managers/dbmanager.h \
-    Data/company.h
+    Data/company.h \
+    helper.h \
+    style.h
 
 FORMS    += dialog.ui

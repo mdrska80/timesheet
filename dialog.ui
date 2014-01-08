@@ -35,7 +35,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <property name="geometry">
@@ -43,7 +43,7 @@
           <x>0</x>
           <y>0</y>
           <width>200</width>
-          <height>366</height>
+          <height>357</height>
          </rect>
         </property>
         <attribute name="label">
@@ -127,6 +127,13 @@
            <item>
             <widget class="QTextEdit" name="textEdit_2"/>
            </item>
+           <item>
+            <widget class="QSlider" name="horizontalSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -136,8 +143,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>200</width>
-          <height>366</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -145,6 +152,14 @@
         </attribute>
        </widget>
        <widget class="QWidget" name="page_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>200</width>
+          <height>357</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Status</string>
         </attribute>

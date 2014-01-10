@@ -18,6 +18,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="EntryListView" name="listView" native="true">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="alternatingRowColors" stdset="0">
         <bool>true</bool>
        </property>
@@ -30,6 +33,9 @@
          <width>200</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
        </property>
        <property name="currentIndex">
         <number>0</number>

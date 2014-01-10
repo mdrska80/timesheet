@@ -14,7 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    entrylistmodel.cpp \
+    GUI/entry/model/entrylistmodel.cpp \
     Data/entry.cpp \
     Data/tsproject.cpp \
     Data/tsfile.cpp \
@@ -24,11 +24,16 @@ SOURCES += main.cpp\
     Managers/tsprojectmanager.cpp \
     Managers/dbmanager.cpp \
     Data/company.cpp \
-    helper.cpp \
-    style.cpp
+    Common/helper.cpp \
+    Common/style.cpp \
+    GUI/entry/delegate/entryitemdelegate.cpp \
+    GUI/entry/entry/gui_entryentry.cpp \
+    GUI/entry/entry/gui_entryentrysmall.cpp \
+    GUI/entry/entry/gui_entryentrybig.cpp \
+    GUI/entry/view/entrylistview.cpp
 
 HEADERS  += dialog.h \
-    entrylistmodel.h \
+    GUI/entry/model/entrylistmodel.h \
     Data/entry.h \
     Data/tsproject.h \
     Data/tsfile.h \
@@ -38,7 +43,14 @@ HEADERS  += dialog.h \
     Managers/tsprojectmanager.h \
     Managers/dbmanager.h \
     Data/company.h \
-    helper.h \
-    style.h
+    Common/helper.h \
+    Common/style.h \
+    GUI/entry/delegate/entryitemdelegate.h \
+    GUI/entry/entry/gui_entryentry.h \
+    GUI/entry/entry/gui_entryentrysmall.h \
+    GUI/entry/entry/gui_entryentrybig.h \
+    GUI/entry/view/entrylistview.h
 
-FORMS    += dialog.ui
+FORMS    += dialog.ui \
+    GUI/entry/entry/gui_entryentrysmall.ui \
+    GUI/entry/entry/gui_entryentrybig.ui

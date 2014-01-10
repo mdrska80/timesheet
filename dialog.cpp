@@ -5,9 +5,11 @@
 #include <QListView>
 
 #include <QDebug>
-#include "entrylistmodel.h"
+#include "GUI/entry/model/entrylistmodel.h"
 
-#include "style.h"
+#include "Common/style.h"
+
+#include "GUI/entry/delegate/entryitemdelegate.h"
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -15,13 +17,20 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+    connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
+    connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
+
     // set up style
+    //Style::get_style(true);
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
     Entry *e = new Entry();
     e->title = "titulek";
     e->color = QColor(255, 0, 0, 255);
+    e->pl_playing = true;
+    e->date = QDate::currentDate();
 
     Entry *e2 = new Entry();
     e2->title = "titulek 2";
@@ -31,18 +40,38 @@ Dialog::Dialog(QWidget *parent) :
     e2->to = QTime::currentTime();
     e2->description = "popis pozadavku, komplexni popis";
 
+    Entry *e3 = new Entry();
+    e3->title = "titulek3";
+    e3->is_disabled = true;
+    e3->date = QDate::currentDate();
 
-    QList<Entry*> items;
-    items.append(e);
-    items.append(e2);
-    items.append(e);
 
-    model = new EntryListModel(items, this);
+    //QList<Entry*> items;
+    //items.append(e);
+    //items.append(e2);
+    //items.append(e3);
 
-    model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
+    //model = new EntryListModel(items, this);
 
-    ui->listView->setModel(model);
-    ui->tableView->setModel(model);
+    //model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
+    //ui->listView->setAlternatingRowColors(true);
+
+    //ui->listView->setModel(model);
+
+
+    EntryList el;
+    el.push_back(e2);
+    el.push_back(e);
+    el.push_back(e3);
+    el.push_back(e3);
+    el.push_back(e);
+
+    ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    ui->listView->show_big_items(false);
+    ui->listView->fill(el,1);
+    ui->listView->select_row(0);
 
     manager = new TSManager();
 }
@@ -56,19 +85,33 @@ Dialog::~Dialog()
 void Dialog::on_listView_clicked(const QModelIndex &index)
 {
     QVariant q = index.model();
-    QString qs = q.toString();
+    //QString qs = q.toString();
 
-    Entry * e = model->GetEntryAtIndex(index);
-    ui->textEdit->setText(e->title);
-    ui->textEdit_2->setText(e->ConvertToXml());
+    Entry *e = ui->listView->get_selection();
 
-    QString DBStatus = manager->db->CheckDb();
-    ui->DBStatus_label->setToolTip(DBStatus);
+    //Entry * e = model->GetEntryAtIndex(index);
 
-    if (DBStatus == NULL)
-        ui->DBStatus_label->setText("<font color='green'>ONLINE</font>");
-    else
+    if (e != NULL)
     {
-        ui->DBStatus_label->setText("<font color='red'>OFFLINE</font>");
+        ui->lineEdit->setText(e->title);
+        ui->textEdit_2->setText(e->ConvertToXml());
+
+        QString DBStatus = manager->db->CheckDb();
+        //ui->DBStatus_label->setToolTip(DBStatus);
+
+        //if (DBStatus == NULL)
+        //    ui->DBStatus_label->setText("<font color='green'>ONLINE</font>");
+        //else
+        //{
+        //    ui->DBStatus_label->setText("<font color='red'>OFFLINE</font>");
+        //}
     }
+}
+
+void Dialog::on_titleChanged(QString changedText)
+{
+    Entry *e = ui->listView->get_selection();
+    e->title = changedText;
+
+    ui->listView->update();
 }

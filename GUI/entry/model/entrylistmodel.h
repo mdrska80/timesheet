@@ -14,23 +14,27 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
-    int rowCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent=QModelIndex()) const;
     int columnCount(const QModelIndex &parent) const;
 
-    bool insertRows(int row, int count, const QModelIndex &parent);
-    bool removeRows(int row, int count, const QModelIndex &parent);
+    bool insertRows(int row, int count, const QModelIndex &parent=QModelIndex());
+    bool removeRows(int row, int count, const QModelIndex &parent=QModelIndex());
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
     Entry* GetEntryAtIndex(const QModelIndex &index);
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
-    
+    QList<Entry*> entries;
+
+    void set_selected(QList<int>& rows);
+    bool is_selected(int row) const ;
+    QList<int>          _selected_rows;
+
 signals:
     
 public slots:
 
 private:
-    QList<Entry*> entries;
     
 };
 

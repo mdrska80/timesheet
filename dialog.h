@@ -5,7 +5,7 @@
 #include <QString>
 #include <QStandardItemModel>
 #include "Managers/tsmanager.h"
-#include "entrylistmodel.h"
+#include "GUI/entry/model/entrylistmodel.h"
 
 namespace Ui {
 class Dialog;
@@ -21,6 +21,8 @@ public:
     
 private slots:
     void on_listView_clicked(const QModelIndex &index);
+    void on_titleChanged(QString changedText);
+
 
 private:
     Ui::Dialog *ui;

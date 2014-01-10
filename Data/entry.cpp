@@ -2,6 +2,10 @@
 
 Entry::Entry()
 {
+    pl_selected = false;
+    pl_playing = false;
+    pl_dragged = false;
+    is_disabled = false;
 }
 
 QString Entry::ConvertToXml()
@@ -26,4 +30,5 @@ QString Entry::ConvertToXml()
 
     return res;
 }
+
 

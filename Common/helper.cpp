@@ -33,7 +33,7 @@ QString Helper::getSharePath()
     QString path;
 #ifndef Q_OS_WIN
     if(QFile::exists(_install_path + "/share/timesheet")) path = _install_path + "/share/timesheet/";
-    else if(QFile::exists("/usr/share/timesheet")) path = "/usr/share/timesheet/";
+    else if(QFile::exists("/usr/share/sayonara")) path = "/usr/share/sayonara/";
     else path = "";
 #else
     path = QDir::homePath() + QString("\\.timesheet\\images\\");

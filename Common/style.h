@@ -4,9 +4,10 @@
 #include <QString>
 #include "helper.h"
 
-namespace Style
+class Style
 {
-    QString get_style(bool dark);
+public:
+    static QString get_style(bool dark);
 };
 
 #endif // STYLE_H

@@ -33,26 +33,24 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     int row = index.row();
     int column = index.column();
 
-    if(role == Qt::DisplayRole)
-    {
-        //qDebug() << "Column: " << column;
-        //return "eee";
-        Entry *e = entries.at(row);
-        return "<b>"+e->title + "</b>(Display)";
-    }
+//    if(role == Qt::DisplayRole)
+//    {
+//        Entry *e = entries.at(row);
+//        return "<b>"+e->title + "</b>(Display)";
+//    }
 
-    if(role == Qt::DecorationRole)
-    {
-        Entry *e = entries.value(row);
-        QColor color = e->color;//colors.value(row);
+//    if(role == Qt::DecorationRole)
+//    {
+//        Entry *e = entries.value(row);
+//        QColor color = e->color;//colors.value(row);
 
-        QPixmap pixmap(26, 26);
-        pixmap.fill(color);
+//        QPixmap pixmap(26, 26);
+//        pixmap.fill(color);
 
-        QIcon icon(pixmap);
+//        QIcon icon(pixmap);
 
-        return icon;
-    }
+//        return icon;
+//    }
 
     if(role == Qt::EditRole)
     {
@@ -66,7 +64,17 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
         return "<b>Hex code:</b> " + entries.at(index.row())->color.name();
     }
 
-    return QVariant();
+    if (role == Qt::DisplayRole){
+        //return entries[index.row()]->toVariant();
+       return QVariant();
+    }
+
+    if (role == Qt::WhatsThisRole){
+        return entries[index.row()]->toVariant();
+    }
+
+    else
+        return QVariant();
 }
 
 QVariant EntryListModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -127,7 +135,10 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
         int row = index.row();
 
         Entry* eToEdit = entries[row];
-        eToEdit->title = value.toString();
+
+        Entry::fromVariant(value, eToEdit);
+
+        //eToEdit->title = Entry::fromVariant(value.toString();
 
 
 
@@ -150,9 +161,14 @@ Entry* EntryListModel::GetEntryAtIndex(const QModelIndex &index)
     if (index.isValid())
     {
         int row = index.row();
-        Entry* eToReturn = entries[row];
+        if (row < entries.size())
+        {
+            Entry* eToReturn = entries[row];
+            return eToReturn;
+        }
 
-        return eToReturn;
+        return NULL;
+
     }
 }
 
@@ -162,4 +178,16 @@ Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
 
     return QAbstractListModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsSelectable;
+}
+
+
+void EntryListModel::set_selected(QList<int>& rows){
+    _selected_rows = rows;
+    for(uint i=0; i< entries.size(); i++){
+        entries[i]->pl_selected = rows.contains(i);
+    }
+}
+
+bool EntryListModel::is_selected(int row) const {
+    return _selected_rows.contains(row);
 }

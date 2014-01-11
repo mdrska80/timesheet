@@ -112,13 +112,6 @@
            <item>
             <widget class="QTextEdit" name="textEdit_2"/>
            </item>
-           <item>
-            <widget class="QSlider" name="horizontalSlider">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
         </layout>

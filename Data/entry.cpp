@@ -8,17 +8,17 @@ Entry::Entry()
     is_disabled = false;
 }
 
-QString Entry::ConvertToXml()
+QString Entry::toXml()
 {
-    QString res = QString("<Entry date='%1'"
+    QString res = QString("\t<Entry date='%1'"
                           " from='%2'"
                           " to='%3'"
                           " title='%4'>\r\n"
 
-                          "\t<Description>\r\n"
-                          "\t\t%5\r\n"
-                          "\t</Description>\r\n"
-                          "</Entry>\r\n"
+                          "\t\t<Description>\r\n"
+                          "\t\t\t%5\r\n"
+                          "\t\t</Description>\r\n"
+                          "\t</Entry>\r\n"
                           )
             .arg(date.toString("dd.MM.yyyy"))
             .arg(from.toString())
@@ -29,6 +29,11 @@ QString Entry::ConvertToXml()
     res = res.replace("'","\"");
 
     return res;
+}
+
+Entry* Entry::fromXml()
+{
+
 }
 
 

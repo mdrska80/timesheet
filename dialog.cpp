@@ -36,7 +36,7 @@ Dialog::Dialog(QWidget *parent) :
     e2->title = "titulek 2";
     e2->color = QColor(255, 0, 255, 255);
     e2->date = QDate::currentDate();
-    e2->from = QTime::currentTime().addSecs(-3600);
+    e2->from = QTime::currentTime().addSecs(-3245);
     e2->to = QTime::currentTime();
     e2->description = "popis pozadavku, komplexni popis";
 
@@ -70,7 +70,12 @@ Dialog::Dialog(QWidget *parent) :
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     ui->listView->show_big_items(false);
-    ui->listView->fill(el,1);
+
+    ui->listView->get_model()->insertEntry(e);
+    ui->listView->get_model()->insertEntry(e2);
+    ui->listView->get_model()->insertEntry(e2);
+
+    //ui->listView->fill(el,1);
     ui->listView->select_row(0);
 
     manager = new TSManager();
@@ -94,7 +99,7 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
     if (e != NULL)
     {
         ui->lineEdit->setText(e->title);
-        ui->textEdit_2->setText(e->ConvertToXml());
+        ui->textEdit_2->setText(e->toXml());
 
         QString DBStatus = manager->db->CheckDb();
         //ui->DBStatus_label->setToolTip(DBStatus);
@@ -114,4 +119,21 @@ void Dialog::on_titleChanged(QString changedText)
     e->title = changedText;
 
     ui->listView->update();
+}
+
+void Dialog::Save()
+{
+    int max = ui->listView->get_model()->entries.size();
+    QString qs = "<Entries>\r\n";
+
+    for(int i = 0;i<max;i++)
+    {
+        Entry* e = ui->listView->get_model()->entries[i];
+        qs.append(e->toXml());
+        //qDebug() << e->title;
+    }
+
+    //finalize xml
+    qs.append("</Entries>");
+    Helper::write_file("test.xml", qs);
 }

@@ -18,11 +18,13 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
+
+    void Save();
+
     
 private slots:
     void on_listView_clicked(const QModelIndex &index);
     void on_titleChanged(QString changedText);
-
 
 private:
     Ui::Dialog *ui;

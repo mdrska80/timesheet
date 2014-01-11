@@ -176,6 +176,7 @@ void EntryListView::keyPressEvent(QKeyEvent* event){
 
     case Qt::Key_Delete:
         remove_cur_selected_rows();
+        select_row(_model->rowCount());
         break;
 
     case Qt::Key_End:
@@ -184,6 +185,10 @@ void EntryListView::keyPressEvent(QKeyEvent* event){
 
     case Qt::Key_Home:
         new_row = 0;
+        break;
+    case Qt::Key_Insert:
+        _model->insertRow(_model->rowCount());
+        select_row(_model->rowCount());
         break;
 
     case Qt::Key_Return:
@@ -554,7 +559,13 @@ void EntryListView::scrollDown(){
     this->scrollTo(_model->index(cur_row - 1));
 }
 
-void EntryListView::remove_cur_selected_rows(bool select_next_row){
+void EntryListView::remove_cur_selected_rows(bool select_next_row)
+{
+    foreach (int i, _cur_selected_rows) {
+        _model->removeRow(i);
+    }
+
+    this->update();
 
     emit sig_rows_removed(_cur_selected_rows, select_next_row);
 }
@@ -581,4 +592,9 @@ void EntryListView::set_delegate_max_width(int n_items){
         max_width -= verticalScrollBar()->width();
 
     _delegate->setMaxWidth(max_width);
+}
+
+EntryListModel* EntryListView::get_model()
+{
+    return _model;
 }

@@ -3,19 +3,21 @@
 
 #include <QAbstractListModel>
 #include "Data/entry.h"
+#include "Storage/persistentstorage.h"
 
 class EntryListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
     explicit EntryListModel(QObject *parent = 0);
-    EntryListModel(QList<Entry*> items, QObject* parent);
 
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
     int rowCount(const QModelIndex &parent=QModelIndex()) const;
     int columnCount(const QModelIndex &parent) const;
+
+    bool insertEntry(Entry* e);
 
     bool insertRows(int row, int count, const QModelIndex &parent=QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent=QModelIndex());
@@ -29,6 +31,7 @@ public:
     void set_selected(QList<int>& rows);
     bool is_selected(int row) const ;
     QList<int>          _selected_rows;
+    PersistentStorage*  _storage;
 
 signals:
     

@@ -40,7 +40,9 @@ public:
     Entry* parent;
 
     //methods
-    QString ConvertToXml();
+    QString toXml();
+    static Entry* fromXml();
+
 
     QVariant toVariant() const{
 

@@ -54,6 +54,8 @@ public:
 
     QList<int> get_selections();
     Entry* get_selection();
+    EntryListModel* get_model();
+
 
 
 

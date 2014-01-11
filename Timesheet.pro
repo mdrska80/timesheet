@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +30,10 @@ SOURCES += main.cpp\
     GUI/entry/entry/gui_entryentry.cpp \
     GUI/entry/entry/gui_entryentrysmall.cpp \
     GUI/entry/entry/gui_entryentrybig.cpp \
-    GUI/entry/view/entrylistview.cpp
+    GUI/entry/view/entrylistview.cpp \
+    Common/qtimespan.cpp \
+    Storage/persistentstorage.cpp \
+    Storage/persistentstorage_xml.cpp
 
 HEADERS  += dialog.h \
     GUI/entry/model/entrylistmodel.h \
@@ -49,7 +52,10 @@ HEADERS  += dialog.h \
     GUI/entry/entry/gui_entryentry.h \
     GUI/entry/entry/gui_entryentrysmall.h \
     GUI/entry/entry/gui_entryentrybig.h \
-    GUI/entry/view/entrylistview.h
+    GUI/entry/view/entrylistview.h \
+    Common/qtimespan.h \
+    Storage/persistentstorage.h \
+    Storage/persistentstorage_xml.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \

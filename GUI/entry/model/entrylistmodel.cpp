@@ -3,16 +3,12 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QDebug>
+#include "Storage/persistentstorage_xml.h"
 
 EntryListModel::EntryListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-}
-
-EntryListModel::EntryListModel(QList<Entry*> items, QObject* parent)
-    : QAbstractListModel(parent)
-{
-    entries = items;
+    _storage = new PersistentStorage_XML();
 }
 
 int EntryListModel::rowCount(const QModelIndex& ) const
@@ -98,6 +94,18 @@ QVariant EntryListModel::headerData(int section, Qt::Orientation orientation, in
         return QString("Color %1").arg(section);
     }
 }
+
+bool EntryListModel::insertEntry(Entry* e)
+{
+    int pocetPolozek = entries.size();
+    beginInsertRows(QModelIndex(), pocetPolozek, pocetPolozek);
+
+        entries.append(e);
+        _storage->Save(&entries);
+
+    endInsertRows();
+}
+
 
 bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index)
 {

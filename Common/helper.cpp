@@ -1,5 +1,7 @@
 #include "helper.h"
 
+#include <QTextStream>
+
 static QString _install_path = "";
 
 bool Helper::read_file_into_str(QString filename, QString* content)
@@ -25,6 +27,22 @@ bool Helper::read_file_into_str(QString filename, QString* content)
     }
 
     return false;
+}
+
+bool Helper::write_file(QString filename, QString content)
+{
+    QFile file(filename);
+
+    if (!file.open(QIODevice::WriteOnly | QFile::Text))
+    {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << content;
+    file.close();
+
+    return true;
 }
 
 QString Helper::getSharePath()

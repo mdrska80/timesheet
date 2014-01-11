@@ -1,4 +1,5 @@
 #include "entrymanager.h"
+#include <QDomDocument>
 
 EntryManager::EntryManager(TSManager* mgr)
 {
@@ -27,4 +28,9 @@ void EntryManager::Load()
 
 void EntryManager::Load(QString filename)
 {
+//    QString xmlText = "nejake xml zde...";
+  //  QDomDocument doc;
+    //doc.setContent(xmlText);
+//    QDomNodeList list=doc.elementsByName("string");
+  //  QString helloWorld=list.at(0).toElement().text();
 }

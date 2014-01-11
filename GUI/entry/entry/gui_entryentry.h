@@ -12,7 +12,7 @@ public:
     GUI_EntryEntry(QWidget *parent = 0);
     virtual ~GUI_EntryEntry(){}
 
-    virtual  void setContent(Entry* md, int idx)=0;
+    virtual void setContent(Entry* md, int idx)=0;
     void setWidth(int w)
     {
         this->resize(w, this->height());

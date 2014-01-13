@@ -13,7 +13,7 @@ EntryListModel::EntryListModel(QObject *parent) :
 
 int EntryListModel::rowCount(const QModelIndex& ) const
 {
-    return entries.size();
+    return _storage->entries->size();
 }
 
 int EntryListModel::columnCount(const QModelIndex& ) const
@@ -26,47 +26,26 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     if(!index.isValid())
         return QVariant();
 
-    int row = index.row();
-    int column = index.column();
-
-//    if(role == Qt::DisplayRole)
-//    {
-//        Entry *e = entries.at(row);
-//        return "<b>"+e->title + "</b>(Display)";
-//    }
-
-//    if(role == Qt::DecorationRole)
-//    {
-//        Entry *e = entries.value(row);
-//        QColor color = e->color;//colors.value(row);
-
-//        QPixmap pixmap(26, 26);
-//        pixmap.fill(color);
-
-//        QIcon icon(pixmap);
-
-//        return icon;
-//    }
-
     if(role == Qt::EditRole)
     {
-//        return entries.at(index.row())->title;
-        Entry *e = entries.at(index.row());
+        Entry *e = _storage->entries->at(index.row());
         return e->title;
     }
 
     if(role == Qt::ToolTipRole)
     {
-        return "<b>Hex code:</b> " + entries.at(index.row())->color.name();
+        Entry* e = _storage->entries->at(index.row());
+        return QString("<b>Title:</b> %1<br/><b>Description:</b> %2")
+                .arg(e->title)
+                .arg(e->description);
     }
 
     if (role == Qt::DisplayRole){
-        //return entries[index.row()]->toVariant();
        return QVariant();
     }
 
     if (role == Qt::WhatsThisRole){
-        return entries[index.row()]->toVariant();
+        return _storage->entries->at(index.row())->toVariant();
     }
 
     else
@@ -95,13 +74,15 @@ QVariant EntryListModel::headerData(int section, Qt::Orientation orientation, in
     }
 }
 
-bool EntryListModel::insertEntry(Entry* e)
+void EntryListModel::insertEntry(Entry* e)
 {
-    int pocetPolozek = entries.size();
+    int pocetPolozek = _storage->entries->size();
     beginInsertRows(QModelIndex(), pocetPolozek, pocetPolozek);
 
-        entries.append(e);
-        _storage->Save(&entries);
+        _storage->entries->append(e);
+        _storage->SaveCompanies("companies.xml");
+        _storage->SaveEntries("test.xml");
+        _storage->Load();
 
     endInsertRows();
 }
@@ -116,7 +97,7 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
         //entrie.insert(position, QColor(0, 0, 0, 255));
         Entry *e = new Entry();
         e->title = "new item";
-        entries.insert(position, e);
+        _storage->entries->insert(position, e);
     }
 
     endInsertRows();
@@ -129,7 +110,7 @@ bool EntryListModel::removeRows(int position, int rows, const QModelIndex &index
 
     for(int row = 0; row < rows; ++row)
     {
-        entries.removeAt(position);
+        _storage->entries->removeAt(position);
     }
 
     endRemoveRows();
@@ -142,7 +123,7 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
     {
         int row = index.row();
 
-        Entry* eToEdit = entries[row];
+        Entry* eToEdit = _storage->entries->at(row);
 
         Entry::fromVariant(value, eToEdit);
 
@@ -155,7 +136,7 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
 
         //Entry *e = Entry(value.value<Entry*>());
 
-        entries.replace(row, eToEdit);
+        _storage->entries->replace(row, eToEdit);
         emit(dataChanged(index, index));
 
         return true;
@@ -169,9 +150,9 @@ Entry* EntryListModel::GetEntryAtIndex(const QModelIndex &index)
     if (index.isValid())
     {
         int row = index.row();
-        if (row < entries.size())
+        if (row < _storage->entries->size())
         {
-            Entry* eToReturn = entries[row];
+            Entry* eToReturn = _storage->entries->at(row);
             return eToReturn;
         }
 
@@ -191,8 +172,8 @@ Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const
 
 void EntryListModel::set_selected(QList<int>& rows){
     _selected_rows = rows;
-    for(uint i=0; i< entries.size(); i++){
-        entries[i]->pl_selected = rows.contains(i);
+    for(uint i=0; i< _storage->entries->size(); i++){
+        _storage->entries->at(i)->pl_selected = rows.contains(i);
     }
 }
 

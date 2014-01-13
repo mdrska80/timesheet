@@ -53,7 +53,7 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
     //md->title = "ahoj";
     //if( !Entry::fromVariant(mdVariant, md) ) return;
 
-    _pl_entry->setContent(md, index.row() +1 );
+    _pl_entry->setContent(md);
 
     QString style;
     QPalette palette = _parent->palette();

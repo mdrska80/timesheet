@@ -38,14 +38,11 @@ public:
     EntryListView(QWidget* parent=0);
     virtual ~EntryListView();
 
-    void set_context_menu_actions(int actions);
     void set_drag_enabled(bool b);
-    void set_mimedata(EntryList& v_md, QString text);
     void clear();
     void fill(const EntryList& v_metadata, int cur_play_idx);
     void scrollUp();
     void scrollDown();
-    void dropEventFromOutside(QDropEvent* event);
     void set_current_track(int row);
     int get_num_rows();
     void show_big_items(bool);
@@ -81,17 +78,11 @@ private:
     void dragLeaveEvent(QDragLeaveEvent* event);
     void dragEnterEvent(QDragEnterEvent* event);
     void dragMoveEvent(QDragMoveEvent* event);
-    void dropEvent(QDropEvent* event);
-    void handle_drop(QDropEvent* event, bool from_outside=false);
 
     void remove_cur_selected_rows(bool select_next_row=true);
     void select_rows(QList<int> lst);
     void goto_row(int row);
     int get_min_selected();
-
-    void init_rc_menu();
-
-
 
 
 private:

@@ -48,9 +48,9 @@
 #include <QtCore/qsharedpointer.h>
 #include <QtCore/qmetatype.h>
 
-//#ifndef Q_CORE_EXPORT
+#ifndef Q_CORE_EXPORT
     #define Q_CORE_EXPORT //make mingw shut up temporarily
-//#endif
+#endif
 
 QT_BEGIN_HEADER
 

@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     GUI/entry/entry/gui_entryentrybig.cpp \
     GUI/entry/view/entrylistview.cpp \
     Common/qtimespan.cpp \
-    Storage/persistentstorage.cpp \
     Storage/persistentstorage_xml.cpp
 
 HEADERS  += dialog.h \
@@ -54,7 +53,6 @@ HEADERS  += dialog.h \
     GUI/entry/entry/gui_entryentrybig.h \
     GUI/entry/view/entrylistview.h \
     Common/qtimespan.h \
-    Storage/persistentstorage.h \
     Storage/persistentstorage_xml.h
 
 FORMS    += dialog.ui \

@@ -17,7 +17,7 @@ public:
     explicit GUI_EntryEntrySmall(QWidget *parent = 0);
     ~GUI_EntryEntrySmall();
 
-    virtual void setContent(Entry* e, int idx);
+    virtual void setContent(Entry* e);
 
 
 private:

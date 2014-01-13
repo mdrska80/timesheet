@@ -9,14 +9,26 @@ class Company
 public:
     Company();
 
-    QString Name;
-    QString Description;
+    // unique id of the company
+    QString id;
 
-    QString Url;
+    //name of the company
+    QString name;
 
-    QDate From;
-    QDate To;
+    // What this company does
+    QString description;
 
+    // main website
+    QString url;
+
+    // when do i begin to work for this company
+    QDate from;
+
+    // when do i stop to work for this company
+    QDate to;
+
+    //methods
+    QString toXml();
 };
 
 #endif // COMPANY_H

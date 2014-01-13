@@ -9,6 +9,8 @@
 
 #include <vector>
 
+#include "company.h"
+
 class Entry
 {
 
@@ -16,7 +18,7 @@ public:
     Entry();
 
     // id of entry from DB
-    int id;
+    QString id;
 
     // Zakladni casove udaje.
     QDate date;
@@ -36,19 +38,17 @@ public:
     bool pl_playing;
     bool is_disabled;
 
-    //parent entry, mostly empty
-    Entry* parent;
+    // Ve ktere spolecnosti entry vznikla.
+    Company *company;
 
     //methods
     QString toXml();
-    static Entry* fromXml();
-
 
     QVariant toVariant() const{
 
         QStringList list;
 
-        list.push_back(QString::number(id));
+        list.push_back(id);
         list.push_back(date.toString("dd.MM.yyyy"));
         list.push_back(from.toString());
         list.push_back(to.toString());
@@ -71,7 +71,7 @@ public:
 
         //find correct one....
 
-        md->id =             list[0].toInt();
+        md->id =             list[0];
         md->date =           QDate::fromString(list[1], "dd.MM.yyyy");
         md->from =           QTime::fromString(list[2]);
         md->to =             QTime::fromString(list[3]);
@@ -80,7 +80,7 @@ public:
         md->pl_selected =    list[6] == "1";
         md->pl_dragged =     list[7] == "1";
         md->pl_playing =     list[8] == "1";
-        md->is_disabled =     list[9] == "1";
+        md->is_disabled =    list[9] == "1";
 
 
 

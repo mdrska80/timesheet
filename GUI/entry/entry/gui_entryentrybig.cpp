@@ -13,7 +13,7 @@ GUI_EntryEntryBig::~GUI_EntryEntryBig()
     delete ui;
 }
 
-void GUI_EntryEntryBig::setContent(Entry* e, int idx)
+void GUI_EntryEntryBig::setContent(Entry* e)
 {
 
 //    QString titlestr;

@@ -159,9 +159,9 @@ void EntryListView::keyPressEvent(QKeyEvent* event){
 
     Qt::KeyboardModifiers  modifiers = event->modifiers();
     QModelIndexList lst = this->selectedIndexes();
-    foreach(QModelIndex idx, lst){
-
-    }
+//    foreach(QModelIndex idx, lst){
+//
+//    }
 
     QListView::keyPressEvent(event);
 
@@ -211,46 +211,6 @@ void EntryListView::resizeEvent(QResizeEvent *e){
     this->set_delegate_max_width(_model->rowCount());
     e->accept();
 
-}
-
-void EntryListView::init_rc_menu(){
-
-    //_rc_menu = new ContextMenu(this);
-
-    //connect(_rc_menu, SIGNAL(sig_info_clicked()), this, SLOT(info_clicked()));
-    //connect(_rc_menu, SIGNAL(sig_edit_clicked()), this, SLOT(edit_clicked()));
-    //connect(_rc_menu, SIGNAL(sig_remove_clicked()), this, SLOT(remove_clicked()));
-}
-
-void EntryListView::set_context_menu_actions(int actions){
-    //if(!_rc_menu) init_rc_menu();
-    //_rc_menu->setup_entries(actions);
-}
-
-
-void EntryListView::set_mimedata(EntryList& v_md, QString text) {
-
-    if(!_drag_allowed) return;
-    if(_qDrag) delete _qDrag;
-
-    //CustomMimeData* mimedata = new CustomMimeData();
-
-//    QList<QUrl> urls;
-//    foreach(Entry md, v_md){
-//        QUrl url(QString("file://") + md.filepath);
-//        urls << url;
-//    }
-
-//    mimedata->setMetaData(v_md);
-//    mimedata->setText(text);
-//    mimedata->setUrls(urls);
-
-    _qDrag = new QDrag(this);
-//    _qDrag->setMimeData(mimedata);
-
-    connect(_qDrag, SIGNAL(destroyed()), this, SLOT(forbid_mimedata_destroyable()));
-
-    _drag = true;
 }
 
 void EntryListView::forbid_mimedata_destroyable(){
@@ -521,28 +481,6 @@ void EntryListView::dragLeaveEvent(QDragLeaveEvent* event){
     clear_drag_lines(_last_known_drag_row);
 }
 
-
-void EntryListView::dropEventFromOutside(QDropEvent* event){
-    if(event->pos().y() < this->y())
-        handle_drop(event, true);
-
-}
-
-// finally drop it
-void EntryListView::dropEvent(QDropEvent* event){
-
-    event->accept();
-
-    if(!event->mimeData()) return;
-    handle_drop(event, false);
-
-}
-
-void EntryListView::handle_drop(QDropEvent* event, bool from_outside){
-
-}
-
-
 void EntryListView::scrollUp(){
     QPoint p(5, 5);
     int cur_row = this->indexAt(p).row();
@@ -563,9 +501,9 @@ void EntryListView::remove_cur_selected_rows(bool select_next_row)
 {
     foreach (int i, _cur_selected_rows) {
         _model->removeRow(i);
+        this->update();
     }
 
-    this->update();
 
     emit sig_rows_removed(_cur_selected_rows, select_next_row);
 }

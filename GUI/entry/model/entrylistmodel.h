@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include "Data/entry.h"
-#include "Storage/persistentstorage.h"
+#include "Storage/persistentstorage_xml.h"
 
 class EntryListModel : public QAbstractListModel
 {
@@ -17,7 +17,7 @@ public:
     int rowCount(const QModelIndex &parent=QModelIndex()) const;
     int columnCount(const QModelIndex &parent) const;
 
-    bool insertEntry(Entry* e);
+    void insertEntry(Entry* e);
 
     bool insertRows(int row, int count, const QModelIndex &parent=QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent=QModelIndex());
@@ -26,12 +26,12 @@ public:
     Entry* GetEntryAtIndex(const QModelIndex &index);
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
-    QList<Entry*> entries;
+    //QList<Entry*> entries;
 
     void set_selected(QList<int>& rows);
     bool is_selected(int row) const ;
     QList<int>          _selected_rows;
-    PersistentStorage*  _storage;
+    PersistentStorage_XML*  _storage;
 
 signals:
     

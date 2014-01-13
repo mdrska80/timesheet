@@ -16,7 +16,7 @@ public:
     explicit GUI_EntryEntryBig(QWidget *parent = 0);
     ~GUI_EntryEntryBig();
 
-    virtual void setContent(Entry* e, int idx);
+    virtual void setContent(Entry* e);
 
 
 private:

@@ -26,11 +26,16 @@ Dialog::Dialog(QWidget *parent) :
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
+    Company *c = new Company();
+    c->name = "Unicorn";
+    ui->listView->get_model()->_storage->companies->append(c);
+
     Entry *e = new Entry();
     e->title = "titulek";
     e->color = QColor(255, 0, 0, 255);
     e->pl_playing = true;
     e->date = QDate::currentDate();
+    e->company = c;
 
     Entry *e2 = new Entry();
     e2->title = "titulek 2";
@@ -42,9 +47,13 @@ Dialog::Dialog(QWidget *parent) :
 
     Entry *e3 = new Entry();
     e3->title = "titulek3";
-    e3->is_disabled = true;
+    //e3->is_disabled = true;
     e3->date = QDate::currentDate();
 
+    Entry *e4 = new Entry();
+    e4->title = "titulek4";
+    //e3->is_disabled = true;
+    e4->date = QDate::currentDate();
 
     //QList<Entry*> items;
     //items.append(e);
@@ -59,12 +68,12 @@ Dialog::Dialog(QWidget *parent) :
     //ui->listView->setModel(model);
 
 
-    EntryList el;
-    el.push_back(e2);
-    el.push_back(e);
-    el.push_back(e3);
-    el.push_back(e3);
-    el.push_back(e);
+//    EntryList el;
+//    el.push_back(e2);
+//    el.push_back(e);
+//    el.push_back(e3);
+//    el.push_back(e3);
+//    el.push_back(e);
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -73,7 +82,8 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->listView->get_model()->insertEntry(e);
     ui->listView->get_model()->insertEntry(e2);
-    ui->listView->get_model()->insertEntry(e2);
+    ui->listView->get_model()->insertEntry(e3);
+    ui->listView->get_model()->insertEntry(e4);
 
     //ui->listView->fill(el,1);
     ui->listView->select_row(0);
@@ -119,21 +129,4 @@ void Dialog::on_titleChanged(QString changedText)
     e->title = changedText;
 
     ui->listView->update();
-}
-
-void Dialog::Save()
-{
-    int max = ui->listView->get_model()->entries.size();
-    QString qs = "<Entries>\r\n";
-
-    for(int i = 0;i<max;i++)
-    {
-        Entry* e = ui->listView->get_model()->entries[i];
-        qs.append(e->toXml());
-        //qDebug() << e->title;
-    }
-
-    //finalize xml
-    qs.append("</Entries>");
-    Helper::write_file("test.xml", qs);
 }

@@ -16,12 +16,10 @@ SOURCES += main.cpp\
         dialog.cpp \
     GUI/entry/model/entrylistmodel.cpp \
     Data/entry.cpp \
-    Data/tsproject.cpp \
     Data/tsfile.cpp \
     Managers/compmanager.cpp \
     Managers/entrymanager.cpp \
     Managers/tsmanager.cpp \
-    Managers/tsprojectmanager.cpp \
     Managers/dbmanager.cpp \
     Data/company.cpp \
     Common/helper.cpp \
@@ -32,17 +30,16 @@ SOURCES += main.cpp\
     GUI/entry/entry/gui_entryentrybig.cpp \
     GUI/entry/view/entrylistview.cpp \
     Common/qtimespan.cpp \
-    Storage/persistentstorage_xml.cpp
+    Storage/persistentstorage_xml.cpp \
+    Data/project.cpp
 
 HEADERS  += dialog.h \
     GUI/entry/model/entrylistmodel.h \
     Data/entry.h \
-    Data/tsproject.h \
     Data/tsfile.h \
     Managers/compmanager.h \
     Managers/entrymanager.h \
     Managers/tsmanager.h \
-    Managers/tsprojectmanager.h \
     Managers/dbmanager.h \
     Data/company.h \
     Common/helper.h \
@@ -53,7 +50,8 @@ HEADERS  += dialog.h \
     GUI/entry/entry/gui_entryentrybig.h \
     GUI/entry/view/entrylistview.h \
     Common/qtimespan.h \
-    Storage/persistentstorage_xml.h
+    Storage/persistentstorage_xml.h \
+    Data/project.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \

@@ -1,7 +1,6 @@
 #ifndef TSMANAGER_H
 #define TSMANAGER_H
 
-#include "tsprojectmanager.h"
 #include "compmanager.h"
 #include "entrymanager.h"
 #include "dbmanager.h"
@@ -19,7 +18,6 @@ public:
     TSManager();
     ~TSManager();
 
-    TSProjectManager* projects;
     CompManager* computations;
     EntryManager* entries;
     DBManager* db;

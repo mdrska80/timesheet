@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "company.h"
+#include "project.h"
 
 class Entry
 {
@@ -40,6 +41,7 @@ public:
 
     // Ve ktere spolecnosti entry vznikla.
     Company *company;
+    Project *project;
 
     //methods
     QString toXml();

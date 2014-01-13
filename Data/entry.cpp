@@ -12,21 +12,27 @@ Entry::Entry()
     is_disabled = false;
 
     id = QUuid::createUuid().toString();
-    company = 0;
+    company = NULL;
+    project = NULL;
 }
 
 QString Entry::toXml()
 {
     QString companyName = "";
+    QString projectName = "";
 
-    if (company != 0)
+    if (company != NULL)
         companyName = company->name;
+
+    if (project != NULL)
+        projectName = project->name;
 
     QString res = QString("\t<Entry"
                           " id='%1'"
                           " date='%2'"
                           " from='%3'"
                           " to='%4'"
+                          " project='%8'"
                           " company='%7'>\r\n"
 
                           "\t\t<Title>%5</Title>\r\n"
@@ -39,7 +45,8 @@ QString Entry::toXml()
             .arg(to.toString("hh:mm"))
             .arg(title)
             .arg(description)
-            .arg(companyName);
+            .arg(companyName)
+            .arg(projectName);
 
     res = res.replace("'","\"");
 

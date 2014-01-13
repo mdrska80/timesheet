@@ -1,13 +1,13 @@
-#ifndef TSPROJECT_H
-#define TSPROJECT_H
+#ifndef PROJECT_H
+#define PROJECT_H
 
 #include <QString>
 #include <QColor>
 
-class TSProject
+class Project
 {
 public:
-    TSProject();
+    Project();
 
     // unique id of the project
     QString id;
@@ -19,13 +19,13 @@ public:
     QString description;
 
     // Id of the parent project
-    QString parentId;
+    Project* parent;
 
     // Color of the project
     QColor color;
 
     //methods
-    QString ConvertToXml();
+    QString toXml();
 };
 
-#endif // TSPROJECT_H
+#endif // PROJECT_H

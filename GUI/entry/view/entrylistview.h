@@ -13,7 +13,6 @@ class EntryListView : public QListView
 
 signals:
     void context_menu_emitted(const QPoint&);
-    void sig_metadata_dropped(const EntryList&, int);
     void sig_rows_removed(const QList<int> &, bool);
     void sig_rows_moved(const QList<int>&, int);
     void sig_info_clicked();

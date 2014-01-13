@@ -52,14 +52,34 @@ void PersistentStorage_XML::SaveCompanies(QString filename)
     Helper::write_file(filename, qs);
 }
 
+void PersistentStorage_XML::SaveProjects(QString filename)
+{
+    int max = projects->size();
+    QString qs = "<Projects>\r\n";
+
+    for(int i = 0;i<max;i++)
+    {
+        Project* e = projects->at(i);
+        qs.append(e->toXml());
+    }
+
+    //finalize xml
+    qs.append("</Projects>");
+    Helper::write_file(filename, qs);
+}
+
 
 QList<Entry*>* PersistentStorage_XML::Load()
 {
     QString companiesFile = "companies.xml";
+    QString projectsFile = "projects.xml";
     QString entriesFile = "test.xml";
 
     ReadCompanies(companiesFile);
+    ReadProjects(projectsFile);
     ReadEntries(entriesFile);
+
+    return entries;
 }
 
 void PersistentStorage_XML::ReadEntries(QString filename)
@@ -107,6 +127,28 @@ void PersistentStorage_XML::ReadCompanies(QString filename)
     }
 }
 
+void PersistentStorage_XML::ReadProjects(QString filename)
+{
+    CleanProjects();
+
+    QString content;
+    if (Helper::read_file_into_str(filename, &content))
+    {
+        QDomDocument doc;
+        doc.setContent(content);
+
+        QDomNodeList list = doc.elementsByTagName("Project");
+
+        for (int x = 0; x < list.count(); x++)
+        {
+            QDomElement node = list.at(x).toElement();
+
+            Project *p = ReadProject(node);
+            projects->append(p);
+        }
+    }
+}
+
 Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
 {
     Entry* e = new Entry();
@@ -137,6 +179,18 @@ Company* PersistentStorage_XML::ReadCompany(QDomElement node)
     return c;
 }
 
+Project* PersistentStorage_XML::ReadProject(QDomElement node)
+{
+    Project* p = new Project();
+
+    p->id = node.attribute("id");
+    p->name = node.attribute("name");
+    p->description = node.firstChildElement("Description").text();
+    p->parent = FindProjectByName(node.attribute("company"));
+
+    return p;
+}
+
 Company* PersistentStorage_XML::FindCompanyByName(QString name)
 {
     int companiesCnt = companies->size();
@@ -145,6 +199,19 @@ Company* PersistentStorage_XML::FindCompanyByName(QString name)
     {
         if (companies->at(i)->name == name)
             return companies->at(i);
+    }
+
+    return 0;
+}
+
+Project* PersistentStorage_XML::FindProjectByName(QString name)
+{
+    int cnt = projects->size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        if (projects->at(i)->name == name)
+            return projects->at(i);
     }
 
     return 0;
@@ -171,6 +238,18 @@ void PersistentStorage_XML::CleanCompanies()
         delete companies->at(i);
     }
     companies->clear();
+}
+
+void PersistentStorage_XML::CleanProjects()
+{
+    int cnt = projects->size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        delete projects->at(i);
+    }
+    projects->clear();
 
 }
+
 

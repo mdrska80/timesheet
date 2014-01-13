@@ -16,15 +16,8 @@ public:
 
     TSManager* manager;
 
-    // Crud part
-    void Load();
-    void Save();
-
 private:
-    QList<Entry*> *entries;
 
-    void Load(QString filename);
-    void Save(QString filename);
 };
 
 #endif // ENTRYMANAGER_H

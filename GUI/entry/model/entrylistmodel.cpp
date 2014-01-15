@@ -12,10 +12,15 @@ EntryListModel::EntryListModel(QObject *parent) :
     _storage = new PersistentStorage_XML();
 }
 
+EntryListModel::~EntryListModel()
+{
+    delete _storage;
+}
+
+
 int EntryListModel::rowCount(const QModelIndex& ) const
 {
-    qDebug() << "pocet radku: " << QString::number(_storage->filteredEntries->size());
-    return _storage->filteredEntries->size();
+    return _storage->filteredEntries.size();
 }
 
 int EntryListModel::columnCount(const QModelIndex& ) const
@@ -36,7 +41,7 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::ToolTipRole)
     {
-        Entry* e = _storage->filteredEntries->at(index.row());
+        Entry* e = _storage->filteredEntries.at(index.row());
         return QString("<b>Title:</b> %1<br/><b>Description:</b> %2")
                 .arg(e->title)
                 .arg(e->description);
@@ -47,7 +52,7 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     }
 
     if (role == Qt::WhatsThisRole){
-        return _storage->filteredEntries->at(index.row())->toVariant();
+        return _storage->filteredEntries.at(index.row())->toVariant();
     }
 
     else
@@ -78,10 +83,10 @@ QVariant EntryListModel::headerData(int section, Qt::Orientation orientation, in
 
 void EntryListModel::insertEntry(Entry* e)
 {
-    int pocetPolozek = _storage->entries->size();
+    int pocetPolozek = _storage->entries.size();
     beginInsertRows(QModelIndex(), pocetPolozek, pocetPolozek);
 
-        _storage->entries->append(e);
+        _storage->entries.append(e);
         _storage->Save();
         _storage->Load();
 
@@ -98,9 +103,9 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
         //entrie.insert(position, QColor(0, 0, 0, 255));
         Entry *e = new Entry();
         e->title = "new item";
-        _storage->entries->append(e);
+        _storage->entries.append(e);
         _storage->Save();
-        _storage->ApplyFilter(ft);
+        _storage->ApplyFilter(ft, true);
     }
 
     endInsertRows();
@@ -113,15 +118,15 @@ bool EntryListModel::removeRows(int position, int rows, const QModelIndex &index
 
     for(int row = 0; row < rows; ++row)
     {
-        Entry *eToRemove = _storage->filteredEntries->at(position);
-        int index = _storage->entries->indexOf(eToRemove);
+        Entry *eToRemove = _storage->filteredEntries.at(position);
+        int index = _storage->entries.indexOf(eToRemove);
 
-        Entry *eCheck = _storage->entries->at(index);
-        _storage->entries->removeAt(index);
+        Entry *eCheck = _storage->entries.at(index);
+        _storage->entries.removeAt(index);
         delete eToRemove;
 
         _storage->Save();
-        _storage->ApplyFilter(ft);
+        _storage->ApplyFilter(ft, true);
     }
 
     endRemoveRows();
@@ -134,7 +139,7 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
     {
         int row = index.row();
 
-        Entry* eToEdit = _storage->filteredEntries->at(row);
+        Entry* eToEdit = _storage->filteredEntries.at(row);
 
         Entry::fromVariant(value, eToEdit);
 
@@ -147,7 +152,7 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
 
         //Entry *e = Entry(value.value<Entry*>());
 
-        _storage->filteredEntries->replace(row, eToEdit);
+        _storage->filteredEntries.replace(row, eToEdit);
         emit(dataChanged(index, index));
 
         return true;
@@ -161,9 +166,9 @@ Entry* EntryListModel::GetEntryAtIndex(const QModelIndex &index)
     if (index.isValid())
     {
         int row = index.row();
-        if (row < _storage->filteredEntries->size())
+        if (row < _storage->filteredEntries.size())
         {
-            Entry* eToReturn = _storage->filteredEntries->at(row);
+            Entry* eToReturn = _storage->filteredEntries.at(row);
             return eToReturn;
         }
 
@@ -183,8 +188,8 @@ Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const
 
 void EntryListModel::set_selected(QList<int>& rows){
     _selected_rows = rows;
-    for(uint i=0; i< _storage->filteredEntries->size(); i++){
-        _storage->filteredEntries->at(i)->pl_selected = rows.contains(i);
+    for(uint i=0; i< _storage->filteredEntries.size(); i++){
+        _storage->filteredEntries.at(i)->pl_selected = rows.contains(i);
     }
 }
 
@@ -194,9 +199,12 @@ bool EntryListModel::is_selected(int row) const {
 
 void EntryListModel::ApplyFilter()
 {
-    beginInsertRows(QModelIndex(), 0, 999);
+    _storage->ApplyFilter(ft, true);
+    int cnt = _storage->filteredEntries.size();
 
-        _storage->ApplyFilter(ft);
+    // proc minus 2?
+    beginInsertRows(QModelIndex(), 0, cnt-2);
+
 
     endInsertRows();
 

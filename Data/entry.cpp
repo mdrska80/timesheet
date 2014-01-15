@@ -16,6 +16,11 @@ Entry::Entry()
     project = NULL;
 }
 
+bool Entry::operator<(const Entry &event)
+{
+    return date<event.date;
+}
+
 QString Entry::toXml()
 {
     QString companyName = "";

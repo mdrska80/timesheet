@@ -15,7 +15,7 @@ public:
     PersistentStorage_XML();
     ~PersistentStorage_XML();
 
-    QList<Entry*>* Load();
+    void Load();
     void Save(void);
     void SaveEntries(QString filename);
     void SaveCompanies(QString filename);
@@ -37,14 +37,18 @@ public:
     void CleanCompanies();
     void CleanProjects();
 
-    void ApplyFilter(FilterTypes ft);
+    void ApplyFilter(FilterTypes ft, bool highlightTodayEntries);
 
+private:
+    void Sort();
+    bool CompareEntries(Entry *e1, Entry *e2);
 
-    QList<Entry*> *entries;
-    QList<Company*> *companies;
-    QList<Project*> *projects;
+public:
+    QList<Entry*> entries;
+    QList<Company*> companies;
+    QList<Project*> projects;
 
-    QList<Entry*> *filteredEntries;
+    QList<Entry*> filteredEntries;
 
 };
 

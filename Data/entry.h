@@ -46,6 +46,9 @@ public:
     //methods
     QString toXml();
 
+    bool operator<(const Entry *);
+    bool operator<(const Entry &);
+
     QVariant toVariant() const{
 
         QStringList list;

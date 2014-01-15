@@ -99,7 +99,7 @@ void Dialog::on_fromChanged(QString changedText)
 void Dialog::on_dateChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->date = QDate::fromString(changedText);
+    e->date = QDate::fromString(changedText, "dd.MM.yyyy");
 
     ui->listView->UpdateAndSave();
 }

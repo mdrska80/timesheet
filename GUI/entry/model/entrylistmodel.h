@@ -9,7 +9,8 @@ class EntryListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit EntryListModel(QObject *parent = 0);
+    EntryListModel(QObject *parent = 0);
+    ~EntryListModel();
 
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;

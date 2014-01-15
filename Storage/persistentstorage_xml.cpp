@@ -40,7 +40,7 @@ QList<Entry*>* PersistentStorage_XML::Load()
     ReadProjects(projectsFile);
     ReadEntries(entriesFile);
 
-    ApplyFilter(FilterType_InValid);
+    //ApplyFilter(FilterType_Today);
 
     return entries;
 }
@@ -275,7 +275,7 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft)
                 Entry *e = entries->at(i);
 
                 if (e->date.isValid() && e->from.isValid() && e->to.isValid())
-                    filteredEntries->append(entries->at(i));
+                    filteredEntries->append(e);
             }
         }
         break;
@@ -286,10 +286,30 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft)
                 Entry *e = entries->at(i);
 
                 if (!e->date.isValid() || !e->from.isValid() || !e->to.isValid())
-                    filteredEntries->append(entries->at(i));
+                    filteredEntries->append(e);
             }
         }
         break;
+    case FilterType_Today:
+        {
+            for (int i = 0;i<cnt;i++)
+            {
+                Entry *e = entries->at(i);
+
+                if (e->date == QDate::currentDate())
+                    filteredEntries->append(e);
+            }
+        }
+        break;
+    case FilterType_All:
+        {
+            for (int i = 0;i<cnt;i++)
+            {
+                filteredEntries->append(entries->at(i));
+            }
+        }
+        break;
+
 
 
 

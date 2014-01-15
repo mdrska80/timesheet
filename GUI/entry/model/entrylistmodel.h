@@ -32,6 +32,10 @@ public:
     bool is_selected(int row) const ;
     QList<int>          _selected_rows;
     PersistentStorage_XML*  _storage;
+    FilterTypes ft;
+
+    void ApplyFilter();
+
 
 signals:
     

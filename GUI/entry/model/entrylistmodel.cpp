@@ -14,6 +14,7 @@ EntryListModel::EntryListModel(QObject *parent) :
 
 int EntryListModel::rowCount(const QModelIndex& ) const
 {
+    qDebug() << "pocet radku: " << QString::number(_storage->filteredEntries->size());
     return _storage->filteredEntries->size();
 }
 
@@ -97,9 +98,9 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
         //entrie.insert(position, QColor(0, 0, 0, 255));
         Entry *e = new Entry();
         e->title = "new item";
-        _storage->entries->insert(position, e);
+        _storage->entries->append(e);
         _storage->Save();
-        _storage->ApplyFilter(FilterType_Valid);
+        _storage->ApplyFilter(ft);
     }
 
     endInsertRows();
@@ -112,7 +113,15 @@ bool EntryListModel::removeRows(int position, int rows, const QModelIndex &index
 
     for(int row = 0; row < rows; ++row)
     {
-        _storage->filteredEntries->removeAt(position);
+        Entry *eToRemove = _storage->filteredEntries->at(position);
+        int index = _storage->entries->indexOf(eToRemove);
+
+        Entry *eCheck = _storage->entries->at(index);
+        _storage->entries->removeAt(index);
+        delete eToRemove;
+
+        _storage->Save();
+        _storage->ApplyFilter(ft);
     }
 
     endRemoveRows();
@@ -181,4 +190,15 @@ void EntryListModel::set_selected(QList<int>& rows){
 
 bool EntryListModel::is_selected(int row) const {
     return _selected_rows.contains(row);
+}
+
+void EntryListModel::ApplyFilter()
+{
+    beginInsertRows(QModelIndex(), 0, 999);
+
+        _storage->ApplyFilter(ft);
+
+    endInsertRows();
+
+
 }

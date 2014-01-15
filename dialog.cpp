@@ -19,12 +19,14 @@ Dialog::Dialog(QWidget *parent) :
 
 
     connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
+    connect(ui->listView, SIGNAL(sig_sel_changed(const QModelIndex&)),this, SLOT(on_listView_clicked(const QModelIndex&)));
 
     connect(ui->descriptionTextEdit, SIGNAL(textChanged()), this, SLOT(on_descriptionChanged()));
     connect(ui->titleLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
     connect(ui->fromLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_fromChanged(QString)));
     connect(ui->toLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_toChanged(QString)));
     connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
+    connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(on_currentTextChanged(QString)));
 
     // set up style
     //Style::get_style(true);
@@ -35,16 +37,14 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
-
     ui->listView->show_big_items(false);
-
-//    ui->listView->get_model()->insertEntry(e);
-  //  ui->listView->get_model()->insertEntry(e2);
-//    ui->listView->get_model()->insertEntry(e3);
-  //  ui->listView->get_model()->insertEntry(e4);
-
-    //ui->listView->fill(el,1);
     ui->listView->select_row(0);
+
+    ui->comboBox->addItem("Valid");
+    ui->comboBox->addItem("InValid");
+    ui->comboBox->addItem("Today");
+    ui->comboBox->addItem("This week");
+    ui->comboBox->addItem("All");
 
     manager = new TSManager();
 }
@@ -61,8 +61,6 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
     //QString qs = q.toString();
 
     Entry *e = ui->listView->get_selection();
-
-    //Entry * e = model->GetEntryAtIndex(index);
 
     if (e != NULL)
     {
@@ -101,7 +99,7 @@ void Dialog::on_fromChanged(QString changedText)
 void Dialog::on_dateChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->date = QDate::fromString(changedText, "dd.MM.yyyy");
+    e->date = QDate::fromString(changedText);
 
     ui->listView->UpdateAndSave();
 }
@@ -114,3 +112,24 @@ void Dialog::on_descriptionChanged()
     ui->listView->UpdateAndSave();
 }
 
+void Dialog::on_currentTextChanged(QString newText)
+{
+    qDebug() << newText;
+
+    if (newText == "Valid")
+        ui->listView->get_model()->ft = FilterType_Valid;
+
+    if (newText == "InValid")
+        ui->listView->get_model()->ft = FilterType_InValid;
+
+    if (newText == "Today")
+        ui->listView->get_model()->ft = FilterType_Today;
+
+    if (newText == "All")
+        ui->listView->get_model()->ft = FilterType_All;
+
+    qDebug() << "Filter type:" << ui->listView->get_model()->ft;
+
+    ui->listView->get_model()->ApplyFilter();
+    ui->listView->update();
+}

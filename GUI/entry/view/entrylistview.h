@@ -18,7 +18,7 @@ signals:
     void sig_info_clicked();
     void sig_remove_clicked();
     void sig_edit_clicked();
-    void sig_sel_changed(const EntryList&, const QList<int>&);
+    void sig_sel_changed(const QModelIndex&/*const EntryList&, const QList<int>&*/);
     void sig_double_clicked(int);
     void sig_no_focus();
 
@@ -36,6 +36,8 @@ private slots:
 public:
     EntryListView(QWidget* parent=0);
     virtual ~EntryListView();
+
+
 
     void set_drag_enabled(bool b);
     void clear();
@@ -77,9 +79,6 @@ private:
     void set_delegate_max_width(int n_items);
 
     void clear_drag_lines(int row);
-    void dragLeaveEvent(QDragLeaveEvent* event);
-    void dragEnterEvent(QDragEnterEvent* event);
-    void dragMoveEvent(QDragMoveEvent* event);
 
     void remove_cur_selected_rows(bool select_next_row=true);
     void select_rows(QList<int> lst);

@@ -5,7 +5,10 @@ enum FilterTypes
 {
     FilterType_None = 1,
     FilterType_Valid = 2,
-    FilterType_InValid = 3
+    FilterType_InValid = 3,
+
+    FilterType_Today = 10,
+    FilterType_All = 100
 };
 
 

@@ -176,7 +176,7 @@ void EntryListView::keyPressEvent(QKeyEvent* event){
 
     case Qt::Key_Delete:
         remove_cur_selected_rows();
-        select_row(_model->rowCount());
+        //select_row(_model->rowCount());
         break;
 
     case Qt::Key_End:
@@ -381,7 +381,11 @@ void EntryListView::selectionChanged ( const QItemSelection & selected, const QI
 
     //EntryList v_md;
 //    _model->get_metadata(idx_list_int, v_md);
-    //emit sig_sel_changed(v_md, idx_list_int);
+    if (selected.indexes().size() > 0)
+    {
+        QModelIndex idx = selected.indexes()[0];
+        emit sig_sel_changed(idx);
+    }
 
     _cur_selected_rows = idx_list_int;
     _sel_changed = true;
@@ -446,41 +450,6 @@ int EntryListView::calc_dd_line(QPoint pos){
     return row;
 }
 
-
-// the drag comes, if there's data --> accept it
-void EntryListView::dragEnterEvent(QDragEnterEvent* event){
-    event->accept();
-}
-
-void EntryListView::dragMoveEvent(QDragMoveEvent* event){
-
-    if( !event->mimeData() )  return;
-    event->accept();
-
-    int row = calc_dd_line(event->pos() );
-
-    _last_known_drag_row = row;
-    clear_drag_lines(row);
-
-    // paint line
-    QModelIndex cur_idx = _model->index(row, 0);  
-    QVariant mdVariant = _model->data(cur_idx, Qt::WhatsThisRole);
-    Entry* md = _model->GetEntryAtIndex(cur_idx);
-
-    //if(!Entry::fromVariant(mdVariant, md)) return;
-
-    md->pl_dragged = true;
-    _model->setData(cur_idx, md->toVariant(), Qt::EditRole);
-}
-
-
-// we start the drag action, all lines has to be cleared
-void EntryListView::dragLeaveEvent(QDragLeaveEvent* event){
-    event->accept();
-
-    clear_drag_lines(_last_known_drag_row);
-}
-
 void EntryListView::scrollUp(){
     QPoint p(5, 5);
     int cur_row = this->indexAt(p).row();
@@ -501,9 +470,9 @@ void EntryListView::remove_cur_selected_rows(bool select_next_row)
 {
     foreach (int i, _cur_selected_rows) {
         _model->removeRow(i);
+        select_row(i);
         this->update();
     }
-
 
     emit sig_rows_removed(_cur_selected_rows, select_next_row);
 }

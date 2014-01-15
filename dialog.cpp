@@ -75,41 +75,56 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
 void Dialog::on_titleChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->title = changedText;
+    if (e!=NULL)
+    {
+        e->title = changedText;
 
-    ui->listView->UpdateAndSave();
+        ui->listView->UpdateAndSave();
+    }
 }
 
 void Dialog::on_toChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->to = QTime::fromString(changedText, "hh:mm");
+    if (e!=NULL)
+    {
+        e->to = QTime::fromString(changedText, "hh:mm");
 
-    ui->listView->UpdateAndSave();
+        ui->listView->UpdateAndSave();
+    }
 }
 
 void Dialog::on_fromChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->from = QTime::fromString(changedText, "hh:mm");
+    if (e!=NULL)
+    {
+        e->from = QTime::fromString(changedText, "hh:mm");
 
-    ui->listView->UpdateAndSave();
+        ui->listView->UpdateAndSave();
+    }
 }
 
 void Dialog::on_dateChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
-    e->date = QDate::fromString(changedText, "dd.MM.yyyy");
 
-    ui->listView->UpdateAndSave();
+    if (e!=NULL)
+    {
+        e->date = QDate::fromString(changedText, "dd.MM.yyyy");
+        ui->listView->UpdateAndSave();
+        //ui->listView->get_model()->ApplyFilter();
+    }
 }
 
 void Dialog::on_descriptionChanged()
 {
     Entry *e = ui->listView->get_selection();
-
-    e->description = ui->descriptionTextEdit->toPlainText();
-    ui->listView->UpdateAndSave();
+    if (e!=NULL)
+    {
+        e->description = ui->descriptionTextEdit->toPlainText();
+        ui->listView->UpdateAndSave();
+    }
 }
 
 void Dialog::on_currentTextChanged(QString newText)

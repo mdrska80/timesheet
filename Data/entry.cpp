@@ -18,6 +18,11 @@ Entry::Entry()
 
 bool Entry::operator<(const Entry &event)
 {
+    if (date == event.date)
+    {
+        return from < event.from;
+    }
+
     return date<event.date;
 }
 

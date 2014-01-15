@@ -51,7 +51,8 @@ HEADERS  += dialog.h \
     GUI/entry/view/entrylistview.h \
     Common/qtimespan.h \
     Storage/persistentstorage_xml.h \
-    Data/project.h
+    Data/project.h \
+    Common/enums.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \

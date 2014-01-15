@@ -536,3 +536,9 @@ EntryListModel* EntryListView::get_model()
 {
     return _model;
 }
+
+void EntryListView::UpdateAndSave()
+{
+    this->update();
+    _model->_storage->Save();
+}

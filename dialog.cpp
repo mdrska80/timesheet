@@ -19,71 +19,29 @@ Dialog::Dialog(QWidget *parent) :
 
 
     connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
-    connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
+
+    connect(ui->descriptionTextEdit, SIGNAL(textChanged()), this, SLOT(on_descriptionChanged()));
+    connect(ui->titleLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
+    connect(ui->fromLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_fromChanged(QString)));
+    connect(ui->toLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_toChanged(QString)));
+    connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
 
     // set up style
     //Style::get_style(true);
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
-    Company *c = new Company();
-    c->name = "Unicorn";
-    ui->listView->get_model()->_storage->companies->append(c);
-
-    Entry *e = new Entry();
-    e->title = "titulek";
-    e->color = QColor(255, 0, 0, 255);
-    e->pl_playing = true;
-    e->date = QDate::currentDate();
-    e->company = c;
-
-    Entry *e2 = new Entry();
-    e2->title = "titulek 2";
-    e2->color = QColor(255, 0, 255, 255);
-    e2->date = QDate::currentDate();
-    e2->from = QTime::currentTime().addSecs(-3245);
-    e2->to = QTime::currentTime();
-    e2->description = "popis pozadavku, komplexni popis";
-
-    Entry *e3 = new Entry();
-    e3->title = "titulek3";
-    //e3->is_disabled = true;
-    e3->date = QDate::currentDate();
-
-    Entry *e4 = new Entry();
-    e4->title = "titulek4";
-    //e3->is_disabled = true;
-    e4->date = QDate::currentDate();
-
-    //QList<Entry*> items;
-    //items.append(e);
-    //items.append(e2);
-    //items.append(e3);
-
-    //model = new EntryListModel(items, this);
-
-    //model->setHeaderData(0, Qt::Horizontal, "test", Qt::DisplayRole);
-    //ui->listView->setAlternatingRowColors(true);
-
-    //ui->listView->setModel(model);
-
-
-//    EntryList el;
-//    el.push_back(e2);
-//    el.push_back(e);
-//    el.push_back(e3);
-//    el.push_back(e3);
-//    el.push_back(e);
+    ui->listView->get_model()->_storage->Load();
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     ui->listView->show_big_items(false);
 
-    ui->listView->get_model()->insertEntry(e);
-    ui->listView->get_model()->insertEntry(e2);
-    ui->listView->get_model()->insertEntry(e3);
-    ui->listView->get_model()->insertEntry(e4);
+//    ui->listView->get_model()->insertEntry(e);
+  //  ui->listView->get_model()->insertEntry(e2);
+//    ui->listView->get_model()->insertEntry(e3);
+  //  ui->listView->get_model()->insertEntry(e4);
 
     //ui->listView->fill(el,1);
     ui->listView->select_row(0);
@@ -108,18 +66,11 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
 
     if (e != NULL)
     {
-        ui->lineEdit->setText(e->title);
-        ui->textEdit_2->setText(e->toXml());
-
-        QString DBStatus = manager->db->CheckDb();
-        //ui->DBStatus_label->setToolTip(DBStatus);
-
-        //if (DBStatus == NULL)
-        //    ui->DBStatus_label->setText("<font color='green'>ONLINE</font>");
-        //else
-        //{
-        //    ui->DBStatus_label->setText("<font color='red'>OFFLINE</font>");
-        //}
+        ui->dateLineEdit->setText(e->date.toString("dd.MM.yyyy"));
+        ui->fromLineEdit->setText(e->from.toString("hh:mm"));
+        ui->toLineEdit->setText(e->to.toString("hh:mm"));
+        ui->titleLineEdit->setText(e->title);
+        ui->descriptionTextEdit->setText(e->description);
     }
 }
 
@@ -128,5 +79,38 @@ void Dialog::on_titleChanged(QString changedText)
     Entry *e = ui->listView->get_selection();
     e->title = changedText;
 
-    ui->listView->update();
+    ui->listView->UpdateAndSave();
 }
+
+void Dialog::on_toChanged(QString changedText)
+{
+    Entry *e = ui->listView->get_selection();
+    e->to = QTime::fromString(changedText, "hh:mm");
+
+    ui->listView->UpdateAndSave();
+}
+
+void Dialog::on_fromChanged(QString changedText)
+{
+    Entry *e = ui->listView->get_selection();
+    e->from = QTime::fromString(changedText, "hh:mm");
+
+    ui->listView->UpdateAndSave();
+}
+
+void Dialog::on_dateChanged(QString changedText)
+{
+    Entry *e = ui->listView->get_selection();
+    e->date = QDate::fromString(changedText, "dd.MM.yyyy");
+
+    ui->listView->UpdateAndSave();
+}
+
+void Dialog::on_descriptionChanged()
+{
+    Entry *e = ui->listView->get_selection();
+
+    e->description = ui->descriptionTextEdit->toPlainText();
+    ui->listView->UpdateAndSave();
+}
+

@@ -7,6 +7,7 @@
 #include "Data/entry.h"
 #include "Data/company.h"
 #include "Data/project.h"
+#include "Common/enums.h"
 
 class PersistentStorage_XML
 {
@@ -15,6 +16,7 @@ public:
     ~PersistentStorage_XML();
 
     QList<Entry*>* Load();
+    void Save(void);
     void SaveEntries(QString filename);
     void SaveCompanies(QString filename);
     void SaveProjects(QString filename);
@@ -35,10 +37,14 @@ public:
     void CleanCompanies();
     void CleanProjects();
 
+    void ApplyFilter(FilterTypes ft);
+
 
     QList<Entry*> *entries;
     QList<Company*> *companies;
     QList<Project*> *projects;
+
+    QList<Entry*> *filteredEntries;
 
 };
 

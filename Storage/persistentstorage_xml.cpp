@@ -8,17 +8,42 @@ PersistentStorage_XML::PersistentStorage_XML()
 {
     companies = new QList<Company*>();
     entries = new QList<Entry*>();
+    projects = new QList<Project*>();
+    filteredEntries = new QList<Entry*>();
 }
 
 PersistentStorage_XML::~PersistentStorage_XML()
 {
     CleanEntries();
     CleanCompanies();
+    CleanProjects();
 
+    delete projects;
     delete companies;
     delete entries;
 }
 
+void PersistentStorage_XML::Save()
+{
+    SaveCompanies("companies.xml");
+    SaveProjects("projects.xml");
+    SaveEntries("entries.xml");
+}
+
+QList<Entry*>* PersistentStorage_XML::Load()
+{
+    QString companiesFile = "companies.xml";
+    QString projectsFile = "projects.xml";
+    QString entriesFile = "entries.xml";
+
+    ReadCompanies(companiesFile);
+    ReadProjects(projectsFile);
+    ReadEntries(entriesFile);
+
+    ApplyFilter(FilterType_InValid);
+
+    return entries;
+}
 
 void PersistentStorage_XML::SaveEntries(QString filename)
 {
@@ -66,20 +91,6 @@ void PersistentStorage_XML::SaveProjects(QString filename)
     //finalize xml
     qs.append("</Projects>");
     Helper::write_file(filename, qs);
-}
-
-
-QList<Entry*>* PersistentStorage_XML::Load()
-{
-    QString companiesFile = "companies.xml";
-    QString projectsFile = "projects.xml";
-    QString entriesFile = "test.xml";
-
-    ReadCompanies(companiesFile);
-    ReadProjects(projectsFile);
-    ReadEntries(entriesFile);
-
-    return entries;
 }
 
 void PersistentStorage_XML::ReadEntries(QString filename)
@@ -249,7 +260,42 @@ void PersistentStorage_XML::CleanProjects()
         delete projects->at(i);
     }
     projects->clear();
+}
 
+void PersistentStorage_XML::ApplyFilter(FilterTypes ft)
+{
+    filteredEntries->clear();
+    int cnt = entries->size();
+
+    switch (ft) {
+    case FilterType_Valid:
+        {
+            for (int i = 0;i<cnt;i++)
+            {
+                Entry *e = entries->at(i);
+
+                if (e->date.isValid() && e->from.isValid() && e->to.isValid())
+                    filteredEntries->append(entries->at(i));
+            }
+        }
+        break;
+    case FilterType_InValid:
+        {
+            for (int i = 0;i<cnt;i++)
+            {
+                Entry *e = entries->at(i);
+
+                if (!e->date.isValid() || !e->from.isValid() || !e->to.isValid())
+                    filteredEntries->append(entries->at(i));
+            }
+        }
+        break;
+
+
+
+    default:
+        break;
+    }
 }
 
 

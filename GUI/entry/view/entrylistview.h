@@ -52,6 +52,9 @@ public:
     Entry* get_selection();
     EntryListModel* get_model();
 
+    void UpdateAndSave();
+
+
 
 
 

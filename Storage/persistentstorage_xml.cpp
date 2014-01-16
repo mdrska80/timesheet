@@ -273,7 +273,8 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                e->pl_playing = e->date == QDate::currentDate();
+                if (highlightTodayEntries)
+                    e->pl_playing = e->date == QDate::currentDate();
 
                 if (e->date.isValid() && e->from.isValid() && e->to.isValid())
                     filteredEntries.append(e);
@@ -285,7 +286,8 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                e->pl_playing = e->date == QDate::currentDate();
+                if (highlightTodayEntries)
+                    e->pl_playing = e->date == QDate::currentDate();
 
                 if (!e->date.isValid() || !e->from.isValid() || !e->to.isValid())
                     filteredEntries.append(e);
@@ -297,19 +299,35 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                e->pl_playing = e->date == QDate::currentDate();
+                if (highlightTodayEntries)
+                    e->pl_playing = e->date == QDate::currentDate();
 
                 if (e->date == QDate::currentDate())
                     filteredEntries.append(e);
             }
         }
         break;
+    case FilterType_Yesterday:
+        {
+            for (int i = 0;i<cnt;i++)
+            {
+                Entry *e = entries.at(i);
+                if (highlightTodayEntries)
+                    e->pl_playing = e->date == QDate::currentDate();
+
+                if (e->date == QDate::currentDate().addDays(-1))
+                    filteredEntries.append(e);
+            }
+        }
+        break;
+
     case FilterType_All:
         {
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                e->pl_playing = e->date == QDate::currentDate();
+                if (highlightTodayEntries)
+                    e->pl_playing = e->date == QDate::currentDate();
 
                 filteredEntries.append(e);
             }
@@ -336,9 +354,3 @@ void PersistentStorage_XML::Sort()
 {
     qSort(filteredEntries.begin(), filteredEntries.end(), dereferencedLessThan<Entry>);
 }
-
-bool PersistentStorage_XML::CompareEntries(Entry *e1, Entry *e2)
-{
-    return true;
-}
-

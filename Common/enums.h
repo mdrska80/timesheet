@@ -8,6 +8,7 @@ enum FilterTypes
     FilterType_InValid = 3,
 
     FilterType_Today = 10,
+    FilterType_Yesterday = 11,
     FilterType_All = 100
 };
 

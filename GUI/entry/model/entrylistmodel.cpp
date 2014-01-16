@@ -42,9 +42,11 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     if(role == Qt::ToolTipRole)
     {
         Entry* e = _storage->filteredEntries.at(index.row());
+
+        QString qs = e->description.replace("\n", "<br/>");
         return QString("<b>Title:</b> %1<br/><b>Description:</b> %2")
                 .arg(e->title)
-                .arg(e->description);
+                .arg(qs);
     }
 
     if (role == Qt::DisplayRole){
@@ -103,6 +105,10 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
         //entrie.insert(position, QColor(0, 0, 0, 255));
         Entry *e = new Entry();
         e->title = "new item";
+        e->date = QDate::currentDate();
+        e->from = QTime::currentTime();
+        e->to = QTime::currentTime().addSecs(60*60*2);
+
         _storage->entries.append(e);
         _storage->Save();
         _storage->ApplyFilter(ft, true);
@@ -121,7 +127,6 @@ bool EntryListModel::removeRows(int position, int rows, const QModelIndex &index
         Entry *eToRemove = _storage->filteredEntries.at(position);
         int index = _storage->entries.indexOf(eToRemove);
 
-        Entry *eCheck = _storage->entries.at(index);
         _storage->entries.removeAt(index);
         delete eToRemove;
 
@@ -143,15 +148,6 @@ bool EntryListModel::setData(const QModelIndex &index, const QVariant &value, in
 
         Entry::fromVariant(value, eToEdit);
 
-        //eToEdit->title = Entry::fromVariant(value.toString();
-
-
-
-        //"lll";//value.value<Entry*>;
-        //eToEdit->title =  static_cast<QString>(value);
-
-        //Entry *e = Entry(value.value<Entry*>());
-
         _storage->filteredEntries.replace(row, eToEdit);
         emit(dataChanged(index, index));
 
@@ -171,10 +167,9 @@ Entry* EntryListModel::GetEntryAtIndex(const QModelIndex &index)
             Entry* eToReturn = _storage->filteredEntries.at(row);
             return eToReturn;
         }
-
-        return NULL;
-
     }
+
+    return NULL;
 }
 
 Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const
@@ -188,7 +183,7 @@ Qt::ItemFlags EntryListModel::flags(const QModelIndex &index) const
 
 void EntryListModel::set_selected(QList<int>& rows){
     _selected_rows = rows;
-    for(uint i=0; i< _storage->filteredEntries.size(); i++){
+    for(int i=0; i< _storage->filteredEntries.size(); i++){
         _storage->filteredEntries.at(i)->pl_selected = rows.contains(i);
     }
 }

@@ -41,7 +41,6 @@ public:
 
 private:
     void Sort();
-    bool CompareEntries(Entry *e1, Entry *e2);
 
 public:
     QList<Entry*> entries;

@@ -57,3 +57,6 @@ HEADERS  += dialog.h \
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \
     GUI/entry/entry/gui_entryentrybig.ui
+
+RESOURCES += \
+    resources.qrc

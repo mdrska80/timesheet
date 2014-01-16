@@ -12,6 +12,7 @@ DBManager::DBManager(TSManager* mgr)
 
 QList<Entry*> *DBManager::GetAllEntries()
 {
+    return NULL;
 }
 
 QString DBManager::CheckDb()

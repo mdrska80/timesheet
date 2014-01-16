@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Timesheet</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -172,6 +172,14 @@ QTextEdit:disabled {
    <header>entrylistview.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>dateLineEdit</tabstop>
+  <tabstop>fromLineEdit</tabstop>
+  <tabstop>toLineEdit</tabstop>
+  <tabstop>titleLineEdit</tabstop>
+  <tabstop>descriptionTextEdit</tabstop>
+  <tabstop>comboBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

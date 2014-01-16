@@ -19,8 +19,8 @@ EntryItemDelegate::EntryItemDelegate(QListView* parent, bool small){
         _pl_entry = new GUI_EntryEntrySmall();
     }
     else{
-        _row_height = 31;
-        _pl_entry = new GUI_EntryEntrySmall();
+        _row_height = 38;
+        _pl_entry = new GUI_EntryEntryBig();
     }
 
     _parent = parent;
@@ -46,13 +46,7 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
     EntryListModel* elm = (EntryListModel*)index.model();
     Entry* md = elm->GetEntryAtIndex(index);
 
-    //QVariant mdVariant = index.model()->data(index, Qt::WhatsThisRole);
-
-
-    //Entry* md = new Entry();
-    //md->title = "ahoj";
-    //if( !Entry::fromVariant(mdVariant, md) ) return;
-
+    // set data to delegate
     _pl_entry->setContent(md);
 
     QString style;
@@ -70,6 +64,13 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
         style = QString("border: none; background-color: ") +
             col_highlight_lighter.name() + "; " +
             get_fg_color(playing_val);
+
+        if (md->pl_selected)
+        {
+            style = QString("border: none; background-color: ") +
+                col_highlight.name() + ";" +
+                get_fg_color(highlight_val);
+        }
     }
 
     else if(md->is_disabled){
@@ -88,7 +89,7 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
             get_fg_color(highlight_val);
     }
 
-    int y = rect.topLeft().y() +  _pl_entry->height() -1;
+    //int y = rect.topLeft().y() +  _pl_entry->height() -1;
     _pl_entry->setStyleSheet(style);
     if(md->is_disabled) _pl_entry->setDisabled(true);
 

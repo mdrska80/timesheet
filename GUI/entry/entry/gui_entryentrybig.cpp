@@ -1,6 +1,8 @@
 #include "gui_entryentrybig.h"
 #include "ui_gui_entryentrybig.h"
 
+#include "Common/qtimespan.h"
+
 GUI_EntryEntryBig::GUI_EntryEntryBig(QWidget *parent) :
     GUI_EntryEntry(parent),
     ui(new Ui::GUI_EntryEntryBig)
@@ -15,10 +17,12 @@ GUI_EntryEntryBig::~GUI_EntryEntryBig()
 
 void GUI_EntryEntryBig::setContent(Entry* e)
 {
+    this->ui->titleLabel->setText(e->title);
+    this->ui->descriptionLabel->setText(e->description);
+    this->ui->dayLabel->setText(e->date.toString("dd"));
 
-//    QString titlestr;
+    this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
 
-//    this->ui->lab_title->setText(titlestr);
-//    this->ui->lab_artist->setText(md.artist.trimmed());
-//    this->ui->lab_time->setText(Helper::cvtMsecs2TitleLengthString(md.length_ms));
+    QTimeSpan ts = e->to - e->from;
+    this->ui->durationLabel->setText(ts.toString("hh:mm"));
 }

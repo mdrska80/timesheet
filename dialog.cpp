@@ -17,6 +17,8 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowIcon(QIcon(":/images/Earth-icon.png"));
+
 
     connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
     connect(ui->listView, SIGNAL(sig_sel_changed(const QModelIndex&)),this, SLOT(on_listView_clicked(const QModelIndex&)));
@@ -37,14 +39,21 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->listView->show_big_items(false);
+    ui->listView->show_big_items(true);
     ui->listView->select_row(0);
+
+    QFont font;
+    font.setFamily(QString::fromUtf8("DejaVu Sans"));
 
     ui->comboBox->addItem("Valid");
     ui->comboBox->addItem("InValid");
     ui->comboBox->addItem("Today");
+    ui->comboBox->addItem("Yesterday");
     ui->comboBox->addItem("This week");
     ui->comboBox->addItem("All");
+    ui->comboBox->setFont(font);
+
+    ui->comboBox->setFocusPolicy(Qt::NoFocus);
 
     manager = new TSManager();
 }
@@ -88,7 +97,7 @@ void Dialog::on_toChanged(QString changedText)
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
     {
-        e->to = QTime::fromString(changedText, "hh:mm");
+        e->to = Helper::ConstructTime(changedText);
 
         ui->listView->UpdateAndSave();
     }
@@ -99,7 +108,7 @@ void Dialog::on_fromChanged(QString changedText)
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
     {
-        e->from = QTime::fromString(changedText, "hh:mm");
+        e->from = Helper::ConstructTime(changedText);
 
         ui->listView->UpdateAndSave();
     }
@@ -111,7 +120,7 @@ void Dialog::on_dateChanged(QString changedText)
 
     if (e!=NULL)
     {
-        e->date = QDate::fromString(changedText, "dd.MM.yyyy");
+        e->date = Helper::ConstructDate(changedText);  //QDate::fromString(changedText, "dd.MM.yyyy");
         ui->listView->UpdateAndSave();
         //ui->listView->get_model()->ApplyFilter();
     }
@@ -139,6 +148,9 @@ void Dialog::on_currentTextChanged(QString newText)
 
     if (newText == "Today")
         ui->listView->get_model()->ft = FilterType_Today;
+
+    if (newText == "Yesterday")
+        ui->listView->get_model()->ft = FilterType_Yesterday;
 
     if (newText == "All")
         ui->listView->get_model()->ft = FilterType_All;

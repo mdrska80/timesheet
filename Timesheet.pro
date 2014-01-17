@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     GUI/entry/view/entrylistview.cpp \
     Common/qtimespan.cpp \
     Storage/persistentstorage_xml.cpp \
-    Data/project.cpp
+    Data/project.cpp \
+    mainwindow.cpp
 
 HEADERS  += dialog.h \
     GUI/entry/model/entrylistmodel.h \
@@ -52,11 +53,13 @@ HEADERS  += dialog.h \
     Common/qtimespan.h \
     Storage/persistentstorage_xml.h \
     Data/project.h \
-    Common/enums.h
+    Common/enums.h \
+    mainwindow.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \
-    GUI/entry/entry/gui_entryentrybig.ui
+    GUI/entry/entry/gui_entryentrybig.ui \
+    mainwindow.ui
 
 RESOURCES += \
     resources.qrc

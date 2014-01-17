@@ -286,8 +286,7 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                if (highlightTodayEntries)
-                    e->pl_playing = e->date == QDate::currentDate();
+                HandleTodayHighlight(e, highlightTodayEntries);
 
                 if (!e->date.isValid() || !e->from.isValid() || !e->to.isValid())
                     filteredEntries.append(e);
@@ -299,8 +298,7 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                if (highlightTodayEntries)
-                    e->pl_playing = e->date == QDate::currentDate();
+                HandleTodayHighlight(e, highlightTodayEntries);
 
                 if (e->date == QDate::currentDate())
                     filteredEntries.append(e);
@@ -312,8 +310,7 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                if (highlightTodayEntries)
-                    e->pl_playing = e->date == QDate::currentDate();
+                HandleTodayHighlight(e, highlightTodayEntries);
 
                 if (e->date == QDate::currentDate().addDays(-1))
                     filteredEntries.append(e);
@@ -326,22 +323,26 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
             for (int i = 0;i<cnt;i++)
             {
                 Entry *e = entries.at(i);
-                if (highlightTodayEntries)
-                    e->pl_playing = e->date == QDate::currentDate();
+                HandleTodayHighlight(e, highlightTodayEntries);
 
                 filteredEntries.append(e);
             }
         }
         break;
 
-
-
-
     default:
         break;
     }
 
     Sort();
+}
+
+void PersistentStorage_XML::HandleTodayHighlight(Entry *e, bool highlightTodayEntries)
+{
+    if (highlightTodayEntries)
+        e->pl_playing = e->date == QDate::currentDate();
+    else
+        e->pl_playing = false;
 }
 
 template<class T>

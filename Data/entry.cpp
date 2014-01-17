@@ -23,6 +23,11 @@ bool Entry::operator<(const Entry &event)
         return from < event.from;
     }
 
+    if (!event.date.isValid())
+    {
+        return title.size() < event.title.size();
+    }
+
     return date<event.date;
 }
 

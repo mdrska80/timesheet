@@ -192,9 +192,9 @@ bool EntryListModel::is_selected(int row) const {
     return _selected_rows.contains(row);
 }
 
-void EntryListModel::ApplyFilter()
+void EntryListModel::ApplyFilter(bool highlightTodayEntries)
 {
-    _storage->ApplyFilter(ft, true);
+    _storage->ApplyFilter(ft, highlightTodayEntries);
     int cnt = _storage->filteredEntries.size();
 
     // proc minus 2?

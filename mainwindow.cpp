@@ -1,5 +1,5 @@
-#include "dialog.h"
-#include "ui_dialog.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QStandardItemModel>
 #include <QListView>
@@ -11,9 +11,9 @@
 
 #include "GUI/entry/delegate/entryitemdelegate.h"
 
-Dialog::Dialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Dialog)
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -26,7 +26,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->listView, SIGNAL(sig_sel_changed(const QModelIndex&)),this, SLOT(on_listView_clicked(const QModelIndex&)));
 
     connect(ui->descriptionTextEdit, SIGNAL(textChanged()), this, SLOT(on_descriptionChanged()));
-    connect(ui->titleLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
+    connect(ui->titleTextEdit, SIGNAL(textChanged()), this, SLOT(on_titleChanged()));
     connect(ui->fromLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_fromChanged(QString)));
     connect(ui->toLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_toChanged(QString)));
     connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
@@ -58,34 +58,43 @@ Dialog::Dialog(QWidget *parent) :
     ui->comboBox->setFocusPolicy(Qt::NoFocus);
 
     manager = new TSManager();
+
+    //set up filter to today
+    int todayIndex = ui->comboBox->findText("Today");
+    ui->comboBox->setCurrentIndex(todayIndex);
+
+    ui->descriptionTextEdit->setStyleSheet(Style::set_textEdit_style());
+    ui->titleTextEdit->setStyleSheet(Style::set_textEdit_style());
 }
 
-Dialog::~Dialog()
+MainWindow::~MainWindow()
 {
     delete ui;
     delete manager;
 }
 
-void Dialog::HandleMenu(QWidget *parent)
+
+void MainWindow::HandleMenu(QWidget *parent)
 {
-    menubar = new QMenuBar(parent);
-    menubar->setObjectName(QString::fromUtf8("menubar"));
-    menubar->setGeometry(QRect(0, 0, 686, 25));
-    menuFle = new QMenu(menubar);
-    menuFle->setObjectName(QString::fromUtf8("menuFle"));
-    menuView = new QMenu(menubar);
-    menuView->setObjectName(QString::fromUtf8("menuView"));
-    menuView->setStyleSheet(QString::fromUtf8(""));
-    menuPreferences = new QMenu(menubar);
-    menuPreferences->setObjectName(QString::fromUtf8("menuPreferences"));
-    menuAbout = new QMenu(menubar);
-    menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
+//    ui->actionSmall_items->isChecked() =
+//    menubar = new QMenuBar(parent);
+  //  menubar->setObjectName(QString::fromUtf8("menubar"));
+//    menubar->setGeometry(QRect(0, 0, 686, 25));
+  //  menuFle = new QMenu(menubar);
+//    menuFle->setObjectName(QString::fromUtf8("menuFle"));
+  //  menuView = new QMenu(menubar);
+//    menuView->setObjectName(QString::fromUtf8("menuView"));
+  //  menuView->setStyleSheet(QString::fromUtf8(""));
+//    menuPreferences = new QMenu(menubar);
+  //  menuPreferences->setObjectName(QString::fromUtf8("menuPreferences"));
+//    menuAbout = new QMenu(menubar);
+  //  menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
     //parent->setMenuBar(menubar);
 
 
 }
 
-void Dialog::on_listView_clicked(const QModelIndex &index)
+void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
     QVariant q = index.model();
     //QString qs = q.toString();
@@ -97,23 +106,22 @@ void Dialog::on_listView_clicked(const QModelIndex &index)
         ui->dateLineEdit->setText(e->date.toString("dd.MM.yyyy"));
         ui->fromLineEdit->setText(e->from.toString("hh:mm"));
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
-        ui->titleLineEdit->setText(e->title);
+        ui->titleTextEdit->setText(e->title);
         ui->descriptionTextEdit->setText(e->description);
     }
 }
 
-void Dialog::on_titleChanged(QString changedText)
+void MainWindow::on_titleChanged()
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
     {
-        e->title = changedText;
-
+        e->title = ui->titleTextEdit->toPlainText();
         ui->listView->UpdateAndSave();
     }
 }
 
-void Dialog::on_toChanged(QString changedText)
+void MainWindow::on_toChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
@@ -124,7 +132,7 @@ void Dialog::on_toChanged(QString changedText)
     }
 }
 
-void Dialog::on_fromChanged(QString changedText)
+void MainWindow::on_fromChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
@@ -135,7 +143,7 @@ void Dialog::on_fromChanged(QString changedText)
     }
 }
 
-void Dialog::on_dateChanged(QString changedText)
+void MainWindow::on_dateChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
 
@@ -147,7 +155,7 @@ void Dialog::on_dateChanged(QString changedText)
     }
 }
 
-void Dialog::on_descriptionChanged()
+void MainWindow::on_descriptionChanged()
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
@@ -157,7 +165,7 @@ void Dialog::on_descriptionChanged()
     }
 }
 
-void Dialog::on_currentTextChanged(QString newText)
+void MainWindow::on_currentTextChanged(QString newText)
 {
     qDebug() << newText;
 
@@ -176,8 +184,20 @@ void Dialog::on_currentTextChanged(QString newText)
     if (newText == "All")
         ui->listView->get_model()->ft = FilterType_All;
 
-    qDebug() << "Filter type:" << ui->listView->get_model()->ft;
+//    qDebug() << "Filter type:" << ui->listView->get_model()->ft;
 
-    ui->listView->get_model()->ApplyFilter(true);
+    ui->listView->get_model()->ApplyFilter(ui->actionHighlight_today_entries->isChecked());
+    ui->listView->update();
+}
+
+void MainWindow::on_actionSmall_items_triggered(bool checked)
+{
+    ui->listView->show_big_items(!checked);
+    ui->listView->update();
+}
+
+void MainWindow::on_actionHighlight_today_entries_triggered(bool checked)
+{
+    ui->listView->get_model()->ApplyFilter(checked);
     ui->listView->update();
 }

@@ -38,6 +38,7 @@ public:
     void CleanProjects();
 
     void ApplyFilter(FilterTypes ft, bool highlightTodayEntries);
+    void HandleTodayHighlight(Entry *e, bool highlightTodayEntries);
 
 private:
     void Sort();

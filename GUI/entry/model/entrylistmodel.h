@@ -35,7 +35,7 @@ public:
     PersistentStorage_XML*  _storage;
     FilterTypes ft;
 
-    void ApplyFilter();
+    void ApplyFilter(bool highlightTodayEntries);
 
 
 signals:

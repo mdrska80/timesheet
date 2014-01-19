@@ -6,10 +6,6 @@
 
 PersistentStorage_XML::PersistentStorage_XML()
 {
-    //companies = new QList<Company*>();
-    //entries = new QList<Entry*>();
-    //projects = new QList<Project*>();
-    //filteredEntries = new QList<Entry*>();
 }
 
 PersistentStorage_XML::~PersistentStorage_XML()
@@ -17,10 +13,6 @@ PersistentStorage_XML::~PersistentStorage_XML()
     CleanEntries();
     CleanCompanies();
     CleanProjects();
-
-    //delete projects;
-    //delete companies;
-    //delete entries;
 }
 
 void PersistentStorage_XML::Save()

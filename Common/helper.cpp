@@ -115,3 +115,13 @@ QDate Helper::ConstructDate(QString date)
     //if nothing return today
     return QDate::currentDate();
 }
+
+QString Helper::get_fg_color(int val_bg)
+{
+
+    if(val_bg > 160)
+        return  QString(" color: #202020; ");
+
+    else
+        return QString(" color: #D8D8D8 ");
+}

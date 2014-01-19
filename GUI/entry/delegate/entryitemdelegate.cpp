@@ -3,15 +3,6 @@
 #include "entryitemdelegate.h"
 #include "GUI/entry/model/entrylistmodel.h"
 
-static QString get_fg_color(int val_bg){
-
-    if(val_bg > 160)
-        return  QString(" color: #202020; ");
-
-    else
-        return QString(" color: #D8D8D8 ");
-}
-
 EntryItemDelegate::EntryItemDelegate(QListView* parent, bool small){
 
     if(small){
@@ -34,7 +25,8 @@ EntryItemDelegate::~EntryItemDelegate(){
 
 
 void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option,
-                     const QModelIndex &index) const {
+                     const QModelIndex &index) const
+{
 
     if(!index.isValid()) return;
 
@@ -63,13 +55,13 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
     if(md->pl_playing){
         style = QString("border: none; background-color: ") +
             col_highlight_lighter.name() + "; " +
-            get_fg_color(playing_val);
+            Helper::get_fg_color(playing_val);
 
         if (md->pl_selected)
         {
             style = QString("border: none; background-color: ") +
                 col_highlight.name() + ";" +
-                get_fg_color(highlight_val);
+                Helper::get_fg_color(highlight_val);
         }
     }
 
@@ -79,14 +71,14 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
 
     else if(!md->pl_selected){
         style = QString("border: none; background-color: transparent; ") +
-            get_fg_color(background_val);
+            Helper::get_fg_color(background_val);
     }
 
     else
     {
         style = QString("border: none; background-color: ") +
             col_highlight.name() + ";" +
-            get_fg_color(highlight_val);
+            Helper::get_fg_color(highlight_val);
     }
 
     //int y = rect.topLeft().y() +  _pl_entry->height() -1;

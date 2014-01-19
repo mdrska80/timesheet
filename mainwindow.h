@@ -19,9 +19,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void HandleMenu(QWidget *parent);
-
-
 private slots:
     void on_listView_clicked(const QModelIndex &index);
 

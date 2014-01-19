@@ -17,6 +17,8 @@ public:
     static QTime ConstructTime(QString time);
     static QDate ConstructDate(QString date);
 
+    static QString get_fg_color(int val_bg);
+
 };
 
 #endif // HELPER_H

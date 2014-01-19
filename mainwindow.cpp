@@ -17,8 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    HandleMenu(parent);
-
     this->setWindowIcon(QIcon(":/images/Earth-icon.png"));
 
 
@@ -73,26 +71,6 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
-
-void MainWindow::HandleMenu(QWidget *parent)
-{
-//    ui->actionSmall_items->isChecked() =
-//    menubar = new QMenuBar(parent);
-  //  menubar->setObjectName(QString::fromUtf8("menubar"));
-//    menubar->setGeometry(QRect(0, 0, 686, 25));
-  //  menuFle = new QMenu(menubar);
-//    menuFle->setObjectName(QString::fromUtf8("menuFle"));
-  //  menuView = new QMenu(menubar);
-//    menuView->setObjectName(QString::fromUtf8("menuView"));
-  //  menuView->setStyleSheet(QString::fromUtf8(""));
-//    menuPreferences = new QMenu(menubar);
-  //  menuPreferences->setObjectName(QString::fromUtf8("menuPreferences"));
-//    menuAbout = new QMenu(menubar);
-  //  menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
-    //parent->setMenuBar(menubar);
-
-
-}
 
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {

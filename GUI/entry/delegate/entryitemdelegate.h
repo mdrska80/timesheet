@@ -8,6 +8,7 @@
 #include "GUI/entry/entry/gui_entryentry.h"
 #include "GUI/entry/entry/gui_entryentrysmall.h"
 #include "GUI/entry/entry/gui_entryentrybig.h"
+#include "Common/helper.h"
 
 class EntryItemDelegate : public QItemDelegate
 {

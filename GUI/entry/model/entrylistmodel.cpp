@@ -33,11 +33,11 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     if(!index.isValid())
         return QVariant();
 
-//    if(role == Qt::EditRole)
-  //  {
-    //    Entry *e = _storage->entries->at(index.row());
-      //  return e->title;
-//    }
+    if(role == Qt::EditRole)
+    {
+        Entry *e = _storage->entries.at(index.row());
+        return e->title;
+    }
 
     if(role == Qt::ToolTipRole)
     {

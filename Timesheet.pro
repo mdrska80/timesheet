@@ -32,7 +32,15 @@ SOURCES += main.cpp\
     Common/qtimespan.cpp \
     Storage/persistentstorage_xml.cpp \
     Data/project.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    Completers/completertitle.cpp \
+    GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.cpp \
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.cpp \
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.cpp \
+    Data/entryfileinfo.cpp \
+    Data/errormessage.cpp \
+    GUI/xmlFileDetail/model/xmlfiledetailmodel.cpp \
+    Storage/fileinfostorage.cpp
 
 HEADERS  += dialog.h \
     GUI/entry/model/entrylistmodel.h \
@@ -54,12 +62,21 @@ HEADERS  += dialog.h \
     Storage/persistentstorage_xml.h \
     Data/project.h \
     Common/enums.h \
-    mainwindow.h
+    mainwindow.h \
+    Completers/completertitle.h \
+    GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.h \
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.h \
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.h \
+    Data/entryfileinfo.h \
+    Data/errormessage.h \
+    GUI/xmlFileDetail/model/xmlfiledetailmodel.h \
+    Storage/fileinfostorage.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \
     GUI/entry/entry/gui_entryentrybig.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui
 
 RESOURCES += \
     resources.qrc

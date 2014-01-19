@@ -23,7 +23,10 @@ public:
     QSize sizeHint(const QStyleOptionViewItem &option,
                          const QModelIndex &index) const;
 
-    QString get_fg_color(int val_bg);
+    void setMaxWidth(int w);
+    int rowHeight();
+
+
 
 private:
     int		_rendered_items;

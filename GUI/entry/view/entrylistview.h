@@ -73,7 +73,6 @@ protected:
 private:
 
     void clear_selection();
-
     void select_all();
     int calc_dd_line(QPoint pos);
     void set_delegate_max_width(int n_items);

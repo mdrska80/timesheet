@@ -78,14 +78,13 @@ QSize XmlFileDetailDelegate::sizeHint(const QStyleOptionViewItem &option,
     return QSize(_max_width, _row_height);
 }
 
-QString XmlFileDetailDelegate::get_fg_color(int val_bg)
-{
-
-    if(val_bg > 160)
-        return  QString(" color: #202020; ");
-
-    else
-        return QString(" color: #D8D8D8 ");
+void XmlFileDetailDelegate::setMaxWidth(int w){
+    _max_width = w;
 }
+
+int XmlFileDetailDelegate::rowHeight(){
+    return _row_height;
+}
+
 
 

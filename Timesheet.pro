@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     Data/entryfileinfo.cpp \
     Data/errormessage.cpp \
     GUI/xmlFileDetail/model/xmlfiledetailmodel.cpp \
-    Storage/fileinfostorage.cpp
+    Storage/fileinfostorage.cpp \
+    GUI/xmlFileDetail/view/xmlfiledetailview.cpp
 
 HEADERS  += dialog.h \
     GUI/entry/model/entrylistmodel.h \
@@ -70,7 +71,8 @@ HEADERS  += dialog.h \
     Data/entryfileinfo.h \
     Data/errormessage.h \
     GUI/xmlFileDetail/model/xmlfiledetailmodel.h \
-    Storage/fileinfostorage.h
+    Storage/fileinfostorage.h \
+    GUI/xmlFileDetail/view/xmlfiledetailview.h
 
 FORMS    += dialog.ui \
     GUI/entry/entry/gui_entryentrysmall.ui \

@@ -8,8 +8,9 @@
 #include "GUI/entry/model/entrylistmodel.h"
 
 #include "Common/style.h"
-
 #include "GUI/entry/delegate/entryitemdelegate.h"
+
+#include "dialogtester.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -178,4 +179,10 @@ void MainWindow::on_actionHighlight_today_entries_triggered(bool checked)
 {
     ui->listView->get_model()->ApplyFilter(checked);
     ui->listView->update();
+}
+
+void MainWindow::on_actionShow_dialog_triggered()
+{
+    DialogTester* tester = new DialogTester(this);
+    tester->show();
 }

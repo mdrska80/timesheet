@@ -33,6 +33,8 @@ private slots:
 
     void on_actionHighlight_today_entries_triggered(bool checked);
 
+    void on_actionShow_dialog_triggered();
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

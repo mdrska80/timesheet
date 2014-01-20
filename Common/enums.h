@@ -23,10 +23,11 @@ enum CompleterLoaderStates
 
 enum CompaniesList
 {
-    Unicorn = 0,
-    Ka = 1,
-    Autocont = 2,
-    Bustec = 3
+    Undefined = 0,
+    Unicorn = 1,
+    Ka = 2,
+    Autocont = 3,
+    Bustec = 4
 };
 
 
@@ -39,12 +40,14 @@ enum TSVersions
 
     NET_Ka = 3,
 
-    NET_Autocont = 4,
+    NET_WPF_Ka = 4,
+
+    NET_Autocont = 5,
 
     // Version written in Autocont under GTK framework
-    GTK_Autocont = 5,
+    GTK_Autocont = 6,
 
-    QT = 6
+    QT = 7
 };
 
 

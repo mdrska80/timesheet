@@ -18,11 +18,11 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="EntryListView" name="listView" native="true">
+       <widget class="EntryListView" name="listView">
         <property name="autoFillBackground">
          <bool>true</bool>
         </property>
-        <property name="alternatingRowColors" stdset="0">
+        <property name="alternatingRowColors">
          <bool>true</bool>
         </property>
        </widget>
@@ -170,8 +170,15 @@
     <addaction name="actionSmall_items"/>
     <addaction name="actionHighlight_today_entries"/>
    </widget>
+   <widget class="QMenu" name="menuTest_Menu">
+    <property name="title">
+     <string>Test Menu</string>
+    </property>
+    <addaction name="actionShow_dialog"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuTest_Menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSmall_items">
@@ -193,12 +200,17 @@
     <string>Highlight today entries</string>
    </property>
   </action>
+  <action name="actionShow_dialog">
+   <property name="text">
+    <string>Show dialog</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>EntryListView</class>
-   <extends>QWidget</extends>
-   <header>entrylistview.h</header>
+   <extends>QListView</extends>
+   <header>GUI/entry/view/entrylistview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

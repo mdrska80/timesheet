@@ -13,7 +13,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        dialog.cpp \
     GUI/entry/model/entrylistmodel.cpp \
     Data/entry.cpp \
     Data/tsfile.cpp \
@@ -41,9 +40,11 @@ SOURCES += main.cpp\
     Data/errormessage.cpp \
     GUI/xmlFileDetail/model/xmlfiledetailmodel.cpp \
     Storage/fileinfostorage.cpp \
-    GUI/xmlFileDetail/view/xmlfiledetailview.cpp
+    GUI/xmlFileDetail/view/xmlfiledetailview.cpp \
+    dialogtester.cpp \
+    Common/entriesanalyzer.cpp
 
-HEADERS  += dialog.h \
+HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
     Data/entry.h \
     Data/tsfile.h \
@@ -72,13 +73,16 @@ HEADERS  += dialog.h \
     Data/errormessage.h \
     GUI/xmlFileDetail/model/xmlfiledetailmodel.h \
     Storage/fileinfostorage.h \
-    GUI/xmlFileDetail/view/xmlfiledetailview.h
+    GUI/xmlFileDetail/view/xmlfiledetailview.h \
+    dialogtester.h \
+    Common/entriesanalyzer.h
 
-FORMS    += dialog.ui \
+FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
     GUI/entry/entry/gui_entryentrybig.ui \
     mainwindow.ui \
-    GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui
+    GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui \
+    dialogtester.ui
 
 RESOURCES += \
     resources.qrc

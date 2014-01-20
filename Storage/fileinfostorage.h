@@ -13,11 +13,11 @@ public:
     void Load();
     void ReadInfos();
 
-    EntryFileInfo* ReadInfo();
+    EntryFileInfo* ReadInfo(QString filename);
     void CleanInfos();
 
-    QStringList IdentifyFiles();
-
+    QStringList IdentifyFiles(QString path);
+    void Sort();
 
     QList<EntryFileInfo*> infos;
 };

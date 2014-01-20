@@ -11,16 +11,26 @@ public:
     EntryFileInfo();
 
     QString filename;
-    int totalEntries;
 
-    int totalWorkedHours;
-    CompaniesList company;
+    //system or processed
+    bool            pl_selected;
+    QString         raw_xml;
 
-    bool isValid;
-    ErrorMessage err;
+    QStringList     titles;
+    QStringList     projects;
+    QDate           date;
+    CompaniesList   company;
+    int             totalEntries;
+    int             totalWorkedHours;
+    bool            isValid;
 
-    //system
-    bool pl_selected;
+    ErrorMessage    err;
+
+    void Process();
+
+    bool operator<(const EntryFileInfo *);
+    bool operator<(const EntryFileInfo &);
+
 
     QVariant toVariant() const{
 

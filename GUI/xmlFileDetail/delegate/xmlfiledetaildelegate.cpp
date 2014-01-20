@@ -7,7 +7,7 @@ XmlFileDetailDelegate::XmlFileDetailDelegate(QListView* parent, bool small)
         _pl_entry = new GUI_XmlFileDetailEntryBig();
     }
     else{
-        _row_height = 38;
+        _row_height = 32;
         _pl_entry = new GUI_XmlFileDetailEntryBig();
     }
 
@@ -46,17 +46,25 @@ void XmlFileDetailDelegate::paint( QPainter *painter, const QStyleOptionViewItem
     QColor col_highlight_lighter = col_highlight.darker(140);
 
     int highlight_val = col_highlight.lightness();
+    int background_val = col_background.lightness();
 
     if(md->pl_selected){
         style = QString("border: none; background-color: ") +
             col_highlight.name() + ";" +
             Helper::get_fg_color(highlight_val);
     }
+    else if(!md->isValid)
+    {
+        // if it is not valid...
+        style = QString("border: none; background-color: ") +
+            col_highlight_lighter.name() + ";" +
+            Helper::get_fg_color(highlight_val);
+    }
+
     else
     {
-        style = QString("border: none; background-color: ") +
-            col_highlight.name() + ";" +
-            Helper::get_fg_color(highlight_val);
+        style = QString("border: none; background-color: transparent; ") +
+            Helper::get_fg_color(background_val);
     }
 
     _pl_entry->setStyleSheet(style);

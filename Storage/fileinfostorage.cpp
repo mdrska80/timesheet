@@ -21,40 +21,6 @@ void FileInfoStorage::ReadInfos()
 {
     CleanInfos();
 
-    EntryFileInfo* i1 = new EntryFileInfo();
-    i1->filename = "2004-5.xml";
-    i1->totalEntries = 25;
-    i1->totalWorkedHours = 160;
-    i1->company = Unicorn;
-    i1->isValid = true;
-    //i1->Process();
-
-    EntryFileInfo* i2 = new EntryFileInfo();
-    i2->filename = "2004-6.xml";
-    i2->totalEntries = 25;
-    i2->totalWorkedHours = 160;
-    i2->company = Unicorn;
-    i2->isValid = false;
-
-    EntryFileInfo* i3 = new EntryFileInfo();
-    i3->filename = "2004-7.xml";
-    i3->totalEntries = 25;
-    i3->totalWorkedHours = 160;
-    i3->company = Unicorn;
-    i3->isValid = true;
-
-    EntryFileInfo* i4 = new EntryFileInfo();
-    i4->filename = "2004-8.xml";
-    i4->totalEntries = 25;
-    i4->totalWorkedHours = 160;
-    i4->company = Unicorn;
-    i4->isValid = true;
-
-    infos.append(i1);
-    infos.append(i2);
-    infos.append(i3);
-    infos.append(i4);
-
     QStringList lst = IdentifyFiles("Data");
 
     int cnt = lst.size();
@@ -78,6 +44,7 @@ EntryFileInfo* FileInfoStorage::ReadInfo(QString filename)
     if (storage.entries.size() == 0)
     {
         efi->err.title = "No entries in file loaded, unknown format?";
+        efi->isValid = false;
         return efi;
     }
 

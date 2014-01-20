@@ -4,8 +4,10 @@
 #include <QMainWindow>
 #include <QString>
 #include <QStandardItemModel>
+
 #include "Managers/tsmanager.h"
 #include "GUI/entry/model/entrylistmodel.h"
+#include "Common/tscore.h"
 
 namespace Ui {
 class MainWindow;

@@ -1,4 +1,5 @@
 #include "xmlfiledetaildelegate.h"
+#include "Common/tscore.h"
 
 XmlFileDetailDelegate::XmlFileDetailDelegate(QListView* parent, bool small)
 {
@@ -49,18 +50,23 @@ void XmlFileDetailDelegate::paint( QPainter *painter, const QStyleOptionViewItem
     int background_val = col_background.lightness();
 
     if(md->pl_selected){
+            style = QString("border: none; background-color: ") +
+                col_highlight.name() + ";" +
+                Helper::get_fg_color(highlight_val);
+        }
+    else if(md->date.year() == TSCore::I().workingYear && md->date.month() == TSCore::I().workingMonth){
         style = QString("border: none; background-color: ") +
-            col_highlight.name() + ";" +
-            Helper::get_fg_color(highlight_val);
+        colorGreen + ";" +
+        Helper::get_fg_color(highlight_val);
+
     }
     else if(!md->isValid)
     {
         // if it is not valid...
         style = QString("border: none; background-color: ") +
-            col_highlight_lighter.name() + ";" +
+            colorRed + ";" +
             Helper::get_fg_color(highlight_val);
     }
-
     else
     {
         style = QString("border: none; background-color: transparent; ") +

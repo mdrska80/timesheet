@@ -8,8 +8,9 @@
 #include "GUI/entry/model/entrylistmodel.h"
 
 #include "Common/style.h"
-#include "GUI/entry/delegate/entryitemdelegate.h"
+#include "Common/tscore.h"
 
+#include "GUI/entry/delegate/entryitemdelegate.h"
 #include "dialogtester.h"
 
 MainWindow::MainWindow(QWidget *parent) :

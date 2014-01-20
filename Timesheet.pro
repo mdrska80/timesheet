@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     Storage/fileinfostorage.cpp \
     GUI/xmlFileDetail/view/xmlfiledetailview.cpp \
     dialogtester.cpp \
-    Common/entriesanalyzer.cpp
+    Common/entriesanalyzer.cpp \
+    Common/tscore.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -75,7 +76,8 @@ HEADERS  += \
     Storage/fileinfostorage.h \
     GUI/xmlFileDetail/view/xmlfiledetailview.h \
     dialogtester.h \
-    Common/entriesanalyzer.h
+    Common/entriesanalyzer.h \
+    Common/tscore.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \

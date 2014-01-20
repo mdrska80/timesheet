@@ -3,6 +3,7 @@
 
 #include "persistentstorage_xml.h"
 #include "Common/helper.h"
+#include "Common/tscore.h"
 
 PersistentStorage_XML::PersistentStorage_XML()
 {
@@ -19,14 +20,14 @@ void PersistentStorage_XML::Save()
 {
     SaveCompanies("companies.xml");
     SaveProjects("projects.xml");
-    SaveEntries("entries.xml");
+    SaveEntries(TSCore::I().GetEntriesFile());
 }
 
 void PersistentStorage_XML::Load()
 {
     QString companiesFile = "companies.xml";
     QString projectsFile = "projects.xml";
-    QString entriesFile = "entries.xml";
+    QString entriesFile = TSCore::I().GetEntriesFile();
 
     ReadCompanies(companiesFile);
     ReadProjects(projectsFile);

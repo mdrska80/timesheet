@@ -14,7 +14,7 @@ public:
 
     //system or processed
     bool            pl_selected;
-    QString         raw_xml;
+    bool            pl_activeFile;
 
     QStringList     titles;
     QStringList     projects;

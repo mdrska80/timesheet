@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>35</height>
+    <height>26</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,28 +27,10 @@
     <number>2</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
-     <item>
-      <widget class="QLabel" name="yearLabel">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>&lt;center&gt;YYYY&lt;/center&gt;</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QLabel" name="monthLabel">
        <property name="maximumSize">
@@ -69,54 +51,32 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QLabel" name="yearLabel">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;center&gt;YYYY&lt;/center&gt;</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>XY entries - 140h / 200h</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>in </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="companyLabel">
-         <property name="text">
-          <string>company</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>on</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="projectListLabel">
-         <property name="text">
-          <string>project list</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>XY entries - 140h / 200h</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="horizontalSpacer">

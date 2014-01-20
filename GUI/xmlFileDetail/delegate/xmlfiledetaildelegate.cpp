@@ -7,7 +7,7 @@ XmlFileDetailDelegate::XmlFileDetailDelegate(QListView* parent, bool small)
         _pl_entry = new GUI_XmlFileDetailEntryBig();
     }
     else{
-        _row_height = 32;
+        _row_height = 28;
         _pl_entry = new GUI_XmlFileDetailEntryBig();
     }
 

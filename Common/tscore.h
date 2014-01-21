@@ -11,6 +11,7 @@ public:
     // what year and month we are currently working in...
     int workingYear;
     int workingMonth;
+    bool needReload;
 
     QString dataDir;
 

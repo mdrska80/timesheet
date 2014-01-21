@@ -15,6 +15,9 @@ public:
     explicit DialogTester(QWidget *parent = 0);
     ~DialogTester();
 
+private slots:
+    void on_pushButton_clicked(bool checked);
+
 private:
     Ui::DialogTester *ui;
 };

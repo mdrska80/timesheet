@@ -6,6 +6,7 @@
 #include "Data/entry.h"
 #include "GUI/entry/model/entrylistmodel.h"
 #include "GUI/entry/delegate/entryitemdelegate.h"
+#include "Common/entriesanalyzer.h"
 
 class EntryListView : public QListView
 {

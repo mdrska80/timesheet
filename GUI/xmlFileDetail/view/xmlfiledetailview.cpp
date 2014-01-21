@@ -143,8 +143,22 @@ void XmlFileDetailView::clear_selection(){
     this->clearSelection();
 }
 
-void XmlFileDetailView::select_row(int i){
+void XmlFileDetailView::select_last_row()
+{
+    if(_model->rowCount() == 0) return;
+    int i = _model->rowCount() - 1;
+//    if(i > _model->rowCount() - 1) i = _model->rowCount() - 1;
+//    if(i < 0) i = 0;
+    QList<int> lst;
+    lst << i;
+    select_rows(lst);
 
+    this->selectionModel()->setCurrentIndex(_model->index(i), QItemSelectionModel::Select);
+}
+
+
+void XmlFileDetailView::select_row(int i)
+{
     if(_model->rowCount() == 0) return;
     if(i > _model->rowCount() - 1) i = _model->rowCount() - 1;
     if(i < 0) i = 0;

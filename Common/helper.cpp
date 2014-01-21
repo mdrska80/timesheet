@@ -125,3 +125,13 @@ QString Helper::get_fg_color(int val_bg)
     else
         return QString(" color: #D8D8D8 ");
 }
+
+QTime Helper::NumberToTime(double number)
+{
+    int hours = (int)number;
+    double minutes = number - hours;
+    int newMinutes = minutes * 60 ;
+
+    return QTime(hours,newMinutes,00);
+
+}

@@ -25,9 +25,15 @@ QVariant XmlFileDetailModel::data(const QModelIndex &index, int role) const
     {
         EntryFileInfo* e = _storage->infos.at(index.row());
 
-        QString qs = e->filename.replace("\n", "<br/>");
-        return QString("<b>Title:</b> %1<br/><b>Description:</b> %2")
-                .arg(e->company);
+        QString titles;
+        int cnt = e->titles.size();
+        for(int i=0;i<cnt;i++)
+        {
+            titles += e->titles[i]+"<br/>";
+        }
+
+        return QString("<b>Titles:</b> %1")
+                .arg(titles);
     }
 
 

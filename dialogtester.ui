@@ -7,15 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Select timesheet file</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="XmlFileDetailView" name="listView"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Select</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -26,7 +33,6 @@
    <header>GUI/xmlFileDetail/view/xmlfiledetailview.h</header>
   </customwidget>
  </customwidgets>
-
  <resources/>
  <connections/>
 </ui>

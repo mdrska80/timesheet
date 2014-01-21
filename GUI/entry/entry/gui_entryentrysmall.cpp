@@ -18,6 +18,7 @@ GUI_EntryEntrySmall::~GUI_EntryEntrySmall()
 void GUI_EntryEntrySmall::setContent(Entry* e)
 {
     this->ui->titleLabel->setText(e->title);
+    this->ui->dayLabel->setText(e->date.toString("dd"));
     this->ui->fromToLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
 
     QTimeSpan ts = e->to - e->from;

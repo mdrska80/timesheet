@@ -60,6 +60,13 @@ void XmlFileDetailDelegate::paint( QPainter *painter, const QStyleOptionViewItem
         Helper::get_fg_color(highlight_val);
 
     }
+    else if(md->isMissing)
+    {
+        // if it is not valid...
+        style = QString("border: none; background-color: ") +
+            colorRedPoison + ";" +
+            Helper::get_fg_color(highlight_val);
+    }
     else if(!md->isValid)
     {
         // if it is not valid...

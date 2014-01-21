@@ -38,7 +38,7 @@ void PersistentStorage_XML::Load()
     //return entries;
 }
 
-void PersistentStorage_XML::SaveEntries(QString filename)
+void PersistentStorage_XML::SaveEntries(QString filename, TSVersions ver)
 {
     int max = entries.size();
     QString qs = "<Entries>\r\n";
@@ -46,12 +46,18 @@ void PersistentStorage_XML::SaveEntries(QString filename)
     for(int i = 0;i<max;i++)
     {
         Entry* e = entries.at(i);
-        qs.append(e->toXml());
+        qs.append(e->toXml(ver));
     }
 
     //finalize xml
     qs.append("</Entries>");
-    Helper::write_file(filename, qs);
+
+    QDate dt = QDate(TSCore::I().workingYear, TSCore::I().workingMonth,1);
+    QDate dtThreshold = QDate(2014,1,1);
+    if (dt >= dtThreshold)
+    {
+        Helper::write_file(filename, qs);
+    }
 }
 
 void PersistentStorage_XML::SaveCompanies(QString filename)
@@ -155,16 +161,85 @@ void PersistentStorage_XML::ReadProjects(QString filename)
 
 Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
 {
+    TSVersions version = IdentifyFormat(node);
     Entry* e = new Entry();
+    e->version = version;
 
-    e->id = node.attribute("id");
-    e->date = QDate::fromString(node.attribute("date"), "dd.MM.yyyy");
-    e->from = QTime::fromString(node.attribute("from"), "hh:mm");
-    e->to = QTime::fromString(node.attribute("to"), "hh:mm");
-    e->company = FindCompanyByName(node.attribute("company"));
+    switch (version) {
+    case TSVersion_QT:
+        e->id = node.attribute("id");
+        e->date = QDate::fromString(node.attribute("date"), "dd.MM.yyyy");
+        e->from = QTime::fromString(node.attribute("from"), "hh:mm");
+        e->to = QTime::fromString(node.attribute("to"), "hh:mm");
+        e->company = FindCompanyByName(node.attribute("company"));
 
-    e->title = node.firstChildElement("Title").text();
-    e->description = node.firstChildElement("Description").text();
+        e->title = node.firstChildElement("Title").text();
+        e->description = node.firstChildElement("Description").text();
+        break;
+    case TSVersion_GTK_Autocont:
+    {
+        //e->id = node.attribute("id");
+        e->date = QDate::fromString(node.attribute("Date"), "d.MM.yyyy");
+        e->from = QTime::fromString(node.attribute("From"), "hh:mm");
+        e->to = QTime::fromString(node.attribute("To"), "hh:mm");
+        e->company = FindCompanyByName("Autocont");
+
+        //this is correct Description to title
+        e->title = node.firstChildElement("Description").text();
+        break;
+    }
+    case TSVersion_NET:
+    {
+        //e->id = node.attribute("id");
+        QString date = node.firstChildElement("Date").text().split("T")[0];
+        e->date = QDate::fromString(date, "yyyy-MM-dd");
+
+        QString timeFrom = node.firstChildElement("From").text().split("T")[1];
+        e->from = QTime::fromString(timeFrom, "hh:mm:ss");
+
+        QString timeTo = node.firstChildElement("To").text().split("T")[1];
+        e->to = QTime::fromString(timeTo, "hh:mm:ss");
+
+        e->company = FindCompanyByName("Unicorn");
+
+        //this is correct Description to title
+        e->title = node.firstChildElement("Description").text();
+
+        e->coll.insert("MainCategory", node.firstChildElement("MainCategory").text());
+        e->coll.insert("SubCategory", node.firstChildElement("SubCategory").text());
+        e->coll.insert("Commment", node.firstChildElement("Commment").text());
+        e->coll.insert("Checked", node.firstChildElement("Checked").text());
+        e->coll.insert("ConfirmedFor", node.firstChildElement("ConfirmedFor").text());
+
+        break;
+    }
+    case TSVersion_NET_WPF_Ka:
+    {
+        //e->id = node.attribute("id");
+        QString date = node.firstChildElement("Date").text().split("T")[0];
+        e->date = QDate::fromString(date, "yyyy-MM-dd");
+
+        QString timeFrom = node.firstChildElement("From").text().split("T")[1].left(8);
+        e->from = QTime::fromString(timeFrom, "hh:mm:ss");
+
+        QString timeTo = node.firstChildElement("To").text().split("T")[1].left(8);
+        e->to = QTime::fromString(timeTo, "hh:mm:ss");
+
+        e->company = FindCompanyByName("Ka");
+
+        //this is correct Description to title
+        e->title = node.firstChildElement("Description").text();
+
+        e->coll.insert("MainCategory", node.firstChildElement("MainCategory").text());
+        e->coll.insert("SubCategory1", node.firstChildElement("SubCategory1").text());
+        e->coll.insert("SubCategory2", node.firstChildElement("SubCategory2").text());
+        e->coll.insert("DirectWork", node.firstChildElement("DirectWork").text());
+        e->coll.insert("ZarazeniZaka", node.firstChildElement("ZarazeniZaka").text());
+        e->coll.insert("PocetOsob", node.firstChildElement("PocetOsob").text());
+        e->coll.insert("TskState", node.firstChildElement("TskState").text());
+        break;
+    }
+    }
 
     return e;
 }
@@ -231,6 +306,7 @@ void PersistentStorage_XML::CleanEntries()
     }
 
     entries.clear();
+    filteredEntries.clear();
 }
 
 void PersistentStorage_XML::CleanCompanies()
@@ -347,4 +423,21 @@ bool dereferencedLessThan(T * o1, T * o2) {
 void PersistentStorage_XML::Sort()
 {
     qSort(filteredEntries.begin(), filteredEntries.end(), dereferencedLessThan<Entry>);
+}
+
+TSVersions PersistentStorage_XML::IdentifyFormat(QDomElement &node)
+{
+    if (!node.attribute("date").isNull())
+        return TSVersion_QT;
+
+    if (!node.attribute("Date").isNull())
+        return TSVersion_GTK_Autocont;
+
+    if (!node.firstChildElement("Date").isNull() && !node.firstChildElement("SubCategory1").isNull())
+        return TSVersion_NET_WPF_Ka;
+
+    if (!node.firstChildElement("Date").isNull())
+        return TSVersion_NET;
+
+
 }

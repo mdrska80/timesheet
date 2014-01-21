@@ -18,6 +18,8 @@ public:
 
     QStringList IdentifyFiles(QString path);
     void Sort();
+    void CheckAllFilesExistence();
+
 
     QList<EntryFileInfo*> infos;
 };

@@ -510,5 +510,4 @@ void EntryListView::UpdateAndSave()
 {
     this->update();
     _model->_storage->Save();
-    //_model->ApplyFilter();
 }

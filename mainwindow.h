@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QLabel>
 #include <QMainWindow>
 #include <QString>
 #include <QStandardItemModel>
@@ -36,6 +37,14 @@ private slots:
     void on_actionHighlight_today_entries_triggered(bool checked);
 
     void on_actionShow_dialog_triggered();
+
+    void on_actionSelect_different_month_triggered();
+
+    void UpdateStatusBar();
+    void ReloadModel();
+
+
+    void on_actionGo_back_to_current_month_triggered();
 
 private:
     Ui::MainWindow *ui;

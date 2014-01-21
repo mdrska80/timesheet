@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
-    ui->listView->get_model()->_storage->Load();
+    ReloadModel();
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -73,6 +73,12 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
+void MainWindow::ReloadModel()
+{
+    ui->listView->get_model()->_storage->Load();
+
+}
+
 
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
@@ -99,6 +105,8 @@ void MainWindow::on_titleChanged()
         e->title = ui->titleTextEdit->toPlainText();
         ui->listView->UpdateAndSave();
     }
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_toChanged(QString changedText)
@@ -110,6 +118,8 @@ void MainWindow::on_toChanged(QString changedText)
 
         ui->listView->UpdateAndSave();
     }
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_fromChanged(QString changedText)
@@ -121,6 +131,8 @@ void MainWindow::on_fromChanged(QString changedText)
 
         ui->listView->UpdateAndSave();
     }
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_dateChanged(QString changedText)
@@ -133,6 +145,8 @@ void MainWindow::on_dateChanged(QString changedText)
         ui->listView->UpdateAndSave();
         //ui->listView->get_model()->ApplyFilter();
     }
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_descriptionChanged()
@@ -143,12 +157,12 @@ void MainWindow::on_descriptionChanged()
         e->description = ui->descriptionTextEdit->toPlainText();
         ui->listView->UpdateAndSave();
     }
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_currentTextChanged(QString newText)
 {
-    qDebug() << newText;
-
     if (newText == "Valid")
         ui->listView->get_model()->ft = FilterType_Valid;
 
@@ -168,6 +182,8 @@ void MainWindow::on_currentTextChanged(QString newText)
 
     ui->listView->get_model()->ApplyFilter(ui->actionHighlight_today_entries->isChecked());
     ui->listView->update();
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_actionSmall_items_triggered(bool checked)
@@ -182,8 +198,49 @@ void MainWindow::on_actionHighlight_today_entries_triggered(bool checked)
     ui->listView->update();
 }
 
-void MainWindow::on_actionShow_dialog_triggered()
+void MainWindow::on_actionSelect_different_month_triggered()
 {
-    DialogTester* tester = new DialogTester(this);
-    tester->show();
+    DialogTester tester(this);
+    tester.exec();
+
+    if (TSCore::I().needReload)
+    {
+        ReloadModel();
+
+        int todayIndex = ui->comboBox->findText("Valid");
+        ui->comboBox->setCurrentIndex(todayIndex);
+
+        todayIndex = ui->comboBox->findText("All");
+        ui->comboBox->setCurrentIndex(todayIndex);
+    }
+
+    update();
+}
+
+void MainWindow::UpdateStatusBar()
+{
+    // analyze filtered items.
+    EntryFileInfo efi;
+    EntriesAnalyzer an = EntriesAnalyzer(&ui->listView->get_model()->_storage->filteredEntries, &efi);
+    an.Analyze();
+
+    QString message = QString("Worked hours: %1")
+            .arg(Helper::NumberToTime(efi.workedHours).toString());
+
+    ui->statusbar->showMessage(message);
+}
+
+void MainWindow::on_actionGo_back_to_current_month_triggered()
+{
+    TSCore::I().workingMonth = QDate::currentDate().month();
+    TSCore::I().workingYear = QDate::currentDate().year();
+
+    ReloadModel();
+
+    int todayIndex = ui->comboBox->findText("Valid");
+    ui->comboBox->setCurrentIndex(todayIndex);
+
+    todayIndex = ui->comboBox->findText("Today");
+    ui->comboBox->setCurrentIndex(todayIndex);
+
 }

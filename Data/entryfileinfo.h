@@ -20,13 +20,13 @@ public:
     QStringList     projects;
     QDate           date;
     CompaniesList   company;
-    int             totalEntries;
-    int             totalWorkedHours;
+    int             entryCount;
+    double          workedHours;
+    double          workingHours;
     bool            isValid;
+    bool            isMissing;
 
     ErrorMessage    err;
-
-    void Process();
 
     bool operator<(const EntryFileInfo *);
     bool operator<(const EntryFileInfo &);

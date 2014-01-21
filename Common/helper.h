@@ -9,6 +9,8 @@
 
 const QString colorRed = "#72424e";
 const QString colorRedDark = "#2f3751";
+const QString colorRedPoison = "#ff0000";
+
 
 const QString colorGreen = "#42724e";
 const QString colorGreenDark = "#372f51";
@@ -28,6 +30,8 @@ public:
     static QDate ConstructDate(QString date);
 
     static QString get_fg_color(int val_bg);
+
+    static QTime NumberToTime(double number);
 };
 
 #endif // HELPER_H

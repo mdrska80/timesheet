@@ -6,18 +6,21 @@
 #include <QColor>
 #include <QVariant>
 #include <QStringList>
+#include <QHash>
 
 #include <vector>
 
 #include "company.h"
 #include "project.h"
+#include  "Common/qtimespan.h"
+#include  "Common/enums.h"
 
 class Entry
 {
 
 public:
     Entry();
-
+    ~Entry();
     // id of entry from DB
     QString id;
 
@@ -43,11 +46,18 @@ public:
     Company *company;
     Project *project;
 
+    TSVersions version;
+
+    QHash<QString, QString> coll;
+
     //methods
-    QString toXml();
+    QString toXml(TSVersions ver);
 
     bool operator<(const Entry *);
     bool operator<(const Entry &);
+
+    QTimeSpan GetDuration();
+
 
     QVariant toVariant() const{
 

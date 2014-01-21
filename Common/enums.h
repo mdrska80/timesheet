@@ -34,20 +34,22 @@ enum CompaniesList
 enum TSVersions
 {
     // Initial version written in C++ nd MFC
-    TSS_initial = 1,
+    TSVersion_TSS_initial = 1,
 
-    NET = 2,
+    TSVersion_NET = 2,
 
-    NET_Ka = 3,
+    TSVersion_NET_Ka = 3,
 
-    NET_WPF_Ka = 4,
+    TSVersion_NET_WPF_Ka = 4,
 
-    NET_Autocont = 5,
+    //2011,8 - 2012,12
+    TSVersion_NET_Autocont = 5,
 
     // Version written in Autocont under GTK framework
-    GTK_Autocont = 6,
+    // 2012,12 - 2013,12
+    TSVersion_GTK_Autocont = 6,
 
-    QT = 7
+    TSVersion_QT = 7
 };
 
 

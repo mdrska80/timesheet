@@ -17,12 +17,15 @@ GUI_EntryEntryBig::~GUI_EntryEntryBig()
 
 void GUI_EntryEntryBig::setContent(Entry* e)
 {
-    this->ui->titleLabel->setText(e->title);
-    this->ui->descriptionLabel->setText(e->description);
-    this->ui->dayLabel->setText(e->date.toString("dd"));
+    if (e!=NULL)
+    {
+        this->ui->titleLabel->setText(e->title);
+        this->ui->descriptionLabel->setText(e->description);
+        this->ui->dayLabel->setText(e->date.toString("dd"));
 
-    this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
+        this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
 
-    QTimeSpan ts = e->to - e->from;
-    this->ui->durationLabel->setText(ts.toString("hh:mm"));
+        QTimeSpan ts = e->to - e->from;
+        this->ui->durationLabel->setText(ts.toString("hh:mm"));
+    }
 }

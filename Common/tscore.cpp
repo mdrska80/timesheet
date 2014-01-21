@@ -5,6 +5,7 @@ TSCore::TSCore()
     dataDir = "Data";
     workingMonth = QDate::currentDate().month();
     workingYear = QDate::currentDate().year();
+    needReload = false;
 }
 
 QString TSCore::GetEntriesFile()

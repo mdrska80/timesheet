@@ -15,6 +15,7 @@ FileInfoStorage::~FileInfoStorage()
 void FileInfoStorage::Load()
 {
     ReadInfos();
+    CheckAllFilesExistence();
 }
 
 void FileInfoStorage::ReadInfos()
@@ -37,6 +38,7 @@ void FileInfoStorage::ReadInfos()
 EntryFileInfo* FileInfoStorage::ReadInfo(QString filename)
 {
     EntryFileInfo* efi = new EntryFileInfo();
+    efi->isValid = true;
 
     PersistentStorage_XML storage;
     storage.ReadEntries("Data/"+filename);
@@ -48,15 +50,10 @@ EntryFileInfo* FileInfoStorage::ReadInfo(QString filename)
         return efi;
     }
 
-    EntriesAnalyzer analyzer(&storage.entries);
-    analyzer.Analyze();
-
     efi->filename = filename;
-    efi->Process();
 
-    efi->totalEntries = analyzer.entriesCnt;
-    efi->totalWorkedHours = analyzer.workedHours;
-    efi->isValid = true;
+    EntriesAnalyzer analyzer(&storage.entries, efi);
+    analyzer.Analyze();
 
     return efi;
 }
@@ -68,6 +65,53 @@ QStringList FileInfoStorage::IdentifyFiles(QString path)
     QStringList txtFilesAndDirectories = directory.entryList(nameFilter);
 
     return txtFilesAndDirectories;
+}
+
+void FileInfoStorage::CheckAllFilesExistence()
+{
+    // this could be static
+    int startYear = 2004;
+    int startMonth = 2-1;
+
+    int curMonth = startMonth;
+    int curYear = startYear;
+    bool scan = true;
+
+    //look for each month till start
+    while(scan)
+    {
+        int noOfInfos = infos.size();
+        bool found = false;
+        curMonth++;
+        if (curMonth == 13)
+        {
+            curMonth = 1;
+            curYear++;
+        }
+
+        for (int i = 0; i< noOfInfos; i++)
+        {
+            EntryFileInfo *fi = infos[i];
+
+            if (fi->date.month() == curMonth && fi->date.year() == curYear)
+                found = true;
+        }
+
+        if (!found)
+        {
+            EntryFileInfo *fi = new EntryFileInfo();
+            fi->date.setDate(curYear, curMonth, 1);
+            fi->isMissing = true;
+            infos.append(fi);
+        }
+
+        if (curMonth == QDate::currentDate().month() && curYear == QDate::currentDate().year())
+            scan = false;
+
+    }
+
+    Sort();
+
 }
 
 void FileInfoStorage::CleanInfos()

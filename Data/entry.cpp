@@ -16,6 +16,11 @@ Entry::Entry()
     project = NULL;
 }
 
+Entry::~Entry()
+{
+    coll.clear();
+}
+
 bool Entry::operator<(const Entry &event)
 {
     if (date == event.date)
@@ -31,7 +36,7 @@ bool Entry::operator<(const Entry &event)
     return date<event.date;
 }
 
-QString Entry::toXml()
+QString Entry::toXml(TSVersions ver)
 {
     QString companyName = "";
     QString projectName = "";
@@ -42,30 +47,52 @@ QString Entry::toXml()
     if (project != NULL)
         projectName = project->name;
 
-    QString res = QString("\t<Entry"
-                          " id='%1'"
-                          " date='%2'"
-                          " from='%3'"
-                          " to='%4'"
-                          " project='%8'"
-                          " company='%7'>\r\n"
+    QString res = "";
 
-                          "\t\t<Title>%5</Title>\r\n"
-                          "\t\t<Description>%6</Description>\r\n"
-                          "\t</Entry>\r\n\r\n"
-                          )
-            .arg(id)
-            .arg(date.toString("dd.MM.yyyy"))
-            .arg(from.toString("hh:mm"))
-            .arg(to.toString("hh:mm"))
-            .arg(title)
-            .arg(description)
-            .arg(companyName)
-            .arg(projectName);
+    switch (ver)
+    {
+    case TSVersion_QT:
 
-    res = res.replace("'","\"");
+        res = QString("\t<Entry"
+                              " id='%1'"
+                              " date='%2'"
+                              " from='%3'"
+                              " to='%4'"
+                              " project='%8'"
+                              " company='%7'>\r\n"
+
+                              "\t\t<Title>%5</Title>\r\n"
+                              "\t\t<Description>%6</Description>\r\n"
+                              "\t</Entry>\r\n\r\n"
+                              )
+                .arg(id)
+                .arg(date.toString("dd.MM.yyyy"))
+                .arg(from.toString("hh:mm"))
+                .arg(to.toString("hh:mm"))
+                .arg(title)
+                .arg(description)
+                .arg(companyName)
+                .arg(projectName);
+
+        res = res.replace("'","\"");
+        break;
+    case TSVersion_GTK_Autocont:
+    {
+
+        break;
+    }
+
+    default:
+        break;
+    }
+
 
     return res;
+}
+
+QTimeSpan Entry::GetDuration()
+{
+    return to - from;
 }
 
 

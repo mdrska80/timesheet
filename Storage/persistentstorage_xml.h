@@ -17,7 +17,7 @@ public:
 
     void Load();
     void Save(void);
-    void SaveEntries(QString filename);
+    void SaveEntries(QString filename, TSVersions ver = TSVersion_QT);
     void SaveCompanies(QString filename);
     void SaveProjects(QString filename);
 
@@ -39,6 +39,9 @@ public:
 
     void ApplyFilter(FilterTypes ft, bool highlightTodayEntries);
     void HandleTodayHighlight(Entry *e, bool highlightTodayEntries);
+
+    TSVersions IdentifyFormat(QDomElement &node);
+
 
 private:
     void Sort();

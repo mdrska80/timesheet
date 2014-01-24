@@ -248,6 +248,8 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
         e->coll.insert("Comment", node.firstChildElement("Commment").text());
         break;
     }
+    default:
+        break;
     }
 
     return e;
@@ -371,5 +373,5 @@ TSVersions PersistentStorage_XML::IdentifyFormat(QDomElement &node)
     if (!node.firstChildElement("Date").isNull())
         return TSVersion_NET;
 
-
+    return TSVersion_NET;
 }

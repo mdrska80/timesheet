@@ -45,7 +45,6 @@ private slots:
 
     void on_actionSmall_items_triggered(bool checked);
 
-    void on_actionHighlight_today_entries_triggered(bool checked);
 
     void on_actionSelect_different_month_triggered();
 

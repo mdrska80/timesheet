@@ -98,7 +98,6 @@ void MainWindow::HandleFilters()
     filters.insert(ftw->name,ftw);
     filters.insert(fa->name,fa);
 
-    int cnt = filters.size();
     foreach (FilterBase* f, filters)
     {
         ui->comboBox->addItem(f->name);
@@ -223,11 +222,6 @@ void MainWindow::on_currentTextChanged(QString newText)
 void MainWindow::on_actionSmall_items_triggered(bool checked)
 {
     ui->listView->show_big_items(!checked);
-    ui->listView->update();
-}
-
-void MainWindow::on_actionHighlight_today_entries_triggered(bool checked)
-{
     ui->listView->update();
 }
 

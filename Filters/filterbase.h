@@ -8,6 +8,7 @@ class FilterBase
 {
 public:
     FilterBase();
+    virtual ~FilterBase(){}
 
     //Filter name
     QString name;

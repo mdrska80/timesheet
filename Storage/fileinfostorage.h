@@ -27,8 +27,8 @@ public:
     QStringList titles;
 
     //status
-    bool isLoaded = false;
-    bool needRefresh = false;
+    bool isLoaded;
+    bool needRefresh;
 };
 
 #endif // FILEINFOSTORAGE_H

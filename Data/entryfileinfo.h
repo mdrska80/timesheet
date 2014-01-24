@@ -37,12 +37,6 @@ public:
         QStringList list;
         return list;
     }
-
-    static bool fromVariant(QVariant v, EntryFileInfo* md){
-
-        QStringList list = v.toStringList();
-        return true;
-    }
 };
 
 #endif // ENTRYFILEINFO_H

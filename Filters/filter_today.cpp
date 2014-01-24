@@ -6,6 +6,7 @@ Filter_Today::Filter_Today()
     code = "TODAY";
 }
 
+
 QList<Entry*> Filter_Today::apply(QList<Entry*> entries)
 {
     QList<Entry*> filtered;

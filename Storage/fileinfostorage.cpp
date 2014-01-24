@@ -2,7 +2,6 @@
 #include "Common/entriesanalyzer.h"
 #include "Storage/persistentstorage_xml.h"
 
-
 FileInfoStorage::FileInfoStorage()
 {
 }
@@ -16,6 +15,9 @@ void FileInfoStorage::Load()
 {
     ReadInfos();
     CheckAllFilesExistence();
+
+    isLoaded = true;
+    needRefresh = false;
 }
 
 void FileInfoStorage::ReadInfos()
@@ -54,6 +56,12 @@ EntryFileInfo* FileInfoStorage::ReadInfo(QString filename)
 
     EntriesAnalyzer analyzer(&storage.entries, efi);
     analyzer.Analyze();
+
+    int cnt = efi->titles.size();
+    for (int i=0;i<cnt;i++)
+    {
+        titles.append(efi->titles[i]);
+    }
 
     return efi;
 }

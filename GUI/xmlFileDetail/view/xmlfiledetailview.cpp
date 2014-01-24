@@ -146,7 +146,7 @@ void XmlFileDetailView::clear_selection(){
 void XmlFileDetailView::select_last_row()
 {
     if(_model->rowCount() == 0) return;
-    int i = _model->rowCount() - 1;
+    int i = _model->rowCount() - 5;
 //    if(i > _model->rowCount() - 1) i = _model->rowCount() - 1;
 //    if(i < 0) i = 0;
     QList<int> lst;

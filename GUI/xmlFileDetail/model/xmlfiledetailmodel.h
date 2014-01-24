@@ -11,7 +11,6 @@ class XmlFileDetailModel : public QAbstractListModel
     Q_OBJECT
 public:
     XmlFileDetailModel(QObject *parent = 0);
-    ~XmlFileDetailModel();
 
     int rowCount(const QModelIndex &parent=QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;

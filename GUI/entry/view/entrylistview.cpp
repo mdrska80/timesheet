@@ -33,9 +33,8 @@ EntryListView::EntryListView(QWidget* parent) : QListView(parent) {
     connect(this, SIGNAL(clicked(const QModelIndex&)), this, SLOT(row_released(const QModelIndex&)));
 }
 
-EntryListView::~EntryListView() {
-
-    //delete _rc_menu;
+EntryListView::~EntryListView()
+{
     delete _model;
 }
 

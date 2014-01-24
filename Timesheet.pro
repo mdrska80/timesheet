@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     Storage/persistentstorage_xml.cpp \
     Data/project.cpp \
     mainwindow.cpp \
-    Completers/completertitle.cpp \
     GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.cpp \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.cpp \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.cpp \
@@ -66,7 +65,6 @@ HEADERS  += \
     Data/project.h \
     Common/enums.h \
     mainwindow.h \
-    Completers/completertitle.h \
     GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.h \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.h \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.h \

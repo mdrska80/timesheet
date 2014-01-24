@@ -1,14 +1,10 @@
 #include "xmlfiledetailmodel.h"
+#include "Common/tscore.h"
 
 XmlFileDetailModel::XmlFileDetailModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    _storage = new FileInfoStorage();
-}
-
-XmlFileDetailModel::~XmlFileDetailModel()
-{
-    delete _storage;
+    _storage = &TSCore::I().fiStorage;
 }
 
 int XmlFileDetailModel::rowCount(const QModelIndex& ) const

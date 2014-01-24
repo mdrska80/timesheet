@@ -14,7 +14,11 @@ DialogTester::DialogTester(QWidget *parent) :
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
-    ui->listView->get_model()->_storage->Load();
+    FileInfoStorage* s = ui->listView->get_model()->_storage;
+
+    if (!s->isLoaded || s->needRefresh)
+        s->Load();
+//    ui->listView->get_model()->_storage->Load();
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);

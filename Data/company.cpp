@@ -17,8 +17,8 @@ QString Company::toXml()
                           "\t</Company>\r\n\r\n"
                           )
             .arg(id)
-            .arg(from.toString("hh:mm"))
-            .arg(to.toString("hh:mm"))
+            .arg(from.toString("dd.MM.yyyy"))
+            .arg(to.toString("dd.MM.yyyy"))
             .arg(name)
             .arg(url)
             .arg(description);

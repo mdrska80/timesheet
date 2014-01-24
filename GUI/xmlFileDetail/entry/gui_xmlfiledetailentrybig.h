@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include "gui_xmlfiledetailentry.h"
+#include "Common/tscore.h"
 
 namespace Ui {
 class GUI_XmlFileDetailEntryBig;
@@ -17,6 +18,7 @@ public:
     ~GUI_XmlFileDetailEntryBig();
 
     virtual void setContent(EntryFileInfo* md);
+    void SetImage(EntryFileInfo* md);
 
 
 private:

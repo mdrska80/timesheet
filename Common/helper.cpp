@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QStringRef>
+#include <QDir>
 
 static QString _install_path = "";
 
@@ -52,8 +53,11 @@ QString Helper::getSharePath()
 
     QString path;
 #ifndef Q_OS_WIN
+    QString executablePth = QDir::currentPath();
+
     if(QFile::exists(_install_path + "/share/timesheet")) path = _install_path + "/share/timesheet/";
-    else if(QFile::exists("/usr/share/sayonara")) path = "/usr/share/sayonara/";
+    //else if(QFile::exists("/usr/share/sayonara")) path = "/usr/share/sayonara/";
+    else if(QFile::exists(executablePth+"/share")) path = executablePth+"/share/";
     else path = "";
 #else
     path = QDir::homePath() + QString("\\.timesheet\\images\\");

@@ -29,7 +29,19 @@ void GUI_XmlFileDetailEntryBig::setContent(EntryFileInfo* md)
     ui->monthLabel->setText(qsMonth);
     QString percents = QString("%1").arg(md->workedHours/(md->workingHours/100), 2, 'f', 0, '0');
     ui->percentLabel->setText(percents+"%");
-    //ui->companyLabel->setText("Unicorn");
-    //ui->projectListLabel->setText("TSS");
-    // do something...
+
+    SetImage(md);
+}
+
+void GUI_XmlFileDetailEntryBig::SetImage(EntryFileInfo* md)
+{
+    ui->imageLabel->setText("<img src=':images/Earth-icon.png' width='24' />");
+
+    Company* c = TSCore::I().GetCompany(md->date);
+    if (c != NULL)
+    {
+        ui->imageLabel->setText("<img src=':images/"+c->name+"' width='24' />");
+    }
+
+
 }

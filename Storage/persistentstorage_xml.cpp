@@ -18,8 +18,8 @@ PersistentStorage_XML::~PersistentStorage_XML()
 
 void PersistentStorage_XML::Save()
 {
-    SaveCompanies("companies.xml");
-    SaveProjects("projects.xml");
+//    SaveCompanies("companies.xml");
+//    SaveProjects("projects.xml");
     SaveEntries(TSCore::I().GetEntriesFile());
 }
 
@@ -135,6 +135,9 @@ void PersistentStorage_XML::ReadCompanies(QString filename)
             companies.append(c);
         }
     }
+
+    // publish it
+    TSCore::I().companies = companies;
 }
 
 void PersistentStorage_XML::ReadProjects(QString filename)
@@ -157,6 +160,9 @@ void PersistentStorage_XML::ReadProjects(QString filename)
             projects.append(p);
         }
     }
+
+    // publish it
+    TSCore::I().projects = projects;
 }
 
 Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
@@ -204,10 +210,11 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
 
         //this is correct Description to title
         e->title = node.firstChildElement("Description").text();
+        e->description = node.firstChildElement("Commment").text();
 
         e->coll.insert("MainCategory", node.firstChildElement("MainCategory").text());
         e->coll.insert("SubCategory", node.firstChildElement("SubCategory").text());
-        e->coll.insert("Commment", node.firstChildElement("Commment").text());
+        e->coll.insert("Comment", node.firstChildElement("Commment").text());
         e->coll.insert("Checked", node.firstChildElement("Checked").text());
         e->coll.insert("ConfirmedFor", node.firstChildElement("ConfirmedFor").text());
 
@@ -264,8 +271,9 @@ Project* PersistentStorage_XML::ReadProject(QDomElement node)
 
     p->id = node.attribute("id");
     p->name = node.attribute("name");
+    p->from = QDate::fromString(node.attribute("from"), "dd.MM.yyyy");
+    p->to = QDate::fromString(node.attribute("to"), "dd.MM.yyyy");
     p->description = node.firstChildElement("Description").text();
-    p->parent = FindProjectByName(node.attribute("company"));
 
     return p;
 }
@@ -387,6 +395,38 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
         }
         break;
 
+    case FilterType_ThisWeek:
+    {
+        QDate qdBegin;
+        QDate qdEnd;
+        QDate qdToday = QDate::currentDate();
+
+        //determine begin and end.
+
+        //monday = 1;
+        int dayOfWeek = qdToday.dayOfWeek();
+        int day = qdToday.day();
+
+        // co kdyz to presahne mesic? dozadu?
+        qdBegin = QDate(qdToday.year(), qdToday.month(), day - (dayOfWeek-1));
+        qdEnd =  QDate(qdToday.year(), qdToday.month(), 7 - dayOfWeek + day);
+
+        for (int i = 0;i<cnt;i++)
+        {
+            Entry *e = entries.at(i);
+            HandleTodayHighlight(e, highlightTodayEntries);
+
+            if (e->date >= qdBegin && e->date <= qdEnd)
+                filteredEntries.append(e);
+        }
+
+
+
+
+
+
+        break;
+    }
     case FilterType_All:
         {
             for (int i = 0;i<cnt;i++)

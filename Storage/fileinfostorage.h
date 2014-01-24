@@ -20,8 +20,13 @@ public:
     void Sort();
     void CheckAllFilesExistence();
 
-
     QList<EntryFileInfo*> infos;
+
+    QStringList titles;
+
+    //status
+    bool isLoaded = false;
+    bool needRefresh = false;
 };
 
 #endif // FILEINFOSTORAGE_H

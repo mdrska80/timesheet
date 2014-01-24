@@ -20,7 +20,13 @@ void GUI_EntryEntryBig::setContent(Entry* e)
     if (e!=NULL)
     {
         this->ui->titleLabel->setText(e->title);
-        this->ui->descriptionLabel->setText(e->description);
+
+
+        if (e->description.isEmpty())
+            this->ui->descriptionLabel->setText(e->coll["Comment"]);
+        else
+            this->ui->descriptionLabel->setText(e->description);
+
         this->ui->dayLabel->setText(e->date.toString("dd"));
 
         this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));

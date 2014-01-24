@@ -3,7 +3,7 @@
 
 #include <QStandardItemModel>
 #include <QListView>
-
+#include <QCompleter>
 #include <QDebug>
 #include "GUI/entry/model/entrylistmodel.h"
 
@@ -20,13 +20,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowIcon(QIcon(":/images/Earth-icon.png"));
+    ui->actionExit->setIcon(QIcon(":/system/power_off.png"));
 
 
     connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
     connect(ui->listView, SIGNAL(sig_sel_changed(const QModelIndex&)),this, SLOT(on_listView_clicked(const QModelIndex&)));
 
     connect(ui->descriptionTextEdit, SIGNAL(textChanged()), this, SLOT(on_descriptionChanged()));
-    connect(ui->titleTextEdit, SIGNAL(textChanged()), this, SLOT(on_titleChanged()));
+    connect(ui->titleLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_titleChanged(QString)));
     connect(ui->fromLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_fromChanged(QString)));
     connect(ui->toLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_toChanged(QString)));
     connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
@@ -37,7 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
-    ReloadModel();
+    Refresh("Today");
+
+    //ReloadModel();
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -64,7 +67,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox->setCurrentIndex(todayIndex);
 
     ui->descriptionTextEdit->setStyleSheet(Style::set_textEdit_style());
-    ui->titleTextEdit->setStyleSheet(Style::set_textEdit_style());
+    ui->descriptionTextEdit->setAcceptRichText(true);
+    //ui->titleLineEdit->setStyleSheet(Style::set_textEdit_style());
+
+    timer = new QTimer(this) ;
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_timeout()));
+    timer->setInterval(2000);
+    timer->start();
+
 }
 
 MainWindow::~MainWindow()
@@ -73,12 +83,24 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
-void MainWindow::ReloadModel()
+void MainWindow::on_timeout()
 {
-    ui->listView->get_model()->_storage->Load();
+    FileInfoStorage* s = &TSCore::I().fiStorage;
+
+    if (!s->isLoaded || s->needRefresh)
+    {
+        ui->statusbar->showMessage("Loading history", 2000);
+        s->Load();
+        ui->statusbar->showMessage("History loaded", 2000);
+    }
+
+    QCompleter *completer = new QCompleter(TSCore::I().fiStorage.titles, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->titleLineEdit->setCompleter(completer);
+
+    timer->stop();
 
 }
-
 
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
@@ -92,17 +114,17 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
         ui->dateLineEdit->setText(e->date.toString("dd.MM.yyyy"));
         ui->fromLineEdit->setText(e->from.toString("hh:mm"));
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
-        ui->titleTextEdit->setText(e->title);
+        ui->titleLineEdit->setText(e->title);
         ui->descriptionTextEdit->setText(e->description);
     }
 }
 
-void MainWindow::on_titleChanged()
+void MainWindow::on_titleChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
     {
-        e->title = ui->titleTextEdit->toPlainText();
+        e->title = changedText;
         ui->listView->UpdateAndSave();
     }
 
@@ -178,6 +200,10 @@ void MainWindow::on_currentTextChanged(QString newText)
     if (newText == "All")
         ui->listView->get_model()->ft = FilterType_All;
 
+    if (newText == "This week")
+        ui->listView->get_model()->ft = FilterType_ThisWeek;
+
+
 //    qDebug() << "Filter type:" << ui->listView->get_model()->ft;
 
     ui->listView->get_model()->ApplyFilter(ui->actionHighlight_today_entries->isChecked());
@@ -205,13 +231,7 @@ void MainWindow::on_actionSelect_different_month_triggered()
 
     if (TSCore::I().needReload)
     {
-        ReloadModel();
-
-        int todayIndex = ui->comboBox->findText("Valid");
-        ui->comboBox->setCurrentIndex(todayIndex);
-
-        todayIndex = ui->comboBox->findText("All");
-        ui->comboBox->setCurrentIndex(todayIndex);
+        Refresh("All");
     }
 
     update();
@@ -224,23 +244,56 @@ void MainWindow::UpdateStatusBar()
     EntriesAnalyzer an = EntriesAnalyzer(&ui->listView->get_model()->_storage->filteredEntries, &efi);
     an.Analyze();
 
-    QString message = QString("Worked hours: %1")
-            .arg(Helper::NumberToTime(efi.workedHours).toString());
+    QString message;
+    if (efi.workedHours < 24)
+    {
+        message = QString("Worked hours: %1")
+                .arg(Helper::NumberToTime(efi.workedHours).toString("hh:mm"));
+
+    }
+    else
+    {
+        message = QString("Worked hours: %1h")
+                .arg(efi.workedHours);
+
+    }
 
     ui->statusbar->showMessage(message);
 }
 
 void MainWindow::on_actionGo_back_to_current_month_triggered()
 {
-    TSCore::I().workingMonth = QDate::currentDate().month();
-    TSCore::I().workingYear = QDate::currentDate().year();
+    TSCore::I().MoveToPresent();
+    Refresh("Today");
+}
 
-    ReloadModel();
+void MainWindow::on_actionNext_month_triggered()
+{
+    TSCore::I().MoveForward();
+    Refresh("All");
+}
+
+void MainWindow::on_actionPrevious_month_triggered()
+{
+    TSCore::I().MoveBackward();
+    Refresh("All");
+}
+
+void MainWindow::Refresh(QString finalFilter)
+{
+    ui->listView->get_model()->_storage->Load();
 
     int todayIndex = ui->comboBox->findText("Valid");
     ui->comboBox->setCurrentIndex(todayIndex);
 
-    todayIndex = ui->comboBox->findText("Today");
+    todayIndex = ui->comboBox->findText(finalFilter);
     ui->comboBox->setCurrentIndex(todayIndex);
 
+    QString qsWindowTitle = QString("%1 :: %2, %3")
+            .arg("Timesheet")
+            .arg(TSCore::I().workingMonth)
+            .arg(TSCore::I().workingYear);
+
+    this->setWindowTitle(qsWindowTitle);
+    UpdateStatusBar();
 }

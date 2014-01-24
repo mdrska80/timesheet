@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QColor>
+#include <QDate>
 
 class Project
 {
@@ -18,11 +19,8 @@ public:
     // Understandable description of the project
     QString description;
 
-    // Id of the parent project
-    Project* parent;
-
-    // Color of the project
-    QColor color;
+    QDate from;
+    QDate to;
 
     //methods
     QString toXml();

@@ -6,18 +6,16 @@ Project::Project()
 
 QString Project::toXml()
 {
-    QString parentName = "";
-
-    if (parent != NULL)
-        parentName = parent->name;
-
-    QString res = QString("<Project id='%1'"
-                          " parentId='%2'"
-                          " name='%3'"
-                          " description='%4' />\r\n"
+    QString res = QString("\t<Project id='%1'"
+                          " from='%2'"
+                          " to='%3'"
+                          " name='%4'>\r\n"
+                          "\t\t<Description>%5</Description>\r\n"
+                          "\t</Project>\r\n\r\n"
                           )
             .arg(id)
-            .arg(parentName)
+            .arg(from.toString("dd.MM.yyyy"))
+            .arg(to.toString("dd.MM.yyyy"))
             .arg(name)
             .arg(description);
 

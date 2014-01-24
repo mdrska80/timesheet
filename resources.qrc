@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/images">
         <file>Earth-icon.png</file>
+        <file>AutoCont.png</file>
+        <file>Ka.png</file>
+        <file>Unicorn.png</file>
+        <file>Bustec.png</file>
+    </qresource>
+    <qresource prefix="/system">
+        <file>power_off.png</file>
     </qresource>
 </RCC>

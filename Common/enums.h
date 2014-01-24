@@ -9,6 +9,7 @@ enum FilterTypes
 
     FilterType_Today = 10,
     FilterType_Yesterday = 11,
+    FilterType_ThisWeek = 12,
     FilterType_All = 100
 };
 

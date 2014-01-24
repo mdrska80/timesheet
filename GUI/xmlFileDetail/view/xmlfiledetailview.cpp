@@ -23,8 +23,8 @@ XmlFileDetailView::~XmlFileDetailView()
 
 void XmlFileDetailView::mousePressEvent(QMouseEvent* event) {
 
-    QPoint pos_org = event->pos();
-    QPoint pos = QWidget::mapToGlobal(pos_org);
+    //QPoint pos_org = event->pos();
+    //QPoint pos = QWidget::mapToGlobal(pos_org);
     QItemSelection sel, desel;
     switch (event->button()) {
 
@@ -93,7 +93,6 @@ void XmlFileDetailView::keyPressEvent(QKeyEvent* event){
     QListView::keyPressEvent(event);
 
     int new_row = -1;
-    int min_row = get_min_selected();
 
     switch(key){
     case Qt::Key_A:
@@ -209,11 +208,6 @@ void XmlFileDetailView::selectionChanged ( const QItemSelection & selected, cons
     if(selected.indexes().size() > 0)
         this->scrollTo(selected.indexes()[0]);
 
-    if (selected.indexes().size() > 0)
-    {
-        QModelIndex idx = selected.indexes()[0];
-    }
-
     _cur_selected_rows = idx_list_int;
     _sel_changed = true;
 }
@@ -264,7 +258,11 @@ void XmlFileDetailView::remove_cur_selected_rows(bool select_next_row)
 {
     foreach (int i, _cur_selected_rows) {
         _model->removeRow(i);
-        select_row(i);
+        if (select_next_row)
+        {
+            select_row(i);
+        }
+
         this->update();
     }
 }

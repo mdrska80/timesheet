@@ -33,7 +33,7 @@ DialogTester::~DialogTester()
     delete ui;
 }
 
-void DialogTester::on_pushButton_clicked(bool checked)
+void DialogTester::on_pushButton_clicked()
 {
     EntryFileInfo* efi = ui->listView->get_selection();
 

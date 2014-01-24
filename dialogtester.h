@@ -16,7 +16,7 @@ public:
     ~DialogTester();
 
 private slots:
-    void on_pushButton_clicked(bool checked);
+    void on_pushButton_clicked();
     void on_filteredTextChnged(QString changedText);
 
 private:

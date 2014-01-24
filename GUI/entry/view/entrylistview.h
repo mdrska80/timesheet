@@ -8,6 +8,8 @@
 #include "GUI/entry/delegate/entryitemdelegate.h"
 #include "Common/entriesanalyzer.h"
 
+#include "Filters/filterbase.h"
+
 class EntryListView : public QListView
 {
     Q_OBJECT
@@ -58,6 +60,7 @@ public:
     EntryListModel* get_model();
 
     void UpdateAndSave();
+    void ApplyFilter(FilterBase* filter);
 
 
 

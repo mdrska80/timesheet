@@ -5,6 +5,8 @@
 #include "Data/entry.h"
 #include "Storage/persistentstorage_xml.h"
 
+#include "Filters/filterbase.h"
+
 class EntryListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -33,10 +35,12 @@ public:
     bool is_selected(int row) const ;
     QList<int>          _selected_rows;
     PersistentStorage_XML*  _storage;
-    FilterTypes ft;
 
-    void ApplyFilter(bool highlightTodayEntries);
+    void ApplyFilter();
+    void ApplyFilter(FilterBase* filter);
     void ApplySearch(QString filter);
+
+    FilterBase* fActive;
 
 
 signals:

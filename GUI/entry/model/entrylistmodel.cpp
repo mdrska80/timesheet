@@ -111,7 +111,7 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
 
         _storage->entries.append(e);
         _storage->Save();
-        _storage->ApplyFilter(ft, true);
+        ApplyFilter();
     }
 
     endInsertRows();
@@ -131,7 +131,7 @@ bool EntryListModel::removeRows(int position, int rows, const QModelIndex &index
         delete eToRemove;
 
         _storage->Save();
-        _storage->ApplyFilter(ft, true);
+        ApplyFilter();
     }
 
     endRemoveRows();
@@ -204,16 +204,19 @@ void EntryListModel::ApplySearch(QString filter)
 
 }
 
-void EntryListModel::ApplyFilter(bool highlightTodayEntries)
+void EntryListModel::ApplyFilter()
 {
-    _storage->ApplyFilter(ft, highlightTodayEntries);
-    int cnt = _storage->filteredEntries.size();
+    ApplyFilter(fActive);
+}
 
-    // proc minus 2?
-    beginInsertRows(QModelIndex(), 0, cnt-2);
+void EntryListModel::ApplyFilter(FilterBase* filter)
+{
+    fActive = filter;
+    QList<Entry*> filtered = filter->apply(_storage->entries);
 
-
+    beginInsertRows(QModelIndex(), 0, filtered.size());
+        _storage->filteredEntries.clear();
+        _storage->filteredEntries = filtered;
     endInsertRows();
-
 
 }

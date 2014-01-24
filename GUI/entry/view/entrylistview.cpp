@@ -187,6 +187,7 @@ void EntryListView::keyPressEvent(QKeyEvent* event){
         break;
     case Qt::Key_Insert:
         _model->insertRow(_model->rowCount());
+
         select_row(_model->rowCount());
         break;
 
@@ -509,6 +510,12 @@ void EntryListView::ApplySearch(QString filter)
 {
     _model->ApplySearch(filter);
 }
+
+void EntryListView::ApplyFilter(FilterBase* filter)
+{
+    _model->ApplyFilter(filter);
+}
+
 
 
 void EntryListView::UpdateAndSave()

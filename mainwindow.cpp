@@ -52,13 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QFont font;
     font.setFamily(QString::fromUtf8("DejaVu Sans"));
 
-    ui->comboBox->addItem("Valid");
-    ui->comboBox->addItem("InValid");
-    ui->comboBox->addItem("Today");
-    ui->comboBox->addItem("Yesterday");
-    ui->comboBox->addItem("This week");
-    ui->comboBox->addItem("All");
-    ui->comboBox->setFont(font);
+    HandleFilters();
 
     ui->comboBox->setFocusPolicy(Qt::NoFocus);
 
@@ -83,6 +77,37 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete manager;
+
+    // delete filters
+    delete ft;
+    delete fv;
+    delete fiv;
+    delete fy;
+    delete ftw;
+    delete fa;
+}
+
+void MainWindow::HandleFilters()
+{
+    ft = new Filter_Today();
+    fv = new Filter_Valid();
+    fiv = new Filter_Invalid();
+    fy = new Filter_Yesterday();
+    ftw = new Filter_Thisweek();
+    fa = new Filter_All();
+
+    filters.insert(ft->name,ft);
+    filters.insert(fv->name,fv);
+    filters.insert(fiv->name,fiv);
+    filters.insert(fy->name,fy);
+    filters.insert(ftw->name,ftw);
+    filters.insert(fa->name,fa);
+
+    int cnt = filters.size();
+    foreach (FilterBase* f, filters)
+    {
+        ui->comboBox->addItem(f->name);
+    }
 }
 
 void MainWindow::on_timeout()
@@ -186,29 +211,16 @@ void MainWindow::on_descriptionChanged()
 
 void MainWindow::on_currentTextChanged(QString newText)
 {
-    if (newText == "Valid")
-        ui->listView->get_model()->ft = FilterType_Valid;
-
-    if (newText == "InValid")
-        ui->listView->get_model()->ft = FilterType_InValid;
-
-    if (newText == "Today")
-        ui->listView->get_model()->ft = FilterType_Today;
-
-    if (newText == "Yesterday")
-        ui->listView->get_model()->ft = FilterType_Yesterday;
-
-    if (newText == "All")
-        ui->listView->get_model()->ft = FilterType_All;
-
-    if (newText == "This week")
-        ui->listView->get_model()->ft = FilterType_ThisWeek;
-
-
-//    qDebug() << "Filter type:" << ui->listView->get_model()->ft;
-
-    ui->listView->get_model()->ApplyFilter(ui->actionHighlight_today_entries->isChecked());
-    ui->listView->update();
+    FilterBase* f = filters[newText];
+    if (f!=NULL)
+    {
+        f->highlightTodayEntries = ui->actionHighlight_today_entries->isChecked();
+        ui->listView->ApplyFilter(f);
+    }
+    else
+    {
+        qDebug() << "unknown filter: " << newText;
+    }
 
     UpdateStatusBar();
 }
@@ -221,7 +233,6 @@ void MainWindow::on_actionSmall_items_triggered(bool checked)
 
 void MainWindow::on_actionHighlight_today_entries_triggered(bool checked)
 {
-    ui->listView->get_model()->ApplyFilter(checked);
     ui->listView->update();
 }
 

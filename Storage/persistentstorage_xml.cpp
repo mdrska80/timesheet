@@ -341,113 +341,6 @@ void PersistentStorage_XML::CleanProjects()
     projects.clear();
 }
 
-void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntries)
-{
-    filteredEntries.clear();
-    int cnt = entries.size();
-
-    switch (ft) {
-    case FilterType_Valid:
-        {
-            for (int i = 0;i<cnt;i++)
-            {
-                Entry *e = entries.at(i);
-                if (highlightTodayEntries)
-                    e->pl_playing = e->date == QDate::currentDate();
-
-                if (e->date.isValid() && e->from.isValid() && e->to.isValid())
-                    filteredEntries.append(e);
-            }
-        }
-        break;
-    case FilterType_InValid:
-        {
-            for (int i = 0;i<cnt;i++)
-            {
-                Entry *e = entries.at(i);
-                HandleTodayHighlight(e, highlightTodayEntries);
-
-                if (!e->date.isValid() || !e->from.isValid() || !e->to.isValid())
-                    filteredEntries.append(e);
-            }
-        }
-        break;
-    case FilterType_Today:
-        {
-            for (int i = 0;i<cnt;i++)
-            {
-                Entry *e = entries.at(i);
-                HandleTodayHighlight(e, highlightTodayEntries);
-
-                if (e->date == QDate::currentDate())
-                    filteredEntries.append(e);
-            }
-        }
-        break;
-    case FilterType_Yesterday:
-        {
-            for (int i = 0;i<cnt;i++)
-            {
-                Entry *e = entries.at(i);
-                HandleTodayHighlight(e, highlightTodayEntries);
-
-                if (e->date == QDate::currentDate().addDays(-1))
-                    filteredEntries.append(e);
-            }
-        }
-        break;
-
-    case FilterType_ThisWeek:
-    {
-        QDate qdBegin;
-        QDate qdEnd;
-        QDate qdToday = QDate::currentDate();
-
-        //determine begin and end.
-
-        //monday = 1;
-        int dayOfWeek = qdToday.dayOfWeek();
-        int day = qdToday.day();
-
-        // co kdyz to presahne mesic? dozadu?
-        qdBegin = QDate(qdToday.year(), qdToday.month(), day - (dayOfWeek-1));
-        qdEnd =  QDate(qdToday.year(), qdToday.month(), 7 - dayOfWeek + day);
-
-        for (int i = 0;i<cnt;i++)
-        {
-            Entry *e = entries.at(i);
-            HandleTodayHighlight(e, highlightTodayEntries);
-
-            if (e->date >= qdBegin && e->date <= qdEnd)
-                filteredEntries.append(e);
-        }
-
-
-
-
-
-
-        break;
-    }
-    case FilterType_All:
-        {
-            for (int i = 0;i<cnt;i++)
-            {
-                Entry *e = entries.at(i);
-                HandleTodayHighlight(e, highlightTodayEntries);
-
-                filteredEntries.append(e);
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    Sort();
-}
-
 QList<Entry*> PersistentStorage_XML::find(QString qs)
 {
     QList<Entry*> lst;
@@ -462,25 +355,6 @@ QList<Entry*> PersistentStorage_XML::find(QString qs)
     }
 
     return lst;
-}
-
-void PersistentStorage_XML::HandleTodayHighlight(Entry *e, bool highlightTodayEntries)
-{
-    if (highlightTodayEntries)
-        e->pl_playing = e->date == QDate::currentDate();
-    else
-        e->pl_playing = false;
-}
-
-template<class T>
-bool dereferencedLessThan(T * o1, T * o2) {
-    return *o1 < *o2;
-}
-
-
-void PersistentStorage_XML::Sort()
-{
-    qSort(filteredEntries.begin(), filteredEntries.end(), dereferencedLessThan<Entry>);
 }
 
 TSVersions PersistentStorage_XML::IdentifyFormat(QDomElement &node)

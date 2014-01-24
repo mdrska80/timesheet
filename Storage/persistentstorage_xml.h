@@ -37,15 +37,9 @@ public:
     void CleanCompanies();
     void CleanProjects();
 
-    void ApplyFilter(FilterTypes ft, bool highlightTodayEntries);
-    void HandleTodayHighlight(Entry *e, bool highlightTodayEntries);
     QList<Entry*> find(QString qs);
-
     TSVersions IdentifyFormat(QDomElement &node);
 
-
-private:
-    void Sort();
 
 public:
     QList<Entry*> entries;

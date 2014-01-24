@@ -42,7 +42,14 @@ SOURCES += main.cpp\
     GUI/xmlFileDetail/view/xmlfiledetailview.cpp \
     dialogtester.cpp \
     Common/entriesanalyzer.cpp \
-    Common/tscore.cpp
+    Common/tscore.cpp \
+    Filters/filterbase.cpp \
+    Filters/filter_today.cpp \
+    Filters/filter_valid.cpp \
+    Filters/filter_invalid.cpp \
+    Filters/filter_yesterday.cpp \
+    Filters/filter_thisweek.cpp \
+    Filters/filter_all.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -75,7 +82,14 @@ HEADERS  += \
     GUI/xmlFileDetail/view/xmlfiledetailview.h \
     dialogtester.h \
     Common/entriesanalyzer.h \
-    Common/tscore.h
+    Common/tscore.h \
+    Filters/filterbase.h \
+    Filters/filter_today.h \
+    Filters/filter_valid.h \
+    Filters/filter_invalid.h \
+    Filters/filter_yesterday.h \
+    Filters/filter_thisweek.h \
+    Filters/filter_all.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \

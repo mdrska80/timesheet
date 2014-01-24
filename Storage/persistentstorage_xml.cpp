@@ -236,6 +236,7 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
 
         //this is correct Description to title
         e->title = node.firstChildElement("Description").text();
+        e->description = node.firstChildElement("Commment").text();
 
         e->coll.insert("MainCategory", node.firstChildElement("MainCategory").text());
         e->coll.insert("SubCategory1", node.firstChildElement("SubCategory1").text());
@@ -244,6 +245,7 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
         e->coll.insert("ZarazeniZaka", node.firstChildElement("ZarazeniZaka").text());
         e->coll.insert("PocetOsob", node.firstChildElement("PocetOsob").text());
         e->coll.insert("TskState", node.firstChildElement("TskState").text());
+        e->coll.insert("Comment", node.firstChildElement("Commment").text());
         break;
     }
     }

@@ -14,10 +14,6 @@ XmlFileDetailView::XmlFileDetailView(QWidget *parent) :
     this->setSelectionRectVisible(true);
     this->setAlternatingRowColors(true);
     this->setMovement(QListView::Free);
-
-//    connect(this, SIGNAL(pressed(const QModelIndex&)), this, SLOT(row_pressed(const QModelIndex&)));
-//    connect(this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(row_double_clicked(const QModelIndex&)));
-//    connect(this, SIGNAL(clicked(const QModelIndex&)), this, SLOT(row_released(const QModelIndex&)));
 }
 
 XmlFileDetailView::~XmlFileDetailView()
@@ -300,6 +296,12 @@ XmlFileDetailModel* XmlFileDetailView::get_model()
 {
     return _model;
 }
+
+void XmlFileDetailView::ApplyFilter(QString filter)
+{
+    _model->ApplyFilter(filter);
+}
+
 
 
 

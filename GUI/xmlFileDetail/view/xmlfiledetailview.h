@@ -26,6 +26,7 @@ public:
     void scrollUp();
     void scrollDown();
     void show_big_items(bool);
+    void ApplyFilter(QString filter);
 
 
 signals:

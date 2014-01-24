@@ -5,11 +5,12 @@ XmlFileDetailModel::XmlFileDetailModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     _storage = &TSCore::I().fiStorage;
+    ApplyFilter("");
 }
 
 int XmlFileDetailModel::rowCount(const QModelIndex& ) const
 {
-    return _storage->infos.size();
+    return _storage->filteredInfos.size();
 }
 
 QVariant XmlFileDetailModel::data(const QModelIndex &index, int role) const
@@ -19,7 +20,7 @@ QVariant XmlFileDetailModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::ToolTipRole)
     {
-        EntryFileInfo* e = _storage->infos.at(index.row());
+        EntryFileInfo* e = _storage->filteredInfos.at(index.row());
 
         QString titles;
         int cnt = e->titles.size();
@@ -38,7 +39,7 @@ QVariant XmlFileDetailModel::data(const QModelIndex &index, int role) const
     }
 
     if (role == Qt::WhatsThisRole){
-        return _storage->infos.at(index.row())->toVariant();
+        return _storage->filteredInfos.at(index.row())->toVariant();
     }
 
     else
@@ -50,9 +51,9 @@ EntryFileInfo* XmlFileDetailModel::GetEntryAtIndex(const QModelIndex &index)
     if (index.isValid())
     {
         int row = index.row();
-        if (row < _storage->infos.size())
+        if (row < _storage->filteredInfos.size())
         {
-            EntryFileInfo* eToReturn = _storage->infos.at(row);
+            EntryFileInfo* eToReturn = _storage->filteredInfos.at(row);
             return eToReturn;
         }
     }
@@ -63,12 +64,24 @@ EntryFileInfo* XmlFileDetailModel::GetEntryAtIndex(const QModelIndex &index)
 
 void XmlFileDetailModel::set_selected(QList<int>& rows){
     _selected_rows = rows;
-    for(int i=0; i< _storage->infos.size(); i++){
-        _storage->infos.at(i)->pl_selected = rows.contains(i);
+    for(int i=0; i< _storage->filteredInfos.size(); i++){
+        _storage->filteredInfos.at(i)->pl_selected = rows.contains(i);
     }
 }
 
 bool XmlFileDetailModel::is_selected(int row) const {
     return _selected_rows.contains(row);
+}
+
+void XmlFileDetailModel::ApplyFilter(QString filter)
+{
+    QList<EntryFileInfo*> fe = _storage->find(filter);
+
+    beginInsertRows(QModelIndex(), 0, fe.size());
+        _storage->filteredInfos.clear();
+        _storage->filteredInfos = fe;
+    endInsertRows();
+
+
 }
 

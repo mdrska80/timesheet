@@ -5,6 +5,7 @@
 #include <QListView>
 #include <QCompleter>
 #include <QDebug>
+#include <QDesktopServices>
 #include "GUI/entry/model/entrylistmodel.h"
 
 #include "Common/style.h"
@@ -99,7 +100,6 @@ void MainWindow::on_timeout()
     ui->titleLineEdit->setCompleter(completer);
 
     timer->stop();
-
 }
 
 void MainWindow::on_listView_clicked(const QModelIndex &index)
@@ -296,4 +296,47 @@ void MainWindow::Refresh(QString finalFilter)
 
     this->setWindowTitle(qsWindowTitle);
     UpdateStatusBar();
+}
+
+void MainWindow::on_actionCreate_desktop_file_triggered()
+{
+    QDir dir;
+
+    QString qsExe = dir.absolutePath()+"/Timesheet";
+    QString qsIcon = dir.absolutePath()+"/Earth-icon.png";
+
+    QString str = QString()+
+                "[Desktop Entry]\r\n"+
+                "Name=Timesheet v %4\r\n"+
+                "Comment=Application for measuring work time\r\n"+
+                "Exec=%1\r\n"+
+                "Icon=%2\r\n"+
+                "Path=%3\r\n"+
+                "Terminal=false\r\n"+
+                "Type=Application\r\n"+
+                "Categories=Game;\r\n\r\n"+
+
+                "Actions=Test\r\n"+
+
+                "[Desktop Action Test]\r\n"+
+                "Name=Test action\r\n"+
+                "Exec=audacious -r\r\n"+
+                "OnlyShowIn=Unity;\r\n";
+
+    str = str.arg(qsExe).arg(qsIcon).arg(dir.absolutePath()).arg(TSCore::I().GetVersion());
+
+    QString home = dir.homePath();
+    QString desktopPath  = QStandardPaths::displayName( QStandardPaths::DesktopLocation );
+
+    QString pathToDesktop = QString()+
+            home+"/"+desktopPath+"/timesheet.desktop";
+
+    Helper::write_file(pathToDesktop, str);
+
+    //set as execultable
+    system(qPrintable("chmod +x "+pathToDesktop));
+
+    //delete myProcess;
+
+
 }

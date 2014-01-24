@@ -16,6 +16,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
 
     EntryFileInfo* GetEntryAtIndex(const QModelIndex &index);
+    void ApplyFilter(QString filter);
 
 
     void set_selected(QList<int>& rows);

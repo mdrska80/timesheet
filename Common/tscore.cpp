@@ -72,5 +72,10 @@ void TSCore::MoveToPresent()
     workingYear = QDate::currentDate().year();
 }
 
+QString TSCore::GetVersion()
+{
+    return "7.0";
+}
+
 
 

@@ -37,6 +37,9 @@ public:
     void MoveBackward();
     void MoveToPresent();
 
+    QString GetVersion();
+
+
     QList<Company*> companies;
     QList<Project*> projects;
 

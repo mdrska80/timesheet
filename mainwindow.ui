@@ -143,8 +143,15 @@
     <addaction name="actionNext_month"/>
     <addaction name="actionPrevious_month"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionCreate_desktop_file"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuTools"/>
   </widget>
   <action name="actionSmall_items">
    <property name="checkable">
@@ -199,6 +206,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Left</string>
+   </property>
+  </action>
+  <action name="actionCreate_desktop_file">
+   <property name="text">
+    <string>Create .desktop file</string>
    </property>
   </action>
  </widget>

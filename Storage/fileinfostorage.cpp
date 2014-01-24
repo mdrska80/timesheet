@@ -132,6 +132,7 @@ void FileInfoStorage::CleanInfos()
     }
 
     infos.clear();
+    filteredInfos.clear();
 }
 
 template<class T>
@@ -142,4 +143,29 @@ bool dereferencedLessThan(T * o1, T * o2) {
 void FileInfoStorage::Sort()
 {
     qSort(infos.begin(), infos.end(), dereferencedLessThan<EntryFileInfo>);
+}
+
+QList<EntryFileInfo*> FileInfoStorage::find(QString qs)
+{
+    QList<EntryFileInfo*> lst;
+    int cnt = infos.size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        EntryFileInfo* efi = infos[i];
+        int cntTitles = efi->titles.size();
+
+        for(int j=0;j<cntTitles;j++)
+        {
+            if (efi->titles[j].contains(qs))
+            {
+                lst.append(efi);
+                break;
+            }
+        }
+    }
+
+    return lst;
+
+
 }

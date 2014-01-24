@@ -14,10 +14,6 @@ DialogTester::DialogTester(QWidget *parent) :
     QString style = Style::get_style(true);
     this->setStyleSheet(style);
 
-    FileInfoStorage* s = ui->listView->get_model()->_storage;
-
-    if (!s->isLoaded || s->needRefresh)
-        s->Load();
 //    ui->listView->get_model()->_storage->Load();
 
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -25,6 +21,8 @@ DialogTester::DialogTester(QWidget *parent) :
     ui->listView->show_big_items(true);
 
     ui->listView->select_last_row();
+
+    connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
 
     //ui->listView->scrollDown();
 
@@ -45,3 +43,9 @@ void DialogTester::on_pushButton_clicked(bool checked)
 
     this->close();
 }
+
+void DialogTester::on_filteredTextChnged(QString changedText)
+{
+    ui->listView->ApplyFilter(changedText);
+}
+

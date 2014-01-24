@@ -51,6 +51,8 @@ private slots:
 
     void on_timeout();
 
+    void on_actionCreate_desktop_file_triggered();
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

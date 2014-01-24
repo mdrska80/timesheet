@@ -21,6 +21,8 @@ public:
     void CheckAllFilesExistence();
 
     QList<EntryFileInfo*> infos;
+    QList<EntryFileInfo*> filteredInfos;
+    QList<EntryFileInfo*> find(QString qs);
 
     QStringList titles;
 

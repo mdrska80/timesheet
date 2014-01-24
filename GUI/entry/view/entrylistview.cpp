@@ -505,6 +505,12 @@ EntryListModel* EntryListView::get_model()
     return _model;
 }
 
+void EntryListView::ApplySearch(QString filter)
+{
+    _model->ApplySearch(filter);
+}
+
+
 void EntryListView::UpdateAndSave()
 {
     this->update();

@@ -52,6 +52,8 @@ private slots:
     void on_timeout();
 
     void on_actionCreate_desktop_file_triggered();
+    void on_filteredTextChnged(QString changedText);
+
 
 private:
     Ui::MainWindow *ui;

@@ -36,6 +36,7 @@ public:
     FilterTypes ft;
 
     void ApplyFilter(bool highlightTodayEntries);
+    void ApplySearch(QString filter);
 
 
 signals:

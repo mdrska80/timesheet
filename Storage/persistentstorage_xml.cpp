@@ -448,6 +448,22 @@ void PersistentStorage_XML::ApplyFilter(FilterTypes ft, bool highlightTodayEntri
     Sort();
 }
 
+QList<Entry*> PersistentStorage_XML::find(QString qs)
+{
+    QList<Entry*> lst;
+    int cnt = entries.size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        Entry *e = entries[i];
+
+        if (e->title.contains(qs) || e->description.contains(qs))
+            lst.append(e);
+    }
+
+    return lst;
+}
+
 void PersistentStorage_XML::HandleTodayHighlight(Entry *e, bool highlightTodayEntries)
 {
     if (highlightTodayEntries)

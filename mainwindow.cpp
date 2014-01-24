@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->toLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_toChanged(QString)));
     connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(on_currentTextChanged(QString)));
+    connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
 
     // set up style
     //Style::get_style(true);
@@ -337,6 +338,10 @@ void MainWindow::on_actionCreate_desktop_file_triggered()
     system(qPrintable("chmod +x "+pathToDesktop));
 
     //delete myProcess;
-
-
 }
+
+void MainWindow::on_filteredTextChnged(QString changedText)
+{
+    ui->listView->ApplySearch(changedText);
+}
+

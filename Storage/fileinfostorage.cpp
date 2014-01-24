@@ -166,6 +166,4 @@ QList<EntryFileInfo*> FileInfoStorage::find(QString qs)
     }
 
     return lst;
-
-
 }

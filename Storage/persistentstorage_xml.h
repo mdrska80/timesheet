@@ -39,6 +39,7 @@ public:
 
     void ApplyFilter(FilterTypes ft, bool highlightTodayEntries);
     void HandleTodayHighlight(Entry *e, bool highlightTodayEntries);
+    QList<Entry*> find(QString qs);
 
     TSVersions IdentifyFormat(QDomElement &node);
 

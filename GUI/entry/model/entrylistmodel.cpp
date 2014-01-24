@@ -192,6 +192,18 @@ bool EntryListModel::is_selected(int row) const {
     return _selected_rows.contains(row);
 }
 
+void EntryListModel::ApplySearch(QString filter)
+{
+    QList<Entry*> fe = _storage->find(filter);
+
+    beginInsertRows(QModelIndex(), 0, fe.size());
+        _storage->filteredEntries.clear();
+        _storage->filteredEntries = fe;
+    endInsertRows();
+
+
+}
+
 void EntryListModel::ApplyFilter(bool highlightTodayEntries)
 {
     _storage->ApplyFilter(ft, highlightTodayEntries);

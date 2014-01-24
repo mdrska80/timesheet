@@ -38,6 +38,8 @@ public:
     EntryListView(QWidget* parent=0);
     virtual ~EntryListView();
 
+    void ApplySearch(QString filter);
+
 
 
     void set_drag_enabled(bool b);

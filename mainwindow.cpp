@@ -42,15 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Refresh("Today");
 
-    //ReloadModel();
-
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->listView->show_big_items(true);
     ui->listView->select_row(0);
-
-    QFont font;
-    font.setFamily(QString::fromUtf8("DejaVu Sans"));
 
     HandleFilters();
 
@@ -356,3 +351,8 @@ void MainWindow::on_filteredTextChnged(QString changedText)
     ui->listView->ApplySearch(changedText);
 }
 
+
+void MainWindow::on_actionExit_triggered()
+{
+    close();
+}

@@ -65,6 +65,8 @@ private slots:
     void on_filteredTextChnged(QString changedText);
 
 
+    void on_actionExit_triggered();
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

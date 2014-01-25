@@ -17,7 +17,7 @@ public:
     virtual ~XmlFileDetailView();
 
     int get_num_rows();
-    void select_last_row();
+    void select_last_row(int shift);
     void select_row(int i);
     QList<int> get_selections();
     EntryFileInfo* get_selection();

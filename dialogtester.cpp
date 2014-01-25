@@ -20,10 +20,13 @@ DialogTester::DialogTester(QWidget *parent) :
     ui->listView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->listView->show_big_items(true);
 
-    ui->listView->select_last_row();
+    ui->listView->select_last_row(5);
 
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
-
+//    connect(this, SIGNAL(destroyed()), this, SLOT(on_pushButton_clicked()));
+    ui->levels->psl_stop();
+    //ui->levels->set_level(0.1f,0.1f);
+//    ui->levels->psl_stop();
     //ui->listView->scrollDown();
 
 }
@@ -36,10 +39,17 @@ DialogTester::~DialogTester()
 void DialogTester::on_pushButton_clicked()
 {
     EntryFileInfo* efi = ui->listView->get_selection();
-
-    TSCore::I().workingMonth = efi->date.month();
-    TSCore::I().workingYear = efi->date.year();
     TSCore::I().needReload = true;
+
+    if (efi!=NULL)
+    {
+        TSCore::I().workingMonth = efi->date.month();
+        TSCore::I().workingYear = efi->date.year();
+    }
+    else
+    {
+        TSCore::I().MoveToPresent();
+    }
 
     this->close();
 }
@@ -47,5 +57,16 @@ void DialogTester::on_pushButton_clicked()
 void DialogTester::on_filteredTextChnged(QString changedText)
 {
     ui->listView->ApplyFilter(changedText);
+    // 5 je max
+    // -45 je 0
+    ui->levels->set_level(100,0);
+    ui->levels->psl_stop();
+}
+
+void DialogTester::closeEvent(QCloseEvent *event)
+{
+    ui->listView->select_last_row(5);
+    //int a =9;
+    //on_pushButton_clicked();
 }
 

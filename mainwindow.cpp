@@ -230,12 +230,12 @@ void MainWindow::on_actionSelect_different_month_triggered()
     DialogTester tester(this);
     tester.exec();
 
-    if (TSCore::I().needReload)
-    {
+//    if (TSCore::I().needReload)
+//    {
         Refresh("All");
-    }
+//    }
 
-    update();
+    //update();
 }
 
 void MainWindow::UpdateStatusBar()

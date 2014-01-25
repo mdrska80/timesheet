@@ -19,6 +19,7 @@ EntryListView::EntryListView(QWidget* parent) : QListView(parent) {
     _last_known_drag_row = -1;
     _model = new EntryListModel(this);
     _delegate = new EntryItemDelegate(this, true);
+    _ignore_selection_changes = false;
     //_rc_menu = 0;
 
     this->setModel(_model);

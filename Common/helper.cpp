@@ -95,6 +95,15 @@ QTime Helper::ConstructTime(QString time)
             return QTime(hours.toInt(), minutes.toInt());
     }
 
+    if (length <= 2 )
+    {
+        QString hours = time;
+        QString minutes = 0;
+
+        if ((hours.toInt() <= 23 ) && (minutes.toInt() <= 59))
+            return QTime(hours.toInt(), minutes.toInt());
+    }
+
     // return garbage...
     return QTime();
 }

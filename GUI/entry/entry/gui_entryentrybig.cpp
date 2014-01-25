@@ -33,5 +33,12 @@ void GUI_EntryEntryBig::setContent(Entry* e)
 
         QTimeSpan ts = e->to - e->from;
         this->ui->durationLabel->setText(ts.toString("hh:mm"));
+
+        qreal r = ts.toSecs();
+
+        int worktime = 60*60*8;
+        int percent = r / (worktime / 100);
+
+        ui->levels->set_level(percent,0);
     }
 }

@@ -7,7 +7,8 @@ TSCore::TSCore()
     workingYear = QDate::currentDate().year();
     needReload = false;
 
-    fiStorage = FileInfoStorage();
+    fiStorage.isLoaded = false;
+    fiStorage.needRefresh = true;
 }
 
 QString TSCore::GetEntriesFile()

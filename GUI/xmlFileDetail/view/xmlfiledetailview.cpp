@@ -14,11 +14,15 @@ XmlFileDetailView::XmlFileDetailView(QWidget *parent) :
     this->setSelectionRectVisible(true);
     this->setAlternatingRowColors(true);
     this->setMovement(QListView::Free);
+
+    _ignore_selection_changes = false;
 }
 
 XmlFileDetailView::~XmlFileDetailView()
 {
-    delete _model;
+    //both are Q objects
+    //delete _delegate;
+    //delete _model;
 }
 
 void XmlFileDetailView::mousePressEvent(QMouseEvent* event) {
@@ -138,10 +142,10 @@ void XmlFileDetailView::clear_selection(){
     this->clearSelection();
 }
 
-void XmlFileDetailView::select_last_row()
+void XmlFileDetailView::select_last_row(int shift)
 {
     if(_model->rowCount() == 0) return;
-    int i = _model->rowCount() - 5;
+    int i = _model->rowCount() - 1 - shift;
 //    if(i > _model->rowCount() - 1) i = _model->rowCount() - 1;
 //    if(i < 0) i = 0;
     QList<int> lst;

@@ -49,7 +49,9 @@ SOURCES += main.cpp\
     Filters/filter_invalid.cpp \
     Filters/filter_yesterday.cpp \
     Filters/filter_thisweek.cpp \
-    Filters/filter_all.cpp
+    Filters/filter_all.cpp \
+    GUI/GUI_LevelPainter.cpp \
+    GUI/EngineColorStyleChooser.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -89,14 +91,18 @@ HEADERS  += \
     Filters/filter_invalid.h \
     Filters/filter_yesterday.h \
     Filters/filter_thisweek.h \
-    Filters/filter_all.h
+    Filters/filter_all.h \
+    GUI/GUI_LevelPainter.h \
+    GUI/StyleTypes.h \
+    GUI/EngineColorStyleChooser.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
     GUI/entry/entry/gui_entryentrybig.ui \
     mainwindow.ui \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui \
-    dialogtester.ui
+    dialogtester.ui \
+    GUI/GUI_LevelPainter.ui
 
 RESOURCES += \
     resources.qrc

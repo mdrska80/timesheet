@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>36</height>
+    <height>44</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,6 +46,15 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QLabel" name="titleLabel">
        <property name="font">
@@ -66,6 +75,7 @@
         <font>
          <pointsize>9</pointsize>
          <italic>true</italic>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -89,16 +99,37 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="fromLabel">
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="fromLabel">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="GUI_LevelPainter" name="levels" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>10</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QLabel" name="durationLabel">
@@ -116,6 +147,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GUI_LevelPainter</class>
+   <extends>QWidget</extends>
+   <header>GUI/GUI_LevelPainter.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

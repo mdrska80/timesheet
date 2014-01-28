@@ -12,6 +12,7 @@
 
 #include "company.h"
 #include "project.h"
+#include "tag.h"
 #include  "Common/qtimespan.h"
 #include  "Common/enums.h"
 
@@ -49,6 +50,8 @@ public:
     TSVersions version;
 
     QHash<QString, QString> coll;
+
+    QList<Tag*> tags;
 
     //methods
     QString toXml(TSVersions ver);

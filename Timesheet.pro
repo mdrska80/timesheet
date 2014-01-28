@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     Filters/filter_thisweek.cpp \
     Filters/filter_all.cpp \
     GUI/GUI_LevelPainter.cpp \
-    GUI/EngineColorStyleChooser.cpp
+    GUI/EngineColorStyleChooser.cpp \
+    Data/tag.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -94,7 +95,8 @@ HEADERS  += \
     Filters/filter_all.h \
     GUI/GUI_LevelPainter.h \
     GUI/StyleTypes.h \
-    GUI/EngineColorStyleChooser.h
+    GUI/EngineColorStyleChooser.h \
+    Data/tag.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \

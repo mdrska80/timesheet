@@ -32,11 +32,15 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
 
         QTimeSpan ts = e->to - e->from;
-        this->ui->durationLabel->setText(ts.toString("hh:mm"));
+
+        if (ts.toHours() > 4)
+            this->ui->durationLabel->setText("<font color='red'>"+ts.toString("hh:mm")+"</font>");
+        else
+            this->ui->durationLabel->setText(ts.toString("hh:mm"));
 
         qreal r = ts.toSecs();
 
-        int worktime = 60*60*8;
+        int worktime = 60*60*4;
         int percent = r / (worktime / 100);
 
         ui->levels->set_level(percent,0);

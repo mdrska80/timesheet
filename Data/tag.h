@@ -2,6 +2,7 @@
 #define TAG_H
 
 #include <QtCore>
+#include <QColor>
 
 class Tag
 {

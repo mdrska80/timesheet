@@ -152,9 +152,16 @@
     </property>
     <addaction name="actionCreate_desktop_file"/>
    </widget>
+   <widget class="QMenu" name="menuReports">
+    <property name="title">
+     <string>Reports</string>
+    </property>
+    <addaction name="actionMonthly"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuTools"/>
+   <addaction name="menuReports"/>
   </widget>
   <action name="actionSmall_items">
    <property name="checkable">
@@ -214,6 +221,11 @@
   <action name="actionCreate_desktop_file">
    <property name="text">
     <string>Create .desktop file</string>
+   </property>
+  </action>
+  <action name="actionMonthly">
+   <property name="text">
+    <string>Monthly</string>
    </property>
   </action>
  </widget>

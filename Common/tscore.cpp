@@ -78,5 +78,31 @@ QString TSCore::GetVersion()
     return "7.0";
 }
 
+void TSCore::RecalculateAggregatedEntries(QList<Entry*>* entries)
+{
+    int maxAE = agregatedEntries.keys().size();
+    for(int i = 0;i<maxAE;i++)
+    {
+        int key = agregatedEntries.keys().at(i);
+        AggregatedEntry* ae = agregatedEntries[key];
+        delete ae;
+    }
+    agregatedEntries.clear();
+
+
+    int max = entries->size();
+    for(int i = 0;i<max;i++)
+    {
+        Entry* e = entries->at(i);
+        AggregatedEntry* ae = agregatedEntries[e->date.day()];
+
+        if (ae == NULL)
+            ae = new AggregatedEntry();
+
+        ae->entries.append(e);
+        ae->init();
+    }
+}
+
 
 

@@ -52,7 +52,9 @@ SOURCES += main.cpp\
     Filters/filter_all.cpp \
     GUI/GUI_LevelPainter.cpp \
     GUI/EngineColorStyleChooser.cpp \
-    Data/tag.cpp
+    Data/tag.cpp \
+    monthlyreportdialog.cpp \
+    Data/aggregatedentry.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -96,7 +98,9 @@ HEADERS  += \
     GUI/GUI_LevelPainter.h \
     GUI/StyleTypes.h \
     GUI/EngineColorStyleChooser.h \
-    Data/tag.h
+    Data/tag.h \
+    monthlyreportdialog.h \
+    Data/aggregatedentry.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
@@ -104,7 +108,8 @@ FORMS    += \
     mainwindow.ui \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui \
     dialogtester.ui \
-    GUI/GUI_LevelPainter.ui
+    GUI/GUI_LevelPainter.ui \
+    monthlyreportdialog.ui
 
 RESOURCES += \
     resources.qrc

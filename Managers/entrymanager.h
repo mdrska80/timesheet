@@ -2,8 +2,8 @@
 #define ENTRYMANAGER_H
 
 #include <QList>
-#include "Data/entry.h"
-#include "Managers/tsmanager.h"
+#include "../Data/entry.h"
+#include "tsmanager.h"
 
 class TSManager;
 

@@ -2,8 +2,8 @@
 #define XMLFILEDETAILMODEL_H
 
 #include <QAbstractListModel>
-#include "Data/entryfileinfo.h"
-#include "Storage/fileinfostorage.h"
+#include "../../../Data/entryfileinfo.h"
+#include "../../../Storage/fileinfostorage.h"
 
 
 class XmlFileDetailModel : public QAbstractListModel

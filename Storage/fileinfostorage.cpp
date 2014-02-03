@@ -1,6 +1,6 @@
 #include "fileinfostorage.h"
-#include "Common/entriesanalyzer.h"
-#include "Storage/persistentstorage_xml.h"
+#include "../Common/entriesanalyzer.h"
+#include "../Storage/persistentstorage_xml.h"
 
 FileInfoStorage::FileInfoStorage()
 {

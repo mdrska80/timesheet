@@ -3,8 +3,8 @@
 
 #include <QList>
 #include <QString>
-#include "Data/entry.h"
-#include "Managers/tsmanager.h"
+#include "../Data/entry.h"
+#include "tsmanager.h"
 
 class DBManager
 {

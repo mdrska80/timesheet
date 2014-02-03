@@ -13,8 +13,8 @@
 #include "company.h"
 #include "project.h"
 #include "tag.h"
-#include  "Common/qtimespan.h"
-#include  "Common/enums.h"
+//#include  "../Common/qtimespan.h"
+#include  "../Common/enums.h"
 
 class Entry
 {
@@ -59,7 +59,8 @@ public:
     bool operator<(const Entry *);
     bool operator<(const Entry &);
 
-    QTimeSpan GetDuration();
+    int GetDuration();
+    QString GetDurationAshhmm();
 
 
     QVariant toVariant() const{

@@ -1,8 +1,8 @@
 #ifndef FILTER_INVALID_H
 #define FILTER_INVALID_H
 
-#include "Filters/filterbase.h"
-#include "Data/entry.h"
+#include "filterbase.h"
+#include "../Data/entry.h"
 
 class Filter_Invalid : public FilterBase
 {

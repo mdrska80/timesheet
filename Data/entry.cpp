@@ -90,9 +90,23 @@ QString Entry::toXml(TSVersions ver)
     return res;
 }
 
-QTimeSpan Entry::GetDuration()
+int Entry::GetDuration()
 {
-    return to - from;
+    int secs = from.secsTo(to);
+    //int secondsTo = QTime().secsTo(to);
+    //int secondsFrom = QTime().secsTo(from);
+
+    return secs;//secondsTo - secondsFrom;
 }
 
+QString Entry::GetDurationAshhmm()
+{
+    // todo tohle je jeste nejak blbe
+    int secs = GetDuration();
+    int hours = secs/3600;
+    int remainingMins = (secs - hours*3600)/60;
+
+    QTime time(hours,remainingMins,0);
+    return time.toString("hh:mm");
+}
 

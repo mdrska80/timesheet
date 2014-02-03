@@ -1,8 +1,6 @@
 #include "gui_entryentrybig.h"
 #include "ui_gui_entryentrybig.h"
 
-#include "Common/qtimespan.h"
-
 GUI_EntryEntryBig::GUI_EntryEntryBig(QWidget *parent) :
     GUI_EntryEntry(parent),
     ui(new Ui::GUI_EntryEntryBig)
@@ -31,17 +29,19 @@ void GUI_EntryEntryBig::setContent(Entry* e)
 
         this->ui->fromLabel->setText(QString("%1 - %2").arg(e->from.toString("hh:mm"),e->to.toString("hh:mm")));
 
-        QTimeSpan ts = e->to - e->from;
+        int secs = e->GetDuration();
+        int hrs = secs / 3600;
+        //QTimeSpan ts = e->to - e->from;
 
-        if (ts.toHours() > 4)
-            this->ui->durationLabel->setText("<font color='red'>"+ts.toString("hh:mm")+"</font>");
+        if (hrs > 4)
+            this->ui->durationLabel->setText("<font color='red'>"+e->GetDurationAshhmm()+"</font>");
         else
-            this->ui->durationLabel->setText(ts.toString("hh:mm"));
+            this->ui->durationLabel->setText(e->GetDurationAshhmm());
 
-        qreal r = ts.toSecs();
+        //qreal r = ts.toSecs();
 
         int worktime = 60*60*4;
-        int percent = r / (worktime / 100);
+        int percent = secs / (worktime / 100);
 
         ui->levels->set_level(percent,0);
     }

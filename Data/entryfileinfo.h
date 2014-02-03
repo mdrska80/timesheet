@@ -2,7 +2,7 @@
 #define ENTRYFILEINFO_H
 
 #include <QtCore>
-#include "Common/enums.h"
+#include "../Common/enums.h"
 #include "errormessage.h"
 
 class EntryFileInfo

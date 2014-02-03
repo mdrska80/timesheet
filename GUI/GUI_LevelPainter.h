@@ -1,7 +1,7 @@
 #ifndef GUI_LEVELPAINTER_H
 #define GUI_LEVELPAINTER_H
 
-#include "GUI/EngineColorStyleChooser.h"
+#include "../GUI/EngineColorStyleChooser.h"
 #include <QCloseEvent>
 #include <QShowEvent>
 #include <QPaintEvent>

@@ -28,7 +28,6 @@ SOURCES += main.cpp\
     GUI/entry/entry/gui_entryentrysmall.cpp \
     GUI/entry/entry/gui_entryentrybig.cpp \
     GUI/entry/view/entrylistview.cpp \
-    Common/qtimespan.cpp \
     Storage/persistentstorage_xml.cpp \
     Data/project.cpp \
     mainwindow.cpp \
@@ -70,7 +69,6 @@ HEADERS  += \
     GUI/entry/entry/gui_entryentrysmall.h \
     GUI/entry/entry/gui_entryentrybig.h \
     GUI/entry/view/entrylistview.h \
-    Common/qtimespan.h \
     Storage/persistentstorage_xml.h \
     Data/project.h \
     Common/enums.h \

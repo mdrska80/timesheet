@@ -6,8 +6,8 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-#include "GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.h"
-#include "GUI/xmlFileDetail/model/xmlfiledetailmodel.h"
+#include "../../../GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.h"
+#include "../../../GUI/xmlFileDetail/model/xmlfiledetailmodel.h"
 
 class XmlFileDetailView : public QListView
 {

@@ -2,8 +2,8 @@
 #include <QDebug>
 
 #include "persistentstorage_xml.h"
-#include "Common/helper.h"
-#include "Common/tscore.h"
+#include "../Common/helper.h"
+#include "../Common/tscore.h"
 
 PersistentStorage_XML::PersistentStorage_XML()
 {

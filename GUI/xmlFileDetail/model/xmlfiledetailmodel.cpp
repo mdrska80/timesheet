@@ -1,5 +1,5 @@
 #include "xmlfiledetailmodel.h"
-#include "Common/tscore.h"
+#include "../../../Common/tscore.h"
 
 XmlFileDetailModel::XmlFileDetailModel(QObject *parent) :
     QAbstractListModel(parent)

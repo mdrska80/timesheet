@@ -4,10 +4,10 @@
 #include <QItemDelegate>
 #include <QListView>
 #include <QPainter>
-#include "GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.h"
-#include "GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.h"
-#include "GUI/xmlFileDetail/model/xmlfiledetailmodel.h"
-#include "Common/helper.h"
+#include "../../../GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.h"
+#include "../../../GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.h"
+#include "../../../GUI/xmlFileDetail/model/xmlfiledetailmodel.h"
+#include "../../../Common/helper.h"
 
 class XmlFileDetailDelegate : public QItemDelegate
 {

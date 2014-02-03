@@ -2,10 +2,10 @@
 #define TSCORE_H
 
 #include <QtCore>
-#include "Data/company.h"
-#include "Data/project.h"
+#include "../Data/company.h"
+#include "../Data/project.h"
 
-#include "Storage/fileinfostorage.h"
+#include "../Storage/fileinfostorage.h"
 
 class TSCore
 {

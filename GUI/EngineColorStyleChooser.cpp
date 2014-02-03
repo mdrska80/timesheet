@@ -20,7 +20,7 @@
 
 
 
-#include "GUI/EngineColorStyleChooser.h"
+#include "../GUI/EngineColorStyleChooser.h"
 //#include "DatabaseAccess/CDatabaseConnector.h"
 #include <QDebug>
 

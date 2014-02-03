@@ -1,5 +1,4 @@
 #include "entriesanalyzer.h"
-#include "Common/qtimespan.h"
 
 EntriesAnalyzer::EntriesAnalyzer(QList<Entry*>* entries, EntryFileInfo* efi)
 {
@@ -19,8 +18,7 @@ void EntriesAnalyzer::Analyze()
     for(int i =0;i<_efi->entryCount;i++)
     {
         Entry *e = sourceEntries->at(i);
-        QTimeSpan ts = e->GetDuration();
-        int seconds = ts.toSecs();
+        int seconds = e->GetDuration();
         tTotal += seconds;
 
         if (!_efi->titles.contains(e->title))

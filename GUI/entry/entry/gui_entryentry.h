@@ -3,7 +3,7 @@
 
 #include <QFrame>
 
-#include "Data/entry.h"
+#include "../../../Data/entry.h"
 
 class GUI_EntryEntry : public QFrame
 {

@@ -3,12 +3,12 @@
 
 #include <QListView>
 
-#include "Data/entry.h"
-#include "GUI/entry/model/entrylistmodel.h"
-#include "GUI/entry/delegate/entryitemdelegate.h"
-#include "Common/entriesanalyzer.h"
+#include "../../../Data/entry.h"
+#include "../../../GUI/entry/model/entrylistmodel.h"
+#include "../../../GUI/entry/delegate/entryitemdelegate.h"
+#include "../../../Common/entriesanalyzer.h"
 
-#include "Filters/filterbase.h"
+#include "../../../Filters/filterbase.h"
 
 class EntryListView : public QListView
 {

@@ -27,7 +27,7 @@
 #include <QList>
 #include <QMap>
 #include <QColor>
-#include "GUI/StyleTypes.h"
+#include "../GUI/StyleTypes.h"
 
 
 class EngineColorStyleChooser : public QObject

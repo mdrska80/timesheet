@@ -2,7 +2,7 @@
 #define FILTERBASE_H
 
 #include <QtCore>
-#include "Data/entry.h"
+#include "../Data/entry.h"
 
 class FilterBase
 {

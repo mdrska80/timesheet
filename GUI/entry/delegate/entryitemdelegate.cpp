@@ -1,7 +1,7 @@
 #include <QPainter>
 
 #include "entryitemdelegate.h"
-#include "GUI/entry/model/entrylistmodel.h"
+#include "../../../GUI/entry/model/entrylistmodel.h"
 
 EntryItemDelegate::EntryItemDelegate(QListView* parent, bool small){
 

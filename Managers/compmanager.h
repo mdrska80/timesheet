@@ -1,7 +1,7 @@
 #ifndef COMPMANAGER_H
 #define COMPMANAGER_H
 
-#include "Managers/tsmanager.h"
+#include "tsmanager.h"
 
 class TSManager;
 

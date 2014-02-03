@@ -16,12 +16,9 @@ bool Helper::read_file_into_str(QString filename, QString* content)
         return false;
     }
 
-    while (!file.atEnd()) {
-        QByteArray arr = file.readLine();
-        QString str = QString::fromLocal8Bit(arr);
-
-        content->append(str);
-    }
+    QTextStream in(&file);
+    in.setCodec("UTF-8");
+    content->append(in.readAll());
 
     file.close();
 
@@ -34,14 +31,17 @@ bool Helper::read_file_into_str(QString filename, QString* content)
 
 bool Helper::write_file(QString filename, QString content)
 {
-    QFile file(filename);
+    QString executablePth = QDir::currentPath();
+    QFile file(executablePth+"/"+filename);
 
     if (!file.open(QIODevice::WriteOnly | QFile::Text))
     {
         return false;
     }
 
+
     QTextStream out(&file);
+    out.setCodec("UTF-8");
     out << content;
     file.close();
 

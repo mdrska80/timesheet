@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QIODevice>
 #include <QTime>
-#include "qtimespan.h"
+//#include "qtimespan.h"
 
 const QString colorRed = "#72424e";
 const QString colorRedDark = "#2f3751";

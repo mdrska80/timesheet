@@ -1,5 +1,5 @@
 #include "xmlfiledetaildelegate.h"
-#include "Common/tscore.h"
+#include "../../../Common/tscore.h"
 
 XmlFileDetailDelegate::XmlFileDetailDelegate(QListView* parent, bool small)
 {

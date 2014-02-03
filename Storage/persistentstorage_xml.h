@@ -4,10 +4,10 @@
 #include <QList>
 #include <QDomDocument>
 
-#include "Data/entry.h"
-#include "Data/company.h"
-#include "Data/project.h"
-#include "Common/enums.h"
+#include "../Data/entry.h"
+#include "../Data/company.h"
+#include "../Data/project.h"
+#include "../Common/enums.h"
 
 class PersistentStorage_XML
 {

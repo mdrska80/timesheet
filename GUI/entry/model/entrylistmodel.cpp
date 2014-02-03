@@ -3,8 +3,8 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QDebug>
-#include "Common/enums.h"
-#include "Storage/persistentstorage_xml.h"
+#include "../../../Common/enums.h"
+#include "../../../Storage/persistentstorage_xml.h"
 
 EntryListModel::EntryListModel(QObject *parent) :
     QAbstractListModel(parent)

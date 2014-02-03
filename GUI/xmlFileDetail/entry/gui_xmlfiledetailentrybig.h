@@ -3,7 +3,7 @@
 
 #include <QFrame>
 #include "gui_xmlfiledetailentry.h"
-#include "Common/tscore.h"
+#include "../../../Common/tscore.h"
 
 namespace Ui {
 class GUI_XmlFileDetailEntryBig;

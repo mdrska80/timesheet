@@ -3,7 +3,7 @@
 
 #include <QFrame>
 
-#include "Data/entryfileinfo.h"
+#include "../../../Data/entryfileinfo.h"
 
 class GUI_XmlFileDetailEntry : public QFrame
 {

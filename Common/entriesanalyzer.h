@@ -2,8 +2,8 @@
 #define ENTRIESANALYZER_H
 
 #include <QList>
-#include "Data/entry.h"
-#include "Data/entryfileinfo.h"
+#include "../Data/entry.h"
+#include "../Data/entryfileinfo.h"
 
 class EntriesAnalyzer
 {

@@ -4,7 +4,7 @@
 #include "compmanager.h"
 #include "entrymanager.h"
 #include "dbmanager.h"
-#include "Data/tsfile.h"
+#include "../Data/tsfile.h"
 
 class TSProjectManager;
 class CompManager;

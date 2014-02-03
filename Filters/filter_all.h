@@ -1,8 +1,8 @@
 #ifndef FILTER_ALL_H
 #define FILTER_ALL_H
 
-#include "Filters/filterbase.h"
-#include "Data/entry.h"
+#include "filterbase.h"
+#include "../Data/entry.h"
 
 class Filter_All : public FilterBase
 {

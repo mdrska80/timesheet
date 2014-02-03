@@ -2,10 +2,10 @@
 #define ENTRYLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "Data/entry.h"
-#include "Storage/persistentstorage_xml.h"
+#include "../../../Data/entry.h"
+#include "../../../Storage/persistentstorage_xml.h"
 
-#include "Filters/filterbase.h"
+#include "../../../Filters/filterbase.h"
 
 class EntryListModel : public QAbstractListModel
 {

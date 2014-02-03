@@ -1,5 +1,5 @@
 #include "entryfileinfo.h"
-#include "Common/helper.h"
+#include "../Common/helper.h"
 
 EntryFileInfo::EntryFileInfo()
 {

@@ -2,7 +2,7 @@
 #define FILEINFOSTORAGE_H
 
 #include <QtCore>
-#include "Data/entryfileinfo.h"
+#include "../Data/entryfileinfo.h"
 
 class FileInfoStorage
 {

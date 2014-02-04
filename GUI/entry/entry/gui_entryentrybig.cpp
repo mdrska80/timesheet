@@ -44,5 +44,6 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         int percent = secs / (worktime / 100);
 
         ui->levels->set_level(percent,0);
+        ui->levels->setMaximumHeight(15);
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.0.0, 2014-02-03T17:00:56. -->
+<!-- Written by QtCreator 3.0.0, 2014-01-29T13:28:47. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -195,7 +195,7 @@
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.ShowReachable">false</value>
     <value type="bool" key="Analyzer.Valgrind.TrackOrigins">true</value>
-    <value type="QString" key="Analyzer.Valgrind.ValgrindExecutable">valgrind</value>
+    <value type="QString" key="Analyzer.Valgrind.ValgrindExecutable">/usr/bin/valgrind</value>
     <valuelist type="QVariantList" key="Analyzer.Valgrind.VisibleErrorKinds">
      <value type="int">0</value>
      <value type="int">1</value>

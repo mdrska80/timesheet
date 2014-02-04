@@ -52,8 +52,9 @@ QString Helper::getSharePath()
 {
 
     QString path;
-#ifndef Q_OS_WIN
     QString executablePth = QDir::currentPath();
+
+#ifndef Q_OS_WIN
 
     if(QFile::exists(_install_path + "/share/timesheet")) path = _install_path + "/share/timesheet/";
     //else if(QFile::exists("/usr/share/sayonara")) path = "/usr/share/sayonara/";
@@ -64,7 +65,9 @@ QString Helper::getSharePath()
     if(QFile::exists(path)){
         return path;
     }
-    else path = "";
+    else if(QFile::exists(executablePth+"/share")) path = executablePth+"/share/";
+    else
+        path = "";
 #endif
 
     return path;

@@ -66,6 +66,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionMonthly_triggered();
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

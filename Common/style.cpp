@@ -4,7 +4,7 @@ QString Style::get_style(bool dark)
 {
 
     QString style;
-    Helper::getSharePath();
+    //Helper::getSharePath();
     QString share_path = Helper::getSharePath();
 
     if(!dark)

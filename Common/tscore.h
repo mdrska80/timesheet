@@ -4,6 +4,7 @@
 #include <QtCore>
 #include "../Data/company.h"
 #include "../Data/project.h"
+#include "../Data/aggregatedentry.h"
 
 #include "../Storage/fileinfostorage.h"
 
@@ -44,6 +45,9 @@ public:
     QList<Project*> projects;
 
     FileInfoStorage fiStorage;
+
+    QHash<int, AggregatedEntry*> agregatedEntries;
+    void RecalculateAggregatedEntries(QList<Entry*>* entries);
 
 private:
     TSCore(TSCore const&);              // Don't Implement

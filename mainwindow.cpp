@@ -13,6 +13,7 @@
 
 #include "GUI/entry/delegate/entryitemdelegate.h"
 #include "dialogtester.h"
+#include "monthlyreportdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -349,4 +350,12 @@ void MainWindow::on_filteredTextChnged(QString changedText)
 void MainWindow::on_actionExit_triggered()
 {
     close();
+}
+
+void MainWindow::on_actionMonthly_triggered()
+{
+    TSCore::I().RecalculateAggregatedEntries(&ui->listView->get_model()->_storage->entries);
+
+    MonthlyReportDialog md(this);
+    md.exec();
 }

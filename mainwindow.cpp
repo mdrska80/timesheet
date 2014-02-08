@@ -13,7 +13,6 @@
 
 #include "GUI/entry/delegate/entryitemdelegate.h"
 #include "dialogtester.h"
-#include "monthlyreportdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -77,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->spectrum->setMinimumWidth(ui->spectrum->height()*1.618);
     ui->spectrum->resize(ui->spectrum->height()*1.618,ui->spectrum->height());
+
+    this->resize(this->height()*1.618, this->height());
 
 }
 
@@ -366,14 +367,6 @@ void MainWindow::on_filteredTextChnged(QString changedText)
 void MainWindow::on_actionExit_triggered()
 {
     close();
-}
-
-void MainWindow::on_actionMonthly_triggered()
-{
-    TSCore::I().RecalculateAggregatedEntries(&ui->listView->get_model()->_storage->entries);
-
-    MonthlyReportDialog md(this);
-    md.exec();
 }
 
 void MainWindow::on_actionShow_spectrum_triggered(bool checked)

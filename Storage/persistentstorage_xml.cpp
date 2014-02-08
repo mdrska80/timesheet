@@ -381,7 +381,7 @@ QList<float> PersistentStorage_XML::GetSpectrum()
     QList<float> list;
 
     QDate CurrentDate(TSCore::I().workingYear,TSCore::I().workingMonth, 1);
-    int maxDays = CurrentDate.daysInMonth();
+    int maxDays = GetMaxDay();// CurrentDate.daysInMonth();
 
     for(int i = 1; i<=maxDays; i++)
     {
@@ -405,6 +405,24 @@ QList<float> PersistentStorage_XML::GetSpectrum()
 
 
     return list;
+}
+
+int PersistentStorage_XML::GetMaxDay()
+{
+    int maxday = 0;
+    int cnt = entries.size();
+    for(int i = 0;i<cnt;i++)
+    {
+        Entry *e = entries.at(i);
+        if (maxday <= e->date.day())
+            maxday = e->date.day();
+    }
+
+    // 0 is bad...
+    if (maxday==0)
+        maxday = 21;
+
+    return maxday;
 }
 
 int PersistentStorage_XML::GetMassDuration(QList<Entry*> &entries)
@@ -435,4 +453,19 @@ QList<Entry*> PersistentStorage_XML::GetEntriesForDay(int day)
     }
 
     return x;
+}
+
+QString PersistentStorage_XML::ExtractTitlesFromEntries(QList<Entry*> &entries)
+{
+    QString s = "";
+
+    int cnt = entries.size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        Entry* e = entries.at(i);
+        s += "- "+e->title+"<br/>";
+    }
+
+    return s;
 }

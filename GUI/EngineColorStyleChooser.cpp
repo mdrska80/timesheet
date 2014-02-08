@@ -209,7 +209,9 @@ void EngineColorStyleChooser::reload(int widget_width, int widget_height){
         fallback2.rect_width_level = 3;
         fallback2.rect_height_level = 3;
 
-        fallback3.col_list.colors << QColor(0, 216, 0)  << QColor(0, 108, 0) << QColor(0, 108, 108) << QColor(0, 108, 216);
+        //fallback3.col_list.colors << QColor(0, 216, 0)  << QColor(0, 108, 0) << QColor(108, 108, 108) << QColor(216, 108, 216);
+//        fallback3.col_list.colors << QColor(255, 175, 164)  << QColor(254, 112, 88) << QColor(186, 21, 2);
+        fallback3.col_list.colors << QColor(200,156,251) << QColor(100,56,171)  << QColor(59,20,113) << QColor(26,3,75);
         fallback3.col_list.name = "Fancy NEW";
         fallback3.hor_spacing_level = 2;
         fallback3.hor_spacing_level = 2;

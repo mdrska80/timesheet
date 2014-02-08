@@ -41,9 +41,11 @@ public:
     TSVersions IdentifyFormat(QDomElement &node);
 
     // spectrum code
+    int GetMaxDay();
     QList<float> GetSpectrum();
     int GetMassDuration(QList<Entry*> &entries);
     QList<Entry*> GetEntriesForDay(int day);
+    QString ExtractTitlesFromEntries(QList<Entry *> &entries);
 
 
 public:

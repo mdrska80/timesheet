@@ -158,12 +158,12 @@
     </property>
     <addaction name="actionSmall_items"/>
     <addaction name="actionHighlight_today_entries"/>
+    <addaction name="actionShow_spectrum"/>
     <addaction name="separator"/>
     <addaction name="actionSelect_different_month"/>
     <addaction name="actionGo_back_to_current_month"/>
     <addaction name="actionNext_month"/>
     <addaction name="actionPrevious_month"/>
-    <addaction name="actionShow_spectrum"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -171,16 +171,9 @@
     </property>
     <addaction name="actionCreate_desktop_file"/>
    </widget>
-   <widget class="QMenu" name="menuReports">
-    <property name="title">
-     <string>Reports</string>
-    </property>
-    <addaction name="actionMonthly"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuTools"/>
-   <addaction name="menuReports"/>
   </widget>
   <action name="actionSmall_items">
    <property name="checkable">

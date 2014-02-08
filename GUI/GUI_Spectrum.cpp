@@ -9,6 +9,8 @@
 #include <QToolTip>
 #include <QGraphicsSceneMouseEvent>
 
+#include "../Common/tscore.h"
+
 float log_lu[1100];
 
 #define N_BINS 70
@@ -82,11 +84,17 @@ void GUI_Spectrum::mouseMoveEvent(QMouseEvent *e)
 
     QString strPercent = QString("%1%").arg(percent*100,2,'f',0, '0');
 
+    QDate dt(TSCore::I().workingYear, TSCore::I().workingMonth, day+1);
+
+    QList<Entry*> entries = TSCore::I().entriesStorage.GetEntriesForDay(day);
+    QString titles = TSCore::I().entriesStorage.ExtractTitlesFromEntries(entries);
+
     QString s;
     //s += "<b>Debug info:</b> X: " + QString::number(e->x()) + " Y: " + QString::number(e->y()) + ", <br/>";// Day: ";
-    s += "Day: "+QString::number(day+1)+"<br/>";// + ", percent:";
-    s += "Percent: "+strPercent+"<br/>";// + ", <br/> Approx time:";
-    s += "Approx time: "+ttt;
+    s += "Day: "+QString::number(day+1)+", "+QDate::longDayName(dt.dayOfWeek())+"<br/>";
+    s += "Percent: "+strPercent+"<br/>";
+    s += "Approx time: "+ttt+"<br/>";
+    s += "<b>Titles</b>: <br/>"+titles;
 
     // do not display irrelevant info
     if (percent != 0)

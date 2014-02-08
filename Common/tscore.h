@@ -7,6 +7,7 @@
 #include "../Data/aggregatedentry.h"
 
 #include "../Storage/fileinfostorage.h"
+#include "../Storage/persistentstorage_xml.h"
 
 class TSCore
 {
@@ -45,6 +46,7 @@ public:
     QList<Project*> projects;
 
     FileInfoStorage fiStorage;
+    PersistentStorage_XML entriesStorage;
 
     QHash<int, AggregatedEntry*> agregatedEntries;
     void RecalculateAggregatedEntries(QList<Entry*>* entries);

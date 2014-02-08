@@ -68,6 +68,8 @@ private slots:
 
     void on_actionMonthly_triggered();
 
+    void on_actionShow_spectrum_triggered(bool checked);
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

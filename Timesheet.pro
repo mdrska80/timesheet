@@ -50,6 +50,7 @@ SOURCES += main.cpp\
     Filters/filter_thisweek.cpp \
     Filters/filter_all.cpp \
     GUI/GUI_LevelPainter.cpp \
+    GUI/GUI_Spectrum.cpp \
     GUI/EngineColorStyleChooser.cpp \
     Data/tag.cpp \
     monthlyreportdialog.cpp \
@@ -94,6 +95,7 @@ HEADERS  += \
     Filters/filter_thisweek.h \
     Filters/filter_all.h \
     GUI/GUI_LevelPainter.h \
+    GUI/GUI_Spectrum.h \
     GUI/StyleTypes.h \
     GUI/EngineColorStyleChooser.h \
     Data/tag.h \
@@ -107,6 +109,7 @@ FORMS    += \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui \
     dialogtester.ui \
     GUI/GUI_LevelPainter.ui \
+    GUI/GUI_Spectrum.ui \
     monthlyreportdialog.ui
 
 RESOURCES += \

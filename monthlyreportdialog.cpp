@@ -9,6 +9,16 @@ MonthlyReportDialog::MonthlyReportDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    PersistentStorage_XML* storage = &TSCore::I().entriesStorage;
+
+    QList<float> list;
+
+
+    list = storage->GetSpectrum();
+
+
+    ui->spectrum->set_spectrum(list);
+
 
 }
 

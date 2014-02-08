@@ -375,3 +375,64 @@ TSVersions PersistentStorage_XML::IdentifyFormat(QDomElement &node)
 
     return TSVersion_NET;
 }
+
+QList<float> PersistentStorage_XML::GetSpectrum()
+{
+    QList<float> list;
+
+    QDate CurrentDate(TSCore::I().workingYear,TSCore::I().workingMonth, 1);
+    int maxDays = CurrentDate.daysInMonth();
+
+    for(int i = 1; i<=maxDays; i++)
+    {
+        QList<Entry*> eries = GetEntriesForDay(i);
+        int totalSecs = GetMassDuration(eries);
+        int fullDaySecs = 10*60*60;
+
+        float f =((float)totalSecs/((float)fullDaySecs/100))/100;
+
+        //list << 0.1 << 0.9;
+        list << f;
+        //list << 0.1 << 0.4;
+        //list << 0.5 << 0.5;
+    }
+
+    for(int i = 1; i<=maxDays; i++)
+    {
+        //not using fade...
+        list << 0;
+    }
+
+
+    return list;
+}
+
+int PersistentStorage_XML::GetMassDuration(QList<Entry*> &entries)
+{
+    int secs =  0;
+    int cnt = entries.size();
+
+    for(int i = 0;i<cnt;i++)
+    {
+        secs += entries.at(i)->GetDuration();
+    }
+
+    return secs;
+}
+
+QList<Entry*> PersistentStorage_XML::GetEntriesForDay(int day)
+{
+    QList<Entry*> x;
+
+    int cnt = entries.size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        Entry* e = entries.at(i);
+
+        if (e->date.day() == day)
+            x.append(e);
+    }
+
+    return x;
+}

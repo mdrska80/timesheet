@@ -40,6 +40,11 @@ public:
     QList<Entry*> find(QString qs);
     TSVersions IdentifyFormat(QDomElement &node);
 
+    // spectrum code
+    QList<float> GetSpectrum();
+    int GetMassDuration(QList<Entry*> &entries);
+    QList<Entry*> GetEntriesForDay(int day);
+
 
 public:
     QList<Entry*> entries;

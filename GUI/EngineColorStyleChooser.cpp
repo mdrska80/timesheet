@@ -180,7 +180,7 @@ void EngineColorStyleChooser::reload(int widget_width, int widget_height){
     if(colors_active.size() == 0){
 
 
-        RawColorStyle fallback1, fallback2;
+        RawColorStyle fallback1, fallback2, fallback3;
 
         fallback1.col_list.colors << QColor(0, 216, 0)  << QColor(216, 216, 0) << QColor(216, 0, 0) << QColor(216, 0, 0);;
         fallback1.col_list.name = "Fancy";
@@ -209,7 +209,22 @@ void EngineColorStyleChooser::reload(int widget_width, int widget_height){
         fallback2.rect_width_level = 3;
         fallback2.rect_height_level = 3;
 
-        colors_active << fallback1 << fallback2;
+        //fallback3.col_list.colors << QColor(0, 216, 0)  << QColor(0, 108, 0) << QColor(108, 108, 108) << QColor(216, 108, 216);
+//        fallback3.col_list.colors << QColor(255, 175, 164)  << QColor(254, 112, 88) << QColor(186, 21, 2);
+        fallback3.col_list.colors << QColor(200,156,251) << QColor(100,56,171)  << QColor(59,20,113) << QColor(26,3,75);
+        fallback3.col_list.name = "Fancy NEW";
+        fallback3.hor_spacing_level = 2;
+        fallback3.hor_spacing_level = 2;
+        fallback3.ver_spacing_spectrum = 1;
+        fallback3.hor_spacing_spectrum = 1;
+        fallback3.n_bins_spectrum = 50;
+        fallback3.n_fading_steps_level = 20;
+        fallback3.n_fading_steps_spectrum = 20;
+        fallback3.rect_height_spectrum = 2;
+        fallback3.rect_width_level = 5;
+        fallback3.rect_height_level = 6;
+
+        colors_active << fallback1 << fallback2 << fallback3;
 
         //CDatabaseConnector::getInstance()->insert_raw_color_style_to_db(fallback1);
         //CDatabaseConnector::getInstance()->insert_raw_color_style_to_db(fallback2);

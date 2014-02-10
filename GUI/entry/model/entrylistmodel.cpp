@@ -5,18 +5,13 @@
 #include <QDebug>
 #include "../../../Common/enums.h"
 #include "../../../Storage/persistentstorage_xml.h"
+#include "../../../Common/tscore.h"
 
 EntryListModel::EntryListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    _storage = new PersistentStorage_XML();
+    _storage = &TSCore::I().entriesStorage;//new PersistentStorage_XML();
 }
-
-EntryListModel::~EntryListModel()
-{
-    delete _storage;
-}
-
 
 int EntryListModel::rowCount(const QModelIndex& ) const
 {

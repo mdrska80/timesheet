@@ -13,7 +13,6 @@
 
 #include "GUI/entry/delegate/entryitemdelegate.h"
 #include "dialogtester.h"
-#include "monthlyreportdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowIcon(QIcon(":/images/Earth-icon.png"));
     ui->actionExit->setIcon(QIcon(":/system/power_off.png"));
 
+    ui->actionShow_spectrum->setChecked(true);
 
     connect(ui->listView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(on_listView_clicked(const QModelIndex&)));
     connect(ui->listView, SIGNAL(sig_sel_changed(const QModelIndex&)),this, SLOT(on_listView_clicked(const QModelIndex&)));
@@ -66,6 +66,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(on_timeout()));
     timer->setInterval(2000);
     timer->start();
+
+    this->setMouseTracking(true);
+
+
+    PersistentStorage_XML* storage = &TSCore::I().entriesStorage;
+    QList<float> list = storage->GetSpectrum();
+    ui->spectrum->set_spectrum(list);
+
+    ui->spectrum->setMinimumWidth(ui->spectrum->height()*1.618);
+    ui->spectrum->resize(ui->spectrum->height()*1.618,ui->spectrum->height());
+
+    this->resize(this->height()*1.618, this->height());
 
 }
 
@@ -283,7 +295,12 @@ void MainWindow::on_actionPrevious_month_triggered()
 
 void MainWindow::Refresh(QString finalFilter)
 {
-    ui->listView->get_model()->_storage->Load();
+    PersistentStorage_XML* storage = ui->listView->get_model()->_storage;
+    storage->Load();
+
+    QList<float> list = storage->GetSpectrum();
+    ui->spectrum->set_spectrum(list);
+    ui->spectrum->psl_style_update();
 
     int todayIndex = ui->comboBox->findText("Valid");
     ui->comboBox->setCurrentIndex(todayIndex);
@@ -352,10 +369,7 @@ void MainWindow::on_actionExit_triggered()
     close();
 }
 
-void MainWindow::on_actionMonthly_triggered()
+void MainWindow::on_actionShow_spectrum_triggered(bool checked)
 {
-    TSCore::I().RecalculateAggregatedEntries(&ui->listView->get_model()->_storage->entries);
-
-    MonthlyReportDialog md(this);
-    md.exec();
+    ui->spectrum->setVisible(checked);
 }

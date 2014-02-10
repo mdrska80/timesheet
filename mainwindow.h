@@ -50,6 +50,8 @@ private slots:
 
     void UpdateStatusBar();
     void Refresh(QString finalFilter);
+    void RefreshSpectrum();
+
 
 
     void on_actionGo_back_to_current_month_triggered();

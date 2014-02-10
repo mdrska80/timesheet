@@ -23,7 +23,20 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         if (e->description.isEmpty())
             this->ui->descriptionLabel->setText(e->coll["Comment"]);
         else
-            this->ui->descriptionLabel->setText(e->description);
+        {
+            QStringList lst = e->description.split('\n');
+            int size = lst.size();
+
+            QString text = lst[0];
+
+            //remove new line and append ...
+            text = text.replace("<br/>", "");
+
+            if (size > 0)
+                text += "...";
+
+            this->ui->descriptionLabel->setText(text);
+        }
 
         this->ui->dayLabel->setText(e->date.toString("dd"));
 

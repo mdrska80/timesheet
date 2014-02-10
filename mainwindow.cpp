@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spectrum->resize(ui->spectrum->height()*1.618,ui->spectrum->height());
 
     this->resize(this->height()*1.618, this->height());
+    ui->descriptionTextEdit->setMouseTracking(true);
+
 
 }
 
@@ -148,7 +150,7 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
         ui->fromLineEdit->setText(e->from.toString("hh:mm"));
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
         ui->titleLineEdit->setText(e->title);
-        ui->descriptionTextEdit->setText(e->description);
+        ui->descriptionTextEdit->setText(e->description.replace("\n", "<br/>"));
     }
 }
 
@@ -273,6 +275,9 @@ void MainWindow::UpdateStatusBar()
     }
 
     ui->statusbar->showMessage(message);
+
+    //update values on spectrum :)
+    RefreshSpectrum();
 }
 
 void MainWindow::on_actionGo_back_to_current_month_triggered()
@@ -298,9 +303,7 @@ void MainWindow::Refresh(QString finalFilter)
     PersistentStorage_XML* storage = ui->listView->get_model()->_storage;
     storage->Load();
 
-    QList<float> list = storage->GetSpectrum();
-    ui->spectrum->set_spectrum(list);
-    ui->spectrum->psl_style_update();
+    RefreshSpectrum();
 
     int todayIndex = ui->comboBox->findText("Valid");
     ui->comboBox->setCurrentIndex(todayIndex);
@@ -315,6 +318,15 @@ void MainWindow::Refresh(QString finalFilter)
 
     this->setWindowTitle(qsWindowTitle);
     UpdateStatusBar();
+}
+
+void MainWindow::RefreshSpectrum()
+{
+    PersistentStorage_XML* storage = &TSCore::I().entriesStorage;
+
+    QList<float> list = storage->GetSpectrum();
+    ui->spectrum->set_spectrum(list);
+    ui->spectrum->psl_style_update();
 }
 
 void MainWindow::on_actionCreate_desktop_file_triggered()

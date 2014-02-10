@@ -53,7 +53,7 @@ QString Entry::toXml(TSVersions ver)
     {
     case TSVersion_QT:
 
-        description = description.replace("<br/>","\n");
+        //description = description.replace("<br/>","\n");
 
         res = QString("\t<Entry"
                               " id='%1'"

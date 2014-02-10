@@ -85,7 +85,7 @@ private:
 
     void resize_steps(int bins, int rects);
 
-    int highlightedColumn = -1;
+    int highlightedColumn;
 
 };
 

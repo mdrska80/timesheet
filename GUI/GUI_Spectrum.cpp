@@ -19,6 +19,7 @@ GUI_Spectrum::GUI_Spectrum(QWidget *parent) :
   QWidget(parent)
 //, ui(new Ui::GUI_Spectrum)
 {
+    highlightedColumn = -1;
 
     _cur_style_idx = 0;//CSettingsStorage::getInstance()->getSpectrumStyle();
     ui = new Ui::GUI_Spectrum();

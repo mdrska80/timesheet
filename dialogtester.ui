@@ -28,11 +28,11 @@
     <widget class="XmlFileDetailView" name="listView"/>
    </item>
    <item>
-    <widget class="GUI_LevelPainter" name="levels" native="true">
+    <widget class="GUI_Tag" name="tag" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </widget>
@@ -53,9 +53,9 @@
    <header>GUI/xmlFileDetail/view/xmlfiledetailview.h</header>
   </customwidget>
   <customwidget>
-   <class>GUI_LevelPainter</class>
+   <class>GUI_Tag</class>
    <extends>QWidget</extends>
-   <header>GUI/GUI_LevelPainter.h</header>
+   <header>GUI/GUI_Tag.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

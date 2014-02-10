@@ -24,7 +24,8 @@ DialogTester::DialogTester(QWidget *parent) :
 
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
 //    connect(this, SIGNAL(destroyed()), this, SLOT(on_pushButton_clicked()));
-    ui->levels->psl_stop();
+    //ui->levels->psl_stop();
+    ui->tag->set_tag("testovaci tag", Qt::blue);
     //ui->levels->set_level(0.1f,0.1f);
 //    ui->levels->psl_stop();
     //ui->listView->scrollDown();
@@ -59,8 +60,8 @@ void DialogTester::on_filteredTextChnged(QString changedText)
     ui->listView->ApplyFilter(changedText);
     // 5 je max
     // -45 je 0
-    ui->levels->set_level(100,0);
-    ui->levels->psl_stop();
+    //ui->levels->set_level(100,0);
+    //ui->levels->psl_stop();
 }
 
 void DialogTester::closeEvent(QCloseEvent *event)

@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     GUI/GUI_Spectrum.cpp \
     GUI/EngineColorStyleChooser.cpp \
     Data/tag.cpp \
-    Data/aggregatedentry.cpp
+    Data/aggregatedentry.cpp \
+    GUI/GUI_Tag.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -98,7 +99,8 @@ HEADERS  += \
     GUI/StyleTypes.h \
     GUI/EngineColorStyleChooser.h \
     Data/tag.h \
-    Data/aggregatedentry.h
+    Data/aggregatedentry.h \
+    GUI/GUI_Tag.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
@@ -107,7 +109,8 @@ FORMS    += \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.ui \
     dialogtester.ui \
     GUI/GUI_LevelPainter.ui \
-    GUI/GUI_Spectrum.ui
+    GUI/GUI_Spectrum.ui \
+    GUI/GUI_Tag.ui
 
 RESOURCES += \
     resources.qrc

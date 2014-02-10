@@ -53,17 +53,19 @@ QString Entry::toXml(TSVersions ver)
     {
     case TSVersion_QT:
 
+        description = description.replace("<br/>","\n");
+
         res = QString("\t<Entry"
                               " id='%1'"
                               " date='%2'"
                               " from='%3'"
                               " to='%4'"
                               " project='%8'"
-                              " company='%7'>\r\n"
+                              " company='%7'>\n"
 
-                              "\t\t<Title>%5</Title>\r\n"
-                              "\t\t<Description>%6</Description>\r\n"
-                              "\t</Entry>\r\n\r\n"
+                              "\t\t<Title>%5</Title>\n"
+                              "\t\t<Description>%6</Description>\n"
+                              "\t</Entry>\n\n"
                               )
                 .arg(id)
                 .arg(date.toString("dd.MM.yyyy"))

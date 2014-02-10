@@ -41,7 +41,7 @@ void PersistentStorage_XML::Load()
 void PersistentStorage_XML::SaveEntries(QString filename, TSVersions ver)
 {
     int max = entries.size();
-    QString qs = "<Entries>\r\n";
+    QString qs = "<Entries>\n";
 
     for(int i = 0;i<max;i++)
     {
@@ -63,7 +63,7 @@ void PersistentStorage_XML::SaveEntries(QString filename, TSVersions ver)
 void PersistentStorage_XML::SaveCompanies(QString filename)
 {
     int max = companies.size();
-    QString qs = "<Companies>\r\n";
+    QString qs = "<Companies>\n";
 
     for(int i = 0;i<max;i++)
     {
@@ -79,7 +79,7 @@ void PersistentStorage_XML::SaveCompanies(QString filename)
 void PersistentStorage_XML::SaveProjects(QString filename)
 {
     int max = projects.size();
-    QString qs = "<Projects>\r\n";
+    QString qs = "<Projects>\n";
 
     for(int i = 0;i<max;i++)
     {

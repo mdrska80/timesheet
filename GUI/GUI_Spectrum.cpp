@@ -162,11 +162,7 @@ GUI_Spectrum::paintEvent(QPaintEvent *e){
 
     int w_bin = ((this->width() + 10) / (ninety - offset)) - border_x;
 
-
-
     int n_zero = 0;
-
-
 
     // run through all bins
     for(int i=offset; i<ninety + 1; i++){
@@ -204,6 +200,15 @@ GUI_Spectrum::paintEvent(QPaintEvent *e){
 
                 if (i == highlightedColumn)
                     col = QColor(50,50,50);
+
+                //n_rects = 8h;
+                int secs = 10*60*60;
+                float div = (8*60*60)/(secs/100); //%
+                int peek = ((div/100)*n_rects)-1;
+                //int peek = (div * widget_height)/h_rect;
+
+                if (peek==r)
+                    col = QColor(65,65,65);
 
             }
 

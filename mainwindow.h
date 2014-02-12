@@ -32,7 +32,6 @@ public:
 
     void HandleFilters();
 
-
 private slots:
     void on_listView_clicked(const QModelIndex &index);
 

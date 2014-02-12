@@ -112,3 +112,69 @@ QString Entry::GetDurationAshhmm()
     return time.toString("hh:mm");
 }
 
+QStringList Entry::GetUrls()
+{
+    QStringList lResult;
+    //get all urls in description.
+    QStringList lst = description.split("http");
+
+    int cnt = lst.size();
+    for(int i = 1;i<cnt;i++)
+    {
+        QString str = lst[i];
+
+        int firstSpaceIndex = str.indexOf(' ',0);
+        QString strUrl = "http"+str.left(firstSpaceIndex);
+
+        lResult.append(strUrl);
+    }
+
+    return lResult;
+}
+
+QString Entry::GetUrlsAsTitles()
+{
+    QStringList lst = GetUrls();
+    QString result;
+
+    foreach(QString s, lst)
+    {
+        result += s + "\n";
+    }
+
+    return result;
+}
+
+QStringList Entry::GetTags()
+{
+    QStringList lResult;
+    //get all urls in description.
+    QStringList lst = description.split("#");
+
+    int cnt = lst.size();
+    for(int i = 1;i<cnt;i++)
+    {
+        QString str = lst[i];
+
+        int firstSpaceIndex = str.indexOf(' ',0);
+        QString strTag = str.left(firstSpaceIndex);
+
+        lResult.append(strTag);
+    }
+
+    return lResult;
+}
+
+QString Entry::GetTagsAsText()
+{
+    QStringList lst = GetTags();
+    QString result;
+
+    foreach(QString s, lst)
+    {
+        result += s + ", ";
+    }
+
+    return result;
+}
+

@@ -80,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->resize(this->height()*1.618, this->height());
     ui->descriptionTextEdit->setMouseTracking(true);
 
+    ui->urlLabel->setText("");
+    ui->urlLabel->setMaximumHeight(24);
+
 
 }
 
@@ -213,6 +216,17 @@ void MainWindow::on_descriptionChanged()
     {
         e->description = ui->descriptionTextEdit->toPlainText();
         ui->listView->UpdateAndSave();
+
+        if (e->description.contains("http"))
+        {
+            QString urls = e->GetUrlsAsTitles();
+            ui->urlLabel->setText("<img src=':images/Earth-icon.png' width='24' height='24' />");
+            ui->urlLabel->setToolTip(urls);
+        }
+        else
+        {
+            ui->urlLabel->setText("");
+        }
     }
 
     UpdateStatusBar();

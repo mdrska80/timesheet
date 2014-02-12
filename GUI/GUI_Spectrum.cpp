@@ -87,8 +87,10 @@ void GUI_Spectrum::mouseMoveEvent(QMouseEvent *e)
 
     QDate dt(TSCore::I().workingYear, TSCore::I().workingMonth, day+1);
 
-    QList<Entry*> entries = TSCore::I().entriesStorage.GetEntriesForDay(day);
+    QList<Entry*> entries = TSCore::I().entriesStorage.GetEntriesForDay(day+1);
     QString titles = TSCore::I().entriesStorage.ExtractTitlesFromEntries(entries);
+
+    //QString wrappedTitles  = "<font color=black>"+titles+"</font>";
 
     QString s;
     //s += "<b>Debug info:</b> X: " + QString::number(e->x()) + " Y: " + QString::number(e->y()) + ", <br/>";// Day: ";

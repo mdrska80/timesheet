@@ -61,6 +61,12 @@ public:
 
     int GetDuration();
     QString GetDurationAshhmm();
+    QStringList GetUrls();
+    QString GetUrlsAsTitles();
+
+    // Tags
+    QStringList GetTags();
+    QString GetTagsAsText();
 
 
     QVariant toVariant() const{

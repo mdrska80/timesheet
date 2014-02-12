@@ -34,9 +34,9 @@ SOURCES += main.cpp\
     GUI/xmlFileDetail/delegate/xmlfiledetaildelegate.cpp \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentry.cpp \
     GUI/xmlFileDetail/entry/gui_xmlfiledetailentrybig.cpp \
+    GUI/xmlFileDetail/model/xmlfiledetailmodel.cpp \
     Data/entryfileinfo.cpp \
     Data/errormessage.cpp \
-    GUI/xmlFileDetail/model/xmlfiledetailmodel.cpp \
     Storage/fileinfostorage.cpp \
     GUI/xmlFileDetail/view/xmlfiledetailview.cpp \
     dialogtester.cpp \
@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     GUI/EngineColorStyleChooser.cpp \
     Data/tag.cpp \
     Data/aggregatedentry.cpp \
-    GUI/GUI_Tag.cpp
+    GUI/GUI_Tag.cpp \
+    Data/attachment.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -100,7 +101,8 @@ HEADERS  += \
     GUI/EngineColorStyleChooser.h \
     Data/tag.h \
     Data/aggregatedentry.h \
-    GUI/GUI_Tag.h
+    GUI/GUI_Tag.h \
+    Data/attachment.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \

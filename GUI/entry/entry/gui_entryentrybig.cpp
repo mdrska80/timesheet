@@ -32,7 +32,7 @@ void GUI_EntryEntryBig::setContent(Entry* e)
             //remove new line and append ...
             text = text.replace("<br/>", "");
 
-            if (size > 0)
+            if (size > 1)
                 text += "...";
 
             this->ui->descriptionLabel->setText(text);
@@ -52,6 +52,15 @@ void GUI_EntryEntryBig::setContent(Entry* e)
             this->ui->durationLabel->setText(e->GetDurationAshhmm());
 
         //qreal r = ts.toSecs();
+        if (e->description.contains("http"))
+        {
+            QString urls = e->GetUrlsAsTitles();
+            ui->urlImageLabel->setText("<img src=':images/Earth-icon.png' width='24' title='"+urls+"'/>");
+        }
+        else
+            ui->urlImageLabel->setText("");
+
+        ui->tagLabel->setText(e->GetTagsAsText());
 
         int worktime = 60*60*4;
         int percent = secs / (worktime / 100);

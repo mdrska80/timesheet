@@ -53,7 +53,8 @@ QString Entry::toXml(TSVersions ver)
     {
     case TSVersion_QT:
 
-        //description = description.replace("<br/>","\n");
+        // for sure
+        description = description.replace("<br/>","\n");
 
         res = QString("\t<Entry"
                               " id='%1'"
@@ -172,7 +173,8 @@ QString Entry::GetTagsAsText()
 
     foreach(QString s, lst)
     {
-        result += s + ", ";
+        if (s!="")
+            result += s + ", ";
     }
 
     return result;

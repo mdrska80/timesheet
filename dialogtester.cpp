@@ -25,7 +25,11 @@ DialogTester::DialogTester(QWidget *parent) :
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
 //    connect(this, SIGNAL(destroyed()), this, SLOT(on_pushButton_clicked()));
     //ui->levels->psl_stop();
-    ui->tag->set_tag("testovaci tag", Qt::blue);
+    QStringList lst;
+    lst.append("Test");
+    lst.append("KV");
+
+    ui->tag->set_tags(lst);
     //ui->levels->set_level(0.1f,0.1f);
 //    ui->levels->psl_stop();
     //ui->listView->scrollDown();

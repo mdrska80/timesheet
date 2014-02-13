@@ -28,7 +28,7 @@
     <widget class="XmlFileDetailView" name="listView"/>
    </item>
    <item>
-    <widget class="GUI_Tag" name="tag" native="true">
+    <widget class="GUI_Tags" name="tag" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -53,9 +53,9 @@
    <header>GUI/xmlFileDetail/view/xmlfiledetailview.h</header>
   </customwidget>
   <customwidget>
-   <class>GUI_Tag</class>
+   <class>GUI_Tags</class>
    <extends>QWidget</extends>
-   <header>GUI/GUI_Tag.h</header>
+   <header>GUI/GUI_Tags.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

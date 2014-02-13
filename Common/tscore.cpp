@@ -44,6 +44,21 @@ Project* TSCore::GetProject(QDate dt)
     return NULL;
 }
 
+Tag* TSCore::GetTag(QString name)
+{
+    int cnt = entriesStorage.tags.size();
+
+    for (int i = 0; i<cnt; i++)
+    {
+        Tag* t = entriesStorage.tags[i];
+
+        if (t->code == name)
+            return t;
+    }
+
+    return NULL;
+}
+
 void TSCore::MoveForward()
 {
     workingMonth++;

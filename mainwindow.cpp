@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(on_currentTextChanged(QString)));
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
 
+    connect(this, SIGNAL(destroyed()), this, SLOT(on_Savetimeout()));
+
     // set up style
     //Style::get_style(true);
     QString style = Style::get_style(true);
@@ -67,6 +69,11 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->setInterval(2000);
     timer->start();
 
+    timerSave = new QTimer(this) ;
+    connect(timerSave, SIGNAL(timeout()), this, SLOT(on_Savetimeout()));
+    timerSave->setInterval(60000); // co 60 s
+    timerSave->start();
+
     this->setMouseTracking(true);
 
 
@@ -82,8 +89,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->urlLabel->setText("");
     ui->urlLabel->setMaximumHeight(24);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -93,8 +98,8 @@ MainWindow::~MainWindow()
 
     // delete filters
     delete ft;
-    delete fv;
-    delete fiv;
+    //delete fv;
+    //delete fiv;
     delete fy;
     delete ftw;
     delete fa;
@@ -103,15 +108,15 @@ MainWindow::~MainWindow()
 void MainWindow::HandleFilters()
 {
     ft = new Filter_Today();
-    fv = new Filter_Valid();
-    fiv = new Filter_Invalid();
+//    fv = new Filter_Valid();
+//    fiv = new Filter_Invalid();
     fy = new Filter_Yesterday();
     ftw = new Filter_Thisweek();
     fa = new Filter_All();
 
     filters.insert(ft->name,ft);
-    filters.insert(fv->name,fv);
-    filters.insert(fiv->name,fiv);
+    //filters.insert(fv->name,fv);
+//    filters.insert(fiv->name,fiv);
     filters.insert(fy->name,fy);
     filters.insert(ftw->name,ftw);
     filters.insert(fa->name,fa);
@@ -131,15 +136,23 @@ void MainWindow::on_timeout()
         ui->statusbar->showMessage("Loading history", 2000);
         s->Load();
         ui->statusbar->showMessage("History loaded", 2000);
+
+
+        QCompleter *completer = new QCompleter(TSCore::I().fiStorage.titles, this);
+        completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->titleLineEdit->setCompleter(completer);
+
+        timer->stop();
     }
-
-    QCompleter *completer = new QCompleter(TSCore::I().fiStorage.titles, this);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->titleLineEdit->setCompleter(completer);
-
-    timer->stop();
 }
 
+void MainWindow::on_Savetimeout()
+{
+    ui->statusbar->showMessage("Saving...", 1000);
+    ui->listView->UpdateAndSave();
+}
+
+#define DO_NOT_SAVE_ONCHANGE(b) _do_not_save_onchange = b
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
     QVariant q = index.model();
@@ -149,11 +162,13 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 
     if (e != NULL)
     {
+        DO_NOT_SAVE_ONCHANGE(true);
         ui->dateLineEdit->setText(e->date.toString("dd.MM.yyyy"));
         ui->fromLineEdit->setText(e->from.toString("hh:mm"));
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
         ui->titleLineEdit->setText(e->title);
         ui->descriptionTextEdit->setText(e->description.replace("\n", "<br/>"));
+        DO_NOT_SAVE_ONCHANGE(false);
     }
 }
 
@@ -161,10 +176,7 @@ void MainWindow::on_titleChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
-    {
         e->title = changedText;
-        ui->listView->UpdateAndSave();
-    }
 
     UpdateStatusBar();
 }
@@ -173,11 +185,7 @@ void MainWindow::on_toChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
-    {
         e->to = Helper::ConstructTime(changedText);
-
-        ui->listView->UpdateAndSave();
-    }
 
     UpdateStatusBar();
 }
@@ -186,11 +194,7 @@ void MainWindow::on_fromChanged(QString changedText)
 {
     Entry *e = ui->listView->get_selection();
     if (e!=NULL)
-    {
         e->from = Helper::ConstructTime(changedText);
-
-        ui->listView->UpdateAndSave();
-    }
 
     UpdateStatusBar();
 }
@@ -200,11 +204,7 @@ void MainWindow::on_dateChanged(QString changedText)
     Entry *e = ui->listView->get_selection();
 
     if (e!=NULL)
-    {
-        e->date = Helper::ConstructDate(changedText);  //QDate::fromString(changedText, "dd.MM.yyyy");
-        ui->listView->UpdateAndSave();
-        //ui->listView->get_model()->ApplyFilter();
-    }
+        e->date = Helper::ConstructDate(changedText);
 
     UpdateStatusBar();
 }
@@ -215,7 +215,6 @@ void MainWindow::on_descriptionChanged()
     if (e!=NULL)
     {
         e->description = ui->descriptionTextEdit->toPlainText();
-        ui->listView->UpdateAndSave();
 
         if (e->description.contains("http"))
         {
@@ -226,6 +225,18 @@ void MainWindow::on_descriptionChanged()
         else
         {
             ui->urlLabel->setText("");
+        }
+
+        QStringList tags = e->GetTags();
+        foreach (QString s, tags) {
+            //handle tags
+            Tag* t = TSCore::I().GetTag(s);
+            if (t==NULL)
+            {
+                Tag* t = new Tag();
+                t->code = s;
+                TSCore::I().entriesStorage.tags.append(t);
+            }
         }
     }
 
@@ -244,8 +255,6 @@ void MainWindow::on_currentTextChanged(QString newText)
     {
         qDebug() << "unknown filter: " << newText;
     }
-
-    UpdateStatusBar();
 }
 
 void MainWindow::on_actionSmall_items_triggered(bool checked)
@@ -259,16 +268,14 @@ void MainWindow::on_actionSelect_different_month_triggered()
     DialogTester tester(this);
     tester.exec();
 
-//    if (TSCore::I().needReload)
-//    {
-        Refresh("All");
-//    }
-
-    //update();
+    Refresh("All");
 }
 
 void MainWindow::UpdateStatusBar()
 {
+    if (!_do_not_save_onchange)
+        on_Savetimeout();
+
     // analyze filtered items.
     EntryFileInfo efi;
     EntriesAnalyzer an = EntriesAnalyzer(&ui->listView->get_model()->_storage->filteredEntries, &efi);

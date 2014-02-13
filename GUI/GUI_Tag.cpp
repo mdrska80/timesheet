@@ -13,11 +13,23 @@ GUI_Tag::~GUI_Tag()
     delete ui;
 }
 
+QSize GUI_Tag::get_size()
+{
+    //set_text must be called first !!!
+
+    // set new size
+    int width = determineWidth()+8;
+    int height = 32; // :)
+
+    return QSize(width, height);
+}
+
 void GUI_Tag::set_tag(QString text, QColor color)
 {
     this->color = color;
 
     ui->lbl->setText(text);
+    innerText = text;
     this->setStyleSheet("QWidget {  border-radius: 3px; background-color : "+color.name()+"; }");
 
     // improve font
@@ -27,12 +39,11 @@ void GUI_Tag::set_tag(QString text, QColor color)
     ui->lbl->setFont(font);
 
     // set new size
-    int width = determineWidth()+8;
-    int height = 32; // :)
-    this->setMaximumHeight(height);
-    this->setMaximumWidth(width);
+    QSize s = get_size();
+    this->setMaximumHeight(s.height());
+    this->setMaximumWidth(s.width());
 
-    resize(width, height);
+    resize(s.width(), s.height());
 
     this->update();
 }

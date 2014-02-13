@@ -60,7 +60,7 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         else
             ui->urlImageLabel->setText("");
 
-        ui->tagLabel->setText(e->GetTagsAsText());
+        //HandleTags(e);
 
         int worktime = 60*60*4;
         int percent = secs / (worktime / 100);
@@ -68,4 +68,20 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         ui->levels->set_level(percent,0);
         ui->levels->setMaximumHeight(15);
     }
+
 }
+
+void GUI_EntryEntryBig::HandleTags(Entry *e)
+{
+    QString l = e->GetTagsAsText();
+    QString current = ui->tag->textualTags;
+    if (current != l)
+    {
+        qDebug() << "Start handling tags. Adding: " << l;
+        QStringList sl = e->GetTags();
+        ui->tag->set_tags(sl);
+        ui->tag->textualTags = l;
+        qDebug() << "End handling tags";
+    }
+}
+

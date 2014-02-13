@@ -20,14 +20,17 @@ public:
     void SaveEntries(QString filename, TSVersions ver = TSVersion_QT);
     void SaveCompanies(QString filename);
     void SaveProjects(QString filename);
+    void SaveTags(QString filename);
 
     void ReadEntries(QString filename);
     void ReadCompanies(QString filename);
     void ReadProjects(QString filename);
+    void ReadTags(QString filename);
 
     Entry* ReadEntry(QDomElement node);
     Company* ReadCompany(QDomElement node);
     Project* ReadProject(QDomElement node);
+    Tag* ReadTag(QDomElement node);
 
     //helper methods
     Company* FindCompanyByName(QString name);
@@ -36,6 +39,7 @@ public:
     void CleanEntries();
     void CleanCompanies();
     void CleanProjects();
+    void CleanTags();
 
     QList<Entry*> find(QString qs);
     TSVersions IdentifyFormat(QDomElement &node);
@@ -52,6 +56,7 @@ public:
     QList<Entry*> entries;
     QList<Company*> companies;
     QList<Project*> projects;
+    QList<Tag*> tags;
 
     QList<Entry*> filteredEntries;
 

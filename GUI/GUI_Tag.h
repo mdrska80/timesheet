@@ -19,11 +19,10 @@ public:
     ~GUI_Tag();
 
     void set_tag(QString text, QColor color);
+    QSize get_size();
     int determineWidth();
 
-    // overrides
-//    void paintEvent(QPaintEvent *e);
-
+    QString innerText;
 
 private:
     Ui::GUI_Tag *ui;

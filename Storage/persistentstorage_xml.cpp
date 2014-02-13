@@ -20,22 +20,25 @@ void PersistentStorage_XML::Save()
 {
 //    SaveCompanies("companies.xml");
 //    SaveProjects("projects.xml");
+    SaveTags("tags.xml");
     SaveEntries(TSCore::I().GetEntriesFile());
+
+    qDebug() << "Saving data";
 }
 
 void PersistentStorage_XML::Load()
 {
     QString companiesFile = "companies.xml";
     QString projectsFile = "projects.xml";
+    QString tagsFile = "tags.xml";
     QString entriesFile = TSCore::I().GetEntriesFile();
 
     ReadCompanies(companiesFile);
     ReadProjects(projectsFile);
     ReadEntries(entriesFile);
+    ReadTags(tagsFile);
 
-    //ApplyFilter(FilterType_Today);
-
-    //return entries;
+    qDebug() << "Loading data";
 }
 
 void PersistentStorage_XML::SaveEntries(QString filename, TSVersions ver)
@@ -89,6 +92,22 @@ void PersistentStorage_XML::SaveProjects(QString filename)
 
     //finalize xml
     qs.append("</Projects>");
+    Helper::write_file(filename, qs);
+}
+
+void PersistentStorage_XML::SaveTags(QString filename)
+{
+    int max = tags.size();
+    QString qs = "<Tags>\n";
+
+    for(int i = 0;i<max;i++)
+    {
+        Tag* e = tags.at(i);
+        qs.append(e->toXml());
+    }
+
+    //finalize xml
+    qs.append("</Tags>");
     Helper::write_file(filename, qs);
 }
 
@@ -163,6 +182,28 @@ void PersistentStorage_XML::ReadProjects(QString filename)
 
     // publish it
     TSCore::I().projects = projects;
+}
+
+void PersistentStorage_XML::ReadTags(QString filename)
+{
+    CleanTags();
+
+    QString content;
+    if (Helper::read_file_into_str(filename, &content))
+    {
+        QDomDocument doc;
+        doc.setContent(content);
+
+        QDomNodeList list = doc.elementsByTagName("Tag");
+
+        for (int x = 0; x < list.count(); x++)
+        {
+            QDomElement node = list.at(x).toElement();
+
+            Tag *t = ReadTag(node);
+            tags.append(t);
+        }
+    }
 }
 
 Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
@@ -282,6 +323,16 @@ Project* PersistentStorage_XML::ReadProject(QDomElement node)
     return p;
 }
 
+Tag* PersistentStorage_XML::ReadTag(QDomElement node)
+{
+    Tag* p = new Tag();
+
+    p->code = node.attribute("code");
+    p->color = node.attribute("color");
+
+    return p;
+}
+
 Company* PersistentStorage_XML::FindCompanyByName(QString name)
 {
     int companiesCnt = companies.size();
@@ -343,6 +394,17 @@ void PersistentStorage_XML::CleanProjects()
     projects.clear();
 }
 
+void PersistentStorage_XML::CleanTags()
+{
+    int cnt = tags.size();
+
+    for (int i = 0;i<cnt;i++)
+    {
+        delete tags.at(i);
+    }
+    tags.clear();
+}
+
 QList<Entry*> PersistentStorage_XML::find(QString qs)
 {
     QList<Entry*> lst;
@@ -351,8 +413,9 @@ QList<Entry*> PersistentStorage_XML::find(QString qs)
     for (int i = 0;i<cnt;i++)
     {
         Entry *e = entries[i];
+        qs = qs.toLower();
 
-        if (e->title.contains(qs) || e->description.contains(qs))
+        if (e->title.toLower().contains(qs) || e->description.toLower().contains(qs))
             lst.append(e);
     }
 

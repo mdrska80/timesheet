@@ -13,8 +13,7 @@
 #include "company.h"
 #include "project.h"
 #include "tag.h"
-//#include  "../Common/qtimespan.h"
-#include  "../Common/enums.h"
+#include "../Common/enums.h"
 
 class Entry
 {

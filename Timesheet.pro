@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     Data/tag.cpp \
     Data/aggregatedentry.cpp \
     GUI/GUI_Tag.cpp \
-    Data/attachment.cpp
+    Data/attachment.cpp \
+    GUI/GUI_Tags.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -102,7 +103,8 @@ HEADERS  += \
     Data/tag.h \
     Data/aggregatedentry.h \
     GUI/GUI_Tag.h \
-    Data/attachment.h
+    Data/attachment.h \
+    GUI/GUI_Tags.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
@@ -112,7 +114,8 @@ FORMS    += \
     dialogtester.ui \
     GUI/GUI_LevelPainter.ui \
     GUI/GUI_Spectrum.ui \
-    GUI/GUI_Tag.ui
+    GUI/GUI_Tag.ui \
+    GUI/GUI_Tags.ui
 
 RESOURCES += \
     resources.qrc

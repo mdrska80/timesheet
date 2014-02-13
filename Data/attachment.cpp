@@ -3,7 +3,7 @@
 
 Attachment::Attachment()
 {
-    QUuid uid = QUuid::createUuid();
+    QUuid uuid = QUuid::createUuid();
     _uuid = uuid.toString();
 }
 

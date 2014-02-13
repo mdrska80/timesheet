@@ -60,11 +60,10 @@ private slots:
     void on_actionPrevious_month_triggered();
 
     void on_timeout();
+    void on_Savetimeout();
 
     void on_actionCreate_desktop_file_triggered();
     void on_filteredTextChnged(QString changedText);
-
-
     void on_actionExit_triggered();
 
     void on_actionShow_spectrum_triggered(bool checked);
@@ -73,6 +72,7 @@ private:
     Ui::MainWindow *ui;
     TSManager* manager;
     QTimer* timer;
+    QTimer* timerSave;
 
     QHash<QString, FilterBase*> filters;
 
@@ -82,6 +82,8 @@ private:
     Filter_Yesterday* fy;
     Filter_Thisweek* ftw;
     Filter_All* fa;
+
+    bool _do_not_save_onchange;
 };
 
 #endif // MAINWINDOW_H

@@ -34,6 +34,7 @@ public:
 
     Company* GetCompany(QDate dt);
     Project* GetProject(QDate dt);
+    Tag* GetTag(QString name);
 
     void MoveForward();
     void MoveBackward();

@@ -4,6 +4,8 @@
 #include <QFrame>
 #include "gui_entryentry.h"
 
+#include "../../../Common/tscore.h"
+
 namespace Ui {
 class GUI_EntryEntryBig;
 }
@@ -17,6 +19,9 @@ public:
     ~GUI_EntryEntryBig();
 
     virtual void setContent(Entry* e);
+
+    void HandleTags(Entry *e);
+
 
 
 private:

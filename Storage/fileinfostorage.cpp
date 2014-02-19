@@ -1,6 +1,7 @@
 #include "fileinfostorage.h"
 #include "../Common/entriesanalyzer.h"
 #include "../Storage/persistentstorage_xml.h"
+#include "../Common/tscore.h"
 
 FileInfoStorage::FileInfoStorage()
 {
@@ -11,16 +12,31 @@ FileInfoStorage::~FileInfoStorage()
     CleanInfos();
 }
 
-void FileInfoStorage::Load()
+void FileInfoStorage::Load(bool onlyActiveCompany)
 {
-    ReadInfos();
+    if (onlyActiveCompany)
+    {
+        Company *c = GetActiveCompany();
+        ReadInfos(c->from);
+    }
+    else
+    {
+        ReadInfos();
+    }
+
     CheckAllFilesExistence();
 
     isLoaded = true;
     needRefresh = false;
 }
 
-void FileInfoStorage::ReadInfos()
+Company* FileInfoStorage::GetActiveCompany()
+{
+    Company *c = TSCore::I().GetCompany(QDate::currentDate());
+    return c;
+}
+
+void FileInfoStorage::ReadInfos(QDate start)
 {
     CleanInfos();
 
@@ -29,10 +45,15 @@ void FileInfoStorage::ReadInfos()
     int cnt = lst.size();
     for (int i = 0;i<cnt;i++)
     {
-        EntryFileInfo *efi = ReadInfo(lst[i]);
+        QDate dt = TSCore::I().GetDateFromFilename(lst[i]);
 
-        if (efi != NULL)
-            infos.append(efi);
+        if (dt >= start)
+        {
+            EntryFileInfo *efi = ReadInfo(lst[i]);
+
+            if (efi != NULL)
+                infos.append(efi);
+        }
     }
 
 }

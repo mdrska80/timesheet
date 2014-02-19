@@ -56,7 +56,8 @@ SOURCES += main.cpp\
     Data/aggregatedentry.cpp \
     GUI/GUI_Tag.cpp \
     Data/attachment.cpp \
-    GUI/GUI_Tags.cpp
+    GUI/GUI_Tags.cpp \
+    exportdialog.cpp
 
 HEADERS  += \
     GUI/entry/model/entrylistmodel.h \
@@ -104,7 +105,8 @@ HEADERS  += \
     Data/aggregatedentry.h \
     GUI/GUI_Tag.h \
     Data/attachment.h \
-    GUI/GUI_Tags.h
+    GUI/GUI_Tags.h \
+    exportdialog.h
 
 FORMS    += \
     GUI/entry/entry/gui_entryentrysmall.ui \
@@ -115,7 +117,8 @@ FORMS    += \
     GUI/GUI_LevelPainter.ui \
     GUI/GUI_Spectrum.ui \
     GUI/GUI_Tag.ui \
-    GUI/GUI_Tags.ui
+    GUI/GUI_Tags.ui \
+    exportdialog.ui
 
 RESOURCES += \
     resources.qrc

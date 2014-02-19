@@ -155,8 +155,6 @@ void PersistentStorage_XML::ReadCompanies(QString filename)
         }
     }
 
-    // publish it
-    TSCore::I().companies = companies;
 }
 
 void PersistentStorage_XML::ReadProjects(QString filename)
@@ -179,9 +177,6 @@ void PersistentStorage_XML::ReadProjects(QString filename)
             projects.append(p);
         }
     }
-
-    // publish it
-    TSCore::I().projects = projects;
 }
 
 void PersistentStorage_XML::ReadTags(QString filename)

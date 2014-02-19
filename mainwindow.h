@@ -68,6 +68,8 @@ private slots:
 
     void on_actionShow_spectrum_triggered(bool checked);
 
+    void on_actionExport_triggered();
+
 private:
     Ui::MainWindow *ui;
     TSManager* manager;

@@ -13,6 +13,7 @@
 
 #include "GUI/entry/delegate/entryitemdelegate.h"
 #include "dialogtester.h"
+#include "exportdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -134,7 +135,7 @@ void MainWindow::on_timeout()
     if (!s->isLoaded || s->needRefresh)
     {
         ui->statusbar->showMessage("Loading history", 2000);
-        s->Load();
+        s->Load(true);
         ui->statusbar->showMessage("History loaded", 2000);
 
 
@@ -405,4 +406,10 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionShow_spectrum_triggered(bool checked)
 {
     ui->spectrum->setVisible(checked);
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+    ExportDialog export(this);
+    export.exec();
 }

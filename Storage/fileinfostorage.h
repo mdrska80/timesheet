@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include "../Data/entryfileinfo.h"
+#include "../Data/company.h"
 
 class FileInfoStorage
 {
@@ -10,8 +11,8 @@ public:
     FileInfoStorage();
     ~FileInfoStorage();
 
-    void Load();
-    void ReadInfos();
+    void Load(bool onlyActiveCompany);
+    void ReadInfos(QDate start = QDate(2000,01,01));
 
     EntryFileInfo* ReadInfo(QString filename);
     void CleanInfos();
@@ -19,6 +20,7 @@ public:
     QStringList IdentifyFiles(QString path);
     void Sort();
     void CheckAllFilesExistence();
+    Company* GetActiveCompany();
 
     QList<EntryFileInfo*> infos;
     QList<EntryFileInfo*> filteredInfos;

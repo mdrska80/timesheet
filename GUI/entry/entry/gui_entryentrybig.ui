@@ -169,14 +169,13 @@
   <customwidget>
    <class>GUI_LevelPainter</class>
    <extends>QWidget</extends>
-   <header>GUI/GUI_LevelPainter.h</header>
+   <header>../../../GUI/GUI_LevelPainter.h</header>
   </customwidget>
   <customwidget>
    <class>GUI_Tags</class>
    <extends>QWidget</extends>
-   <header>GUI/GUI_Tags.h</header>
+   <header>../../../GUI/GUI_Tags.h</header>
   </customwidget>
-
  </customwidgets>
  <resources/>
  <connections/>

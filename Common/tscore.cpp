@@ -18,11 +18,11 @@ QString TSCore::GetEntriesFile()
 
 Company* TSCore::GetCompany(QDate dt)
 {
-    int cnt = companies.size();
+    int cnt = entriesStorage.companies.size();
 
     for (int i = 0; i<cnt; i++)
     {
-        Company* c = companies[i];
+        Company* c = entriesStorage.companies[i];
         if (dt >= c->from && dt <= c->to)
             return c;
     }
@@ -30,13 +30,13 @@ Company* TSCore::GetCompany(QDate dt)
     return NULL;
 }
 
-Project* TSCore::GetProject(QDate dt)
+Project* TSCore::GetProject(QDate dt = QDate(2000,01,01))
 {
-    int cnt = projects.size();
+    int cnt = entriesStorage.projects.size();
 
     for (int i = 0; i<cnt; i++)
     {
-        Project* c = projects[i];
+        Project* c = entriesStorage.projects[i];
         if (dt >= c->from && dt <= c->to)
             return c;
     }
@@ -91,6 +91,27 @@ void TSCore::MoveToPresent()
 QString TSCore::GetVersion()
 {
     return "7.0";
+}
+
+QDate TSCore::GetDateFromFilename(QString filename)
+{
+    // this is how filename is created
+    // QString("%1/%2-%3.xml").arg(dataDir).arg(workingYear).arg(workingMonth);
+    filename = filename.replace(".xml","");
+    QStringList lst = filename.split('-');
+
+    if (lst.size() == 2)
+    {
+        QString strYear = lst[0];
+        QString strMonth = lst[1];
+
+        int year = strYear.toInt();
+        int month = strMonth.toInt();
+
+        return QDate(year, month, 1);
+    }
+
+    return QDate::currentDate();
 }
 
 void TSCore::RecalculateAggregatedEntries(QList<Entry*>* entries)

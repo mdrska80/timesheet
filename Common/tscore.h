@@ -41,10 +41,8 @@ public:
     void MoveToPresent();
 
     QString GetVersion();
+    QDate GetDateFromFilename(QString filename);
 
-
-    QList<Company*> companies;
-    QList<Project*> projects;
 
     FileInfoStorage fiStorage;
     PersistentStorage_XML entriesStorage;

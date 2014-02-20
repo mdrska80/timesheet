@@ -37,6 +37,8 @@ public:
 
     QColor color;
 
+    QString bustecDiff;
+
     bool pl_selected;
     bool pl_dragged;
     bool pl_playing;

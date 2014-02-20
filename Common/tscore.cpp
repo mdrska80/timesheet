@@ -16,6 +16,11 @@ QString TSCore::GetEntriesFile()
     return QString("%1/%2-%3.xml").arg(dataDir).arg(workingYear).arg(workingMonth);
 }
 
+QString TSCore::GetDochazkaFile()
+{
+    return QString("%1/bustec/%2-%3.txt").arg(dataDir).arg(workingYear).arg(workingMonth);
+}
+
 Company* TSCore::GetCompany(QDate dt)
 {
     int cnt = entriesStorage.companies.size();

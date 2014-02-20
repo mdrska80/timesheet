@@ -1,5 +1,6 @@
 #include "gui_entryentrybig.h"
 #include "ui_gui_entryentrybig.h"
+#include "../../../Common/helper.h"
 
 GUI_EntryEntryBig::GUI_EntryEntryBig(QWidget *parent) :
     GUI_EntryEntry(parent),
@@ -46,10 +47,13 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         int hrs = secs / 3600;
         //QTimeSpan ts = e->to - e->from;
 
-        if (hrs > 4)
-            this->ui->durationLabel->setText("<font color='red'>"+e->GetDurationAshhmm()+"</font>");
-        else
+//        if (hrs > 4)
+  //          this->ui->durationLabel->setText("<font color='red'>"+e->GetDurationAshhmm()+"</font>");
+    //    else
             this->ui->durationLabel->setText(e->GetDurationAshhmm());
+
+        this->ui->durationLabel->setText(this->ui->durationLabel->text()+"<br/>"+e->bustecDiff);
+
 
         //qreal r = ts.toSecs();
         if (e->description.contains("http"))
@@ -60,7 +64,7 @@ void GUI_EntryEntryBig::setContent(Entry* e)
         else
             ui->urlImageLabel->setText("");
 
-        //HandleTags(e);
+//        ui->bustecLabel->setText(e->bustecDiff);
 
         int worktime = 60*60*4;
         int percent = secs / (worktime / 100);

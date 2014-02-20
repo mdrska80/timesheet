@@ -22,6 +22,7 @@ public:
     QString dataDir;
 
     QString GetEntriesFile();
+    QString GetDochazkaFile();
 
     // singleton stuff
     static TSCore& I()

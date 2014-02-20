@@ -108,7 +108,6 @@
      </property>
     </widget>
    </item>
-
    <item>
     <widget class="QLabel" name="urlImageLabel">
      <property name="text">

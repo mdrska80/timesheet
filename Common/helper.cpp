@@ -149,5 +149,18 @@ QTime Helper::NumberToTime(double number)
     int newMinutes = minutes * 60 ;
 
     return QTime(hours,newMinutes,00);
+}
 
+QString Helper::GetSecsAshhmm(int secs)
+{
+    int hours = secs/3600;
+    int remainingMins = (secs - hours*3600)/60;
+
+    QTime time(hours,remainingMins,0);
+    return time.toString("hh:mm");
+}
+
+QString Helper::GetSecsAsMin(int secs)
+{
+    return QString::number(secs/60)+" min";
 }

@@ -32,7 +32,9 @@ void PersistentStorage_XML::Load()
     QString projectsFile = "projects.xml";
     QString tagsFile = "tags.xml";
     QString entriesFile = TSCore::I().GetEntriesFile();
+    QString dochazkaFile = TSCore::I().GetDochazkaFile();
 
+    ReadDochazka(dochazkaFile);
     ReadCompanies(companiesFile);
     ReadProjects(projectsFile);
     ReadEntries(entriesFile);
@@ -109,6 +111,15 @@ void PersistentStorage_XML::SaveTags(QString filename)
     //finalize xml
     qs.append("</Tags>");
     Helper::write_file(filename, qs);
+}
+
+void PersistentStorage_XML::ReadDochazka(QString filename)
+{
+    QString content;
+    if (Helper::read_file_into_str(filename, &content))
+    {
+        dochazka.Process(content);
+    }
 }
 
 void PersistentStorage_XML::ReadEntries(QString filename)
@@ -286,6 +297,21 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
     }
     default:
         break;
+    }
+
+    //read bustec time
+    if (e!=NULL)
+    {
+        //bustecTime = Helper::GetSecsAshhmm(dochazka.GetDuration(e->date));
+        int diff = dochazka.GetDuration(e->date) - (8.5*60*60);
+        QString bustecDiff = "";
+
+        if (diff < 0)
+            bustecDiff = "<font color='red'></b>"+Helper::GetSecsAsMin(qAbs(diff))+"</b></font>";
+        else
+            bustecDiff = "<font color='green'><b>"+Helper::GetSecsAsMin(qAbs(diff))+"</b></font>";
+
+        e->bustecDiff = bustecDiff;
     }
 
     return e;

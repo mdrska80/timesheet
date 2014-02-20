@@ -7,6 +7,7 @@
 #include "../Data/entry.h"
 #include "../Data/company.h"
 #include "../Data/project.h"
+#include "../Data/bustecdochazka.h"
 #include "../Common/enums.h"
 
 class PersistentStorage_XML
@@ -26,6 +27,7 @@ public:
     void ReadCompanies(QString filename);
     void ReadProjects(QString filename);
     void ReadTags(QString filename);
+    void ReadDochazka(QString filename);
 
     Entry* ReadEntry(QDomElement node);
     Company* ReadCompany(QDomElement node);
@@ -59,6 +61,7 @@ public:
     QList<Tag*> tags;
 
     QList<Entry*> filteredEntries;
+    BustecDochazka dochazka;
 
 };
 

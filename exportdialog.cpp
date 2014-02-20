@@ -2,6 +2,7 @@
 #include "ui_exportdialog.h"
 #include "Common/tscore.h"
 #include "Data/entry.h"
+#include "Common/helper.h"
 
 ExportDialog::ExportDialog(QWidget *parent) :
     QDialog(parent),
@@ -25,20 +26,38 @@ void ExportDialog::on_pushButton_2_clicked()
     ui->textEdit->clear();
     QString strFormat = ui->formatLineEdit->text();
 
-    int cnt = TSCore::I().entriesStorage.entries.size();
+    int workingYear = TSCore::I().workingYear;
+    int workingMonth =  TSCore::I().workingMonth;
 
-    for(int i = 0; i < cnt; i++)
+
+    QDate dt;
+    dt.setDate(workingYear, workingMonth, 1);
+    int pocetDniVMesici = dt.daysInMonth();
+
+    for (int i = 1;i<=pocetDniVMesici;i++)
     {
-        Entry *e = TSCore::I().entriesStorage.entries[i];
-        QString line = strFormat;
+        QDate dtx(workingYear, workingMonth,i);
 
+        QTime tFrom;
+        QTime tTo;
+        bool ok = TSCore::I().entriesStorage.dochazka.GetFromToByDate(dtx, tFrom, tTo);
 
-        line = line.replace("%date", e->date.toString("dd.MM.yyyy"));
-        line = line.replace("%from", e->from.toString("hh:mm"));
-        line = line.replace("%to", e->to.toString("hh:mm"));
-        line = line.replace("%duration", e->GetDurationAshhmm());
-        line = line.replace("%title", e->title);
-        line = line.replace("%description", e->description);
+        if (!ok)
+            TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom,tTo);
+
+        QString line = "";
+        if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
+        {
+            line += ",,,,,X";
+        }
+        else
+        {
+            line += tFrom.toString("hh:mm");
+            line += ",";
+            line += tTo.toString("hh:mm");
+            line += ",,,";
+            line += Helper::GetSecsAshhmm(Helper::GetDuration(tFrom, tTo));
+        }
 
         ui->textEdit->append(line);
     }

@@ -23,6 +23,9 @@ public:
     QTime GetPrichod(QList<BustecEntry*> lst);
     QTime GetOdchod(QList<BustecEntry*> lst);
 
+    bool GetFromToByDate(QDate dt, QTime &from, QTime &to);
+
+
 
 
 

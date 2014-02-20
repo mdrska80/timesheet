@@ -74,6 +74,34 @@ void BustecDochazka::CleanEntries()
     bentries.clear();
 }
 
+int BustecDochazka::IsDayFullFilled(QDate date)
+{
+    QList<BustecEntry*> lst = GetEntriesByDate(date);
+    return -1;
+}
+
+bool BustecDochazka::GetFromToByDate(QDate date, QTime &from, QTime &to)
+{
+    QList<BustecEntry*> lst = GetEntriesByDate(date);
+
+    if (lst.size()==0) return false;
+
+    from = GetPrichod(lst);
+    to = GetOdchod(lst);
+    return true;
+}
+
+int BustecDochazka::GetDuration(QDate date)
+{
+    QList<BustecEntry*> lst = GetEntriesByDate(date);
+
+    QTime from = GetPrichod(lst);
+    QTime to = GetOdchod(lst);
+
+    int durInSecs = GetDuration(from, to);
+    return durInSecs;
+}
+
 QList<BustecEntry*> BustecDochazka::GetEntriesByDate(QDate date)
 {
     QList<BustecEntry*> lst;
@@ -87,23 +115,6 @@ QList<BustecEntry*> BustecDochazka::GetEntriesByDate(QDate date)
             lst.append(e);
     }
     return lst;
-}
-
-int BustecDochazka::IsDayFullFilled(QDate date)
-{
-    QList<BustecEntry*> lst = GetEntriesByDate(date);
-    return -1;
-}
-
-int BustecDochazka::GetDuration(QDate date)
-{
-    QList<BustecEntry*> lst = GetEntriesByDate(date);
-
-    QTime from = GetPrichod(lst);
-    QTime to = GetOdchod(lst);
-
-    int durInSecs = GetDuration(from, to);
-    return durInSecs;
 }
 
 int BustecDochazka::GetDuration(QTime from, QTime to)

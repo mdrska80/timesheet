@@ -53,6 +53,12 @@ public:
     QList<Entry*> GetEntriesForDay(int day);
     QString ExtractTitlesFromEntries(QList<Entry *> &entries);
 
+    //helper metthods
+    void GetFromToByDate(QDate date, QTime &from, QTime &to);
+    QTime GetPrichod(QList<Entry*> lst);
+    QTime GetOdchod(QList<Entry*> lst);
+
+
 
 public:
     QList<Entry*> entries;

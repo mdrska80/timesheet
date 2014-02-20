@@ -164,3 +164,9 @@ QString Helper::GetSecsAsMin(int secs)
 {
     return QString::number(secs/60)+" min";
 }
+
+int Helper::GetDuration(QTime from, QTime to)
+{
+    int secs = from.secsTo(to);
+    return secs;
+}

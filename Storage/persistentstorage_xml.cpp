@@ -522,6 +522,48 @@ int PersistentStorage_XML::GetMassDuration(QList<Entry*> &entries)
     return secs;
 }
 
+void PersistentStorage_XML::GetFromToByDate(QDate date, QTime &from, QTime &to)
+{
+    QList<Entry*> lst = GetEntriesForDay(date.day());
+    from = GetPrichod(lst);
+    to = GetOdchod(lst);
+}
+
+QTime PersistentStorage_XML::GetPrichod(QList<Entry*> lst)
+{
+    // hledam neco s akci 1 a nejmensim case
+    QTime time;
+    time.setHMS(23,59,59);
+
+    int cnt = lst.size();
+    for(int i = 0; i<cnt;i++)
+    {
+        Entry *e = lst[i];
+
+        if (time > e->from)
+            time = e->from;
+    }
+    return time;
+}
+
+QTime PersistentStorage_XML::GetOdchod(QList<Entry*> lst)
+{
+    // hledam neco s akci 2 a nejvyssim cas
+    QTime time;
+    time.setHMS(0,0,0);
+
+    int cnt = lst.size();
+    for(int i = 0; i<cnt;i++)
+    {
+        Entry *e = lst[i];
+
+        if (time < e->to)
+            time = e->to;
+    }
+
+    return time;
+}
+
 QList<Entry*> PersistentStorage_XML::GetEntriesForDay(int day)
 {
     QList<Entry*> x;

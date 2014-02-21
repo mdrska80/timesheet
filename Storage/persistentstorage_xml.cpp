@@ -303,13 +303,16 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
     if (e!=NULL)
     {
         //bustecTime = Helper::GetSecsAshhmm(dochazka.GetDuration(e->date));
-        int diff = dochazka.GetDuration(e->date) - (8.5*60*60);
+        int diff = dochazka.GetDuration(e->date) - (8*60*60);
         QString bustecDiff = "";
 
         if (diff < 0)
             bustecDiff = "<font color='red'></b>"+Helper::GetSecsAsMin(qAbs(diff))+"</b></font>";
         else
             bustecDiff = "<font color='green'><b>"+Helper::GetSecsAsMin(qAbs(diff))+"</b></font>";
+
+        if (diff == -28801) //:)
+            bustecDiff = "";
 
         e->bustecDiff = bustecDiff;
     }

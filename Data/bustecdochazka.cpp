@@ -1,4 +1,5 @@
 #include "bustecdochazka.h"
+#include "../Common/helper.h"
 
 BustecDochazka::BustecDochazka()
 {
@@ -95,11 +96,16 @@ int BustecDochazka::GetDuration(QDate date)
 {
     QList<BustecEntry*> lst = GetEntriesByDate(date);
 
-    QTime from = GetPrichod(lst);
-    QTime to = GetOdchod(lst);
+    QTime from = Helper::RoundTimeUp(GetPrichod(lst));
+    QTime to = Helper::RoundTimeDown(GetOdchod(lst));
 
-    int durInSecs = GetDuration(from, to);
-    return durInSecs;
+    if (from.isValid() && to.isValid())
+    {
+        int durInSecs = GetDuration(from, to);
+        return durInSecs;
+    }
+
+    return -1;
 }
 
 QList<BustecEntry*> BustecDochazka::GetEntriesByDate(QDate date)

@@ -286,7 +286,7 @@ void MainWindow::UpdateStatusBar()
     if (efi.workedHours < 24)
     {
         message = QString("Worked hours: %1")
-                .arg(Helper::NumberToTime(efi.workedHours).toString("hh:mm"));
+                .arg(Helper::GetSecsAshhmm(efi.workedHours*60*60));
 
     }
     else

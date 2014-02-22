@@ -31,7 +31,6 @@ public:
 
     static QString get_fg_color(int val_bg);
 
-    static QTime NumberToTime(double number);
     static QString GetSecsAshhmm(int secs);
     static QString GetSecsAsMin(int secs);
     static int GetDuration(QTime from, QTime to);

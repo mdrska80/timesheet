@@ -52,11 +52,14 @@ void ExportDialog::on_pushButton_2_clicked()
         }
         else
         {
-            line += tFrom.toString("hh:mm");
+            QTime roundedFrom = Helper::RoundTimeUp(tFrom);
+            QTime roundedTo = Helper::RoundTimeUp(tTo);
+
+            line += roundedFrom.toString("hh:mm");
             line += ",";
-            line += tTo.toString("hh:mm");
+            line += roundedTo.toString("hh:mm");
             line += ",,,";
-            line += Helper::GetSecsAshhmm(Helper::GetDuration(tFrom, tTo));
+            line += Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo));
         }
 
         ui->textEdit->append(line);

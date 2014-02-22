@@ -36,6 +36,9 @@ public:
     static QString GetSecsAsMin(int secs);
     static int GetDuration(QTime from, QTime to);
 
+    static QTime RoundTimeDown(QTime time);
+    static QTime RoundTimeUp(QTime time);
+
 
 
 };

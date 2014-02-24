@@ -6,6 +6,7 @@
 #include "../../../Common/enums.h"
 #include "../../../Storage/persistentstorage_xml.h"
 #include "../../../Common/tscore.h"
+#include "../../../Common/helper.h"
 
 EntryListModel::EntryListModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -101,8 +102,8 @@ bool EntryListModel::insertRows(int position, int rows, const QModelIndex &index
         Entry *e = new Entry();
         e->title = "new item";
         e->date = QDate::currentDate();
-        e->from = QTime::currentTime();
-        e->to = QTime::currentTime().addSecs(60*60*2);
+        e->from = Helper::RoundTimeUp(QTime::currentTime());
+        e->to = Helper::RoundTimeUp(QTime::currentTime().addSecs(60*60*2));
 
         _storage->entries.append(e);
         _storage->Save();

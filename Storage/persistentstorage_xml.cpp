@@ -302,8 +302,9 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
     //read bustec time
     if (e!=NULL)
     {
+        double dailyFond = (8.5*60*60);
         //bustecTime = Helper::GetSecsAshhmm(dochazka.GetDuration(e->date));
-        int diff = dochazka.GetDuration(e->date) - (8*60*60);
+        int diff = dochazka.GetDuration(e->date) -dailyFond ;
         QString bustecDiff = "";
 
         if (diff < 0)
@@ -311,7 +312,7 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
         else
             bustecDiff = "<font color='green'><b>"+Helper::GetSecsAsMin(qAbs(diff))+"</b></font>";
 
-        if (diff == -28801) //:)
+        if (diff == -30601) //:)
             bustecDiff = "";
 
         e->bustecDiff = bustecDiff;

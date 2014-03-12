@@ -164,10 +164,10 @@ int Helper::GetDuration(QTime from, QTime to)
 
 QTime Helper::RoundTimeDown(QTime time)
 {
-    if (time.minute() > 45) return QTime(time.hour(), 45, 00);
-    if (time.minute() > 30) return QTime(time.hour(), 30, 00);
-    if (time.minute() > 15) return QTime(time.hour(), 15, 00);
-    if (time.minute() > 0) return QTime(time.hour(), 00, 00);
+    if (time.minute() >= 45) return QTime(time.hour(), 45, 00);
+    if (time.minute() >= 30) return QTime(time.hour(), 30, 00);
+    if (time.minute() >= 15) return QTime(time.hour(), 15, 00);
+    if (time.minute() >= 0) return QTime(time.hour(), 00, 00);
 
     // impossile to get here
     return time;

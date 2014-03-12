@@ -14,6 +14,8 @@ ExportDialog::ExportDialog(QWidget *parent) :
 
     QString strFormat = "%date,%from,%to,%duration,%title";
     ui->formatLineEdit->setText(strFormat);
+
+    on_pushButton_2_clicked();
 }
 
 ExportDialog::~ExportDialog()
@@ -24,6 +26,7 @@ ExportDialog::~ExportDialog()
 void ExportDialog::on_pushButton_2_clicked()
 {
     ui->textEdit->clear();
+    ui->textEdit_2->clear();
     QString strFormat = ui->formatLineEdit->text();
 
     int workingYear = TSCore::I().workingYear;
@@ -33,6 +36,10 @@ void ExportDialog::on_pushButton_2_clicked()
     QDate dt;
     dt.setDate(workingYear, workingMonth, 1);
     int pocetDniVMesici = dt.daysInMonth();
+
+    int globalniOdchylka = 0;
+    QString odchylkaString = "";
+    QString odchylkaZnamenko = "";
 
     for (int i = 1;i<=pocetDniVMesici;i++)
     {
@@ -45,23 +52,62 @@ void ExportDialog::on_pushButton_2_clicked()
         if (!ok)
             TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom,tTo);
 
+        QString mins = 0;
+        QString znamenko = "";
+
         QString line = "";
         if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
         {
             line += ",,,,,X";
+            mins = "-";
         }
         else
         {
             QTime roundedFrom = Helper::RoundTimeUp(tFrom);
-            QTime roundedTo = Helper::RoundTimeUp(tTo);
+            QTime roundedTo = Helper::RoundTimeDown(tTo);
 
             line += roundedFrom.toString("hh:mm");
             line += ",";
             line += roundedTo.toString("hh:mm");
             line += ",,,";
-            line += Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo));
+            line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"</b>";
+
+            int secs = Helper::GetDuration(roundedFrom, roundedTo);
+            secs = secs-8.5*60*60;
+
+            if (-secs != 8.5*60*60)
+            globalniOdchylka += secs;
+
+            znamenko = "";
+            if (secs < 0)
+            {
+                secs *= -1;
+                znamenko = "-";
+            }
+
+            mins = "-";
+            if (secs != 8.5*60*60)
+            {
+                mins = znamenko+Helper::GetSecsAshhmm(secs);
+            }
         }
 
+        odchylkaZnamenko = "<font color='green'>";
+        int gloOdch = globalniOdchylka;
+        if (gloOdch <0)
+        {
+            gloOdch *= -1;
+            odchylkaZnamenko = "<font color='red'>-";
+        }
+
+        odchylkaString = odchylkaZnamenko+Helper::GetSecsAshhmm(gloOdch);
+
+        if (mins == "-")
+        {
+            odchylkaString = "<font>";
+        }
+
+        ui->textEdit_2->append(mins+", \t"+odchylkaString+"</font>");
         ui->textEdit->append(line);
     }
 }

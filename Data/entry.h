@@ -39,6 +39,10 @@ public:
 
     QString bustecDiff;
 
+    // Je neprakticke, vzhledem k vykazovani v bustecu resit prescas tak ze budu evidovat realne hodnoty po pulnoci
+    // Tak tento zaznam se naplni v případě, že v tento den přesáhnu čas po půlnoci a do dalšího dne už se nevyplňuje nic.
+    QTime overtime;
+
     bool pl_selected;
     bool pl_dragged;
     bool pl_playing;

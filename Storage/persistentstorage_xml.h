@@ -55,6 +55,8 @@ public:
 
     //helper metthods
     void GetFromToByDate(QDate date, QTime &from, QTime &to);
+    QTime GetOvertimeForDay(QDate date);
+
     QTime GetPrichod(QList<Entry*> lst);
     QTime GetOdchod(QList<Entry*> lst);
 

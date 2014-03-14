@@ -224,6 +224,7 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
         e->date = QDate::fromString(node.attribute("date"), "dd.MM.yyyy");
         e->from = QTime::fromString(node.attribute("from"), "hh:mm");
         e->to = QTime::fromString(node.attribute("to"), "hh:mm");
+        e->overtime = QTime::fromString(node.attribute("overtime"), "hh:mm");
         e->company = FindCompanyByName(node.attribute("company"));
 
         e->title = node.firstChildElement("Title").text();
@@ -524,6 +525,24 @@ int PersistentStorage_XML::GetMassDuration(QList<Entry*> &entries)
     }
 
     return secs;
+}
+
+QTime PersistentStorage_XML::GetOvertimeForDay(QDate date)
+{
+    QTime cumulativeOvertime;
+    cumulativeOvertime.setHMS(0,0,0);
+
+    QList<Entry*> lst = GetEntriesForDay(date.day());
+    int cnt = lst.size();
+
+    for(int i = 0; i<cnt;i++)
+    {
+        Entry* e = lst[i];
+        int scs = Helper::TimeToSecs(e->overtime);
+        cumulativeOvertime = cumulativeOvertime.addSecs(scs);
+    }
+
+    return cumulativeOvertime;
 }
 
 void PersistentStorage_XML::GetFromToByDate(QDate date, QTime &from, QTime &to)

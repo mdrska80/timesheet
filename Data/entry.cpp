@@ -62,6 +62,7 @@ QString Entry::toXml(TSVersions ver)
                               " date='%2'"
                               " from='%3'"
                               " to='%4'"
+                              " overtime='%9'"
                               " project='%8'"
                               " company='%7'>\n"
 
@@ -76,7 +77,8 @@ QString Entry::toXml(TSVersions ver)
                 .arg(title)
                 .arg(description)
                 .arg(companyName)
-                .arg(projectName);
+                .arg(projectName)
+                .arg(overtime.toString("hh:mm"));
 
         res = res.replace("'","\"");
         break;

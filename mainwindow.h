@@ -41,6 +41,7 @@ private slots:
     void on_dateChanged(QString changedText);
     void on_descriptionChanged();
     void on_currentTextChanged(QString newText);
+    void on_overtimeTextChanged(QString changedText);
 
     void on_actionSmall_items_triggered(bool checked);
 

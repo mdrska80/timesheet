@@ -52,6 +52,8 @@ void ExportDialog::on_pushButton_2_clicked()
         if (!ok)
             TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom,tTo);
 
+        QTime entryOvertime = TSCore::I().entriesStorage.GetOvertimeForDay(dtx);
+
         QString mins = 0;
         QString znamenko = "";
 
@@ -70,9 +72,17 @@ void ExportDialog::on_pushButton_2_clicked()
             line += ",";
             line += roundedTo.toString("hh:mm");
             line += ",,,";
-            line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"</b>";
+
+//            if (entryOvertime.isValid())
+  //              line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"("+Helper::GetSecsAsMin(Helper::TimeToSecs(entryOvertime))+")</b>";
+    //        else
+                line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"</b>";
 
             int secs = Helper::GetDuration(roundedFrom, roundedTo);
+
+            secs += Helper::TimeToSecs(entryOvertime);
+
+
             secs = secs-8.5*60*60;
 
             if (-secs != 8.5*60*60)
@@ -107,7 +117,12 @@ void ExportDialog::on_pushButton_2_clicked()
             odchylkaString = "<font>";
         }
 
-        ui->textEdit_2->append(mins+", \t"+odchylkaString+"</font>");
+        if (Helper::TimeToSecs(entryOvertime) == 0)
+            ui->textEdit_2->append(mins+", \t"+odchylkaString+"</font>");
+        else
+            ui->textEdit_2->append(mins+", \t"+odchylkaString+"</font> <font color='lightblue'>(+"+Helper::GetSecsAsMin(Helper::TimeToSecs(entryOvertime))+")</font>");
+
+
         ui->textEdit->append(line);
     }
 }

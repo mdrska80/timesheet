@@ -156,6 +156,18 @@ QString Helper::GetSecsAsMin(int secs)
     return QString::number(secs/60)+" min";
 }
 
+int Helper::TimeToSecs(QTime time)
+{
+    if (time.isValid())
+    {
+        int secs = time.hour()*60*60+time.minute()*60+time.second();
+        return secs;
+    }
+
+    return NULL;
+}
+
+
 int Helper::GetDuration(QTime from, QTime to)
 {
     int secs = from.secsTo(to);

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>876</width>
     <height>600</height>
    </rect>
   </property>
@@ -57,6 +57,16 @@
               </property>
               <property name="placeholderText">
                <string>do</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="overtimeLineEdit">
+              <property name="statusTip">
+               <string extracomment="Je neprakticke, vzhledem k vykazovani v Bustecu resit prescas tak ze budu evidovat realne hodnoty po pulnoci. Tak tento zaznam se naplni v případě, že v tento den přesáhnu čas po půlnoci a do dalšího dne už se nevyplňuje nic."/>
+              </property>
+              <property name="placeholderText">
+               <string>Přesčas po půlnoci</string>
               </property>
              </widget>
             </item>
@@ -149,7 +159,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>876</width>
      <height>21</height>
     </rect>
    </property>

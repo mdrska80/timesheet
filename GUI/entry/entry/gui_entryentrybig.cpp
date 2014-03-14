@@ -52,7 +52,14 @@ void GUI_EntryEntryBig::setContent(Entry* e)
     //    else
             this->ui->durationLabel->setText(e->GetDurationAshhmm());
 
-        this->ui->durationLabel->setText(this->ui->durationLabel->text()+"<br/>"+e->bustecDiff);
+        QString evidedOvertime = "";
+        if (e->overtime.isValid())
+        {
+            int scs =  e->overtime.hour()*60*60+e->overtime.minute()*60+e->overtime.second();
+            evidedOvertime = "<font color='lightblue'></b> +"+Helper::GetSecsAsMin(scs)+"</b></font>";
+        }
+
+        this->ui->durationLabel->setText(this->ui->durationLabel->text()+"<br/>"+e->bustecDiff+evidedOvertime);
 
 
         //qreal r = ts.toSecs();

@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->dateLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_dateChanged(QString)));
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(on_currentTextChanged(QString)));
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
-
+    connect(ui->overtimeLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_overtimeTextChanged(QString)));
     connect(this, SIGNAL(destroyed()), this, SLOT(on_Savetimeout()));
 
     // set up style
@@ -169,8 +169,18 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
         ui->titleLineEdit->setText(e->title);
         ui->descriptionTextEdit->setText(e->description.replace("\n", "<br/>"));
+        ui->overtimeLineEdit->setText(e->overtime.toString("hh:mm"));
         DO_NOT_SAVE_ONCHANGE(false);
     }
+}
+
+void MainWindow::on_overtimeTextChanged(QString changedText)
+{
+    Entry *e = ui->listView->get_selection();
+    if (e!=NULL)
+        e->overtime = Helper::ConstructTime(changedText);
+
+    UpdateStatusBar();
 }
 
 void MainWindow::on_titleChanged(QString changedText)
@@ -228,17 +238,17 @@ void MainWindow::on_descriptionChanged()
             ui->urlLabel->setText("");
         }
 
-        QStringList tags = e->GetTags();
-        foreach (QString s, tags) {
-            //handle tags
-            Tag* t = TSCore::I().GetTag(s);
-            if (t==NULL)
-            {
-                Tag* t = new Tag();
-                t->code = s;
-                TSCore::I().entriesStorage.tags.append(t);
-            }
-        }
+//        QStringList tags = e->GetTags();
+  //      foreach (QString s, tags) {
+    //        //handle tags
+      //      Tag* t = TSCore::I().GetTag(s);
+        //    if (t==NULL)
+          //  {
+            //    Tag* t = new Tag();
+              //  t->code = s;
+                //TSCore::I().entriesStorage.tags.append(t);
+//            }
+  //      }
     }
 
     UpdateStatusBar();

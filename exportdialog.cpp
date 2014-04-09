@@ -41,6 +41,8 @@ void ExportDialog::on_pushButton_2_clicked()
     QString odchylkaString = "";
     QString odchylkaZnamenko = "";
 
+    bool overMidnightWorkDetected = false;
+
     for (int i = 1;i<=pocetDniVMesici;i++)
     {
         QDate dtx(workingYear, workingMonth,i);
@@ -53,6 +55,10 @@ void ExportDialog::on_pushButton_2_clicked()
             TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom,tTo);
 
         QTime entryOvertime = TSCore::I().entriesStorage.GetOvertimeForDay(dtx);
+        if (QTime(0,0,0).secsTo(entryOvertime) > 0)
+        {
+            overMidnightWorkDetected = true;
+        }
 
         QString mins = 0;
         QString znamenko = "";
@@ -60,7 +66,7 @@ void ExportDialog::on_pushButton_2_clicked()
         QString line = "";
         if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
         {
-            line += ",,,,,X";
+            line += ",,,,X";
             mins = "-";
         }
         else
@@ -70,15 +76,29 @@ void ExportDialog::on_pushButton_2_clicked()
 
             line += roundedFrom.toString("hh:mm");
             line += ",";
-            line += roundedTo.toString("hh:mm");
+            if (overMidnightWorkDetected)
+                line += roundedFrom.addSecs(8.5*60*60).toString("hh:mm");
+            else
+                line += roundedTo.toString("hh:mm");
+
             line += ",,,";
 
-//            if (entryOvertime.isValid())
-  //              line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"("+Helper::GetSecsAsMin(Helper::TimeToSecs(entryOvertime))+")</b>";
-    //        else
+            if (overMidnightWorkDetected)
+                line += "<b>08:30</b>";
+            else
                 line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"</b>";
 
-            int secs = Helper::GetDuration(roundedFrom, roundedTo);
+            int secs = 0;
+
+            if (overMidnightWorkDetected)
+            {
+                secs = Helper::GetDuration(roundedFrom, QTime(23,59,59));
+                secs += 1; //to je ta sekunda co nahore chybi
+//                secs += entryOvertime.hour()*3660+entryOvertime.minute()*60+entryOvertime.second();
+
+            }
+            else
+                secs = Helper::GetDuration(roundedFrom, roundedTo);
 
             secs += Helper::TimeToSecs(entryOvertime);
 
@@ -124,5 +144,6 @@ void ExportDialog::on_pushButton_2_clicked()
 
 
         ui->textEdit->append(line);
+        overMidnightWorkDetected = false;
     }
 }

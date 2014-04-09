@@ -133,6 +133,7 @@ QTime BustecDochazka::GetPrichod(QList<BustecEntry*> lst)
 {
     // hledam neco s akci 1 a nejmensim case
     QTime time;
+
     time.setHMS(23,59,59);
 
     int cnt = lst.size();
@@ -142,8 +143,10 @@ QTime BustecDochazka::GetPrichod(QList<BustecEntry*> lst)
 
         if (e->Action == 1)
         {
-            if (time > e->Time)
+            //pred patou takove hodnoty nebereme...
+            if (time > e->Time && Helper::TimeToSecs(e->Time) >= 4*60*60)
                 time = e->Time;
+
         }
     }
     return time;

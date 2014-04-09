@@ -229,6 +229,8 @@ Entry* PersistentStorage_XML::ReadEntry(QDomElement node)
 
         e->title = node.firstChildElement("Title").text();
         e->description = node.firstChildElement("Description").text();
+
+        e->description = e->description.replace("\r\n", "<br/>");
         break;
     case TSVersion_GTK_Autocont:
     {

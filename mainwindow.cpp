@@ -168,7 +168,7 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
         ui->fromLineEdit->setText(e->from.toString("hh:mm"));
         ui->toLineEdit->setText(e->to.toString("hh:mm"));
         ui->titleLineEdit->setText(e->title);
-        ui->descriptionTextEdit->setText(e->description.replace("\n", "<br/>"));
+        ui->descriptionTextEdit->setText(e->description.replace("\r\n", "<br/>"));
         ui->overtimeLineEdit->setText(e->overtime.toString("hh:mm"));
         DO_NOT_SAVE_ONCHANGE(false);
     }

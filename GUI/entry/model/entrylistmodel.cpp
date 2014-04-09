@@ -39,7 +39,6 @@ QVariant EntryListModel::data(const QModelIndex &index, int role) const
     {
         Entry* e = _storage->filteredEntries.at(index.row());
 
-        QString qs = e->description.replace("\r\n", "<br/>");
         return QString("<b>Title:</b> %1<br/><b>Description:</b> %2")
                 .arg(e->title)
                 .arg(e->description);

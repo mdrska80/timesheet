@@ -25,7 +25,7 @@ void GUI_EntryEntryBig::setContent(Entry* e)
             this->ui->descriptionLabel->setText(e->coll["Comment"]);
         else
         {
-            QStringList lst = e->description.split('\n');
+            QStringList lst = e->description.split("<br/>");
             int size = lst.size();
 
             QString text = lst[0];

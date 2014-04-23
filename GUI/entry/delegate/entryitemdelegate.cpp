@@ -73,11 +73,17 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
         style = QString("border: none; background-color: transparent; ") +
             Helper::get_fg_color(background_val);
     }
-
     else
     {
         style = QString("border: none; background-color: ") +
             col_highlight.name() + ";" +
+            Helper::get_fg_color(highlight_val);
+    }
+
+    if(md->title.toLower().contains("svátek"))
+    {
+        style = QString("border: none; background-color: ") +
+            colorGreen + ";" +
             Helper::get_fg_color(highlight_val);
     }
 

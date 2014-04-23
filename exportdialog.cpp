@@ -9,12 +9,6 @@ ExportDialog::ExportDialog(QWidget *parent) :
     ui(new Ui::ExportDialog)
 {
     ui->setupUi(this);
-
-    connect(ui->formatLineEdit, SIGNAL(textChanged()), this, SLOT(on_pushButton_2_clicked()));
-
-    QString strFormat = "%date,%from,%to,%duration,%title";
-    ui->formatLineEdit->setText(strFormat);
-
     on_pushButton_2_clicked();
 }
 
@@ -27,7 +21,7 @@ void ExportDialog::on_pushButton_2_clicked()
 {
     ui->textEdit->clear();
     ui->textEdit_2->clear();
-    QString strFormat = ui->formatLineEdit->text();
+    ui->textEdit_3->clear();
 
     int workingYear = TSCore::I().workingYear;
     int workingMonth =  TSCore::I().workingMonth;
@@ -49,6 +43,20 @@ void ExportDialog::on_pushButton_2_clicked()
 
         QTime tFrom;
         QTime tTo;
+
+        QTime tFrom2;
+        QTime tTo2;
+        TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom2,tTo2);
+        if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
+            ui->textEdit_3->append("-");
+        else
+        {
+            if (tFrom == QTime(23,59,59))
+                ui->textEdit_3->append("-");
+            else
+                ui->textEdit_3->append(tFrom2.toString("hh:mm")+", "+tTo2.toString("hh:mm"));
+        }
+
         bool ok = TSCore::I().entriesStorage.dochazka.GetFromToByDate(dtx, tFrom, tTo);
 
         if (!ok)
@@ -122,7 +130,7 @@ void ExportDialog::on_pushButton_2_clicked()
             }
         }
 
-        odchylkaZnamenko = "<font color='green'>";
+        odchylkaZnamenko = "<font color='lightgreen'>";
         int gloOdch = globalniOdchylka;
         if (gloOdch <0)
         {

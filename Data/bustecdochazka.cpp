@@ -32,20 +32,28 @@ BustecEntry* BustecDochazka::ProcessRow(QString s)
 
     QStringList lst = s.split('\t');
 
-    if (lst.size() != 6) return NULL;           // nejeky jiny format
     if (lst[0] == "Datum a čas") return NULL;   // hlavicka, ta nas take nezajima
 
-    // teprve ted ma smysl vytvaret kontejner
-    BustecEntry *entry = new BustecEntry();
-    entry->Date = ParseDate(lst[0]);
-    entry->Time = ParseTime(lst[0]);
-    entry->Action = lst[1].toInt();
-    entry->ActionName = lst[2];
-    entry->Terminal = lst[3].toInt();
-    entry->Surname = lst[4];
-    entry->Name = lst[5];
+    if (lst.size() == 6 || lst.size() == 7)
+    {
+        // teprve ted ma smysl vytvaret kontejner
+        BustecEntry *entry = new BustecEntry();
+        entry->Date = ParseDate(lst[0]);
+        entry->Time = ParseTime(lst[0]);
+        entry->Action = lst[1].toInt();
+        entry->ActionName = lst[2];
+        entry->Terminal = lst[3].toInt();
+        entry->Surname = lst[4];
+        entry->Name = lst[5];
 
-    return entry;
+        if (lst.size() == 7)
+            entry->Vlozeno = lst[6];
+
+        return entry;
+    }
+
+    return NULL;
+
 }
 
 QDate BustecDochazka::ParseDate(QString in)

@@ -34,6 +34,8 @@ public:
 
     // Jméno
     QString Name;
+
+    QString Vlozeno;
 };
 
 #endif // BUSTECENTRY_H

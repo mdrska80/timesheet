@@ -408,6 +408,6 @@ void MainWindow::on_actionShow_spectrum_triggered(bool checked)
 
 void MainWindow::on_actionExport_triggered()
 {
-    ExportDialog export(this);
-    export.exec();
+    ExportDialog exp(this);
+    exp.exec();
 }

@@ -23,12 +23,6 @@ DialogTester::DialogTester(QWidget *parent) :
     ui->listView->select_last_row(5);
 
     connect(ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(on_filteredTextChnged(QString)));
-
-    QStringList lst;
-    lst.append("Test");
-    lst.append("KV");
-
-    ui->tag->set_tags(lst);
 }
 
 DialogTester::~DialogTester()
@@ -62,7 +56,5 @@ void DialogTester::on_filteredTextChnged(QString changedText)
 void DialogTester::closeEvent(QCloseEvent *event)
 {
     ui->listView->select_last_row(5);
-    //int a =9;
-    //on_pushButton_clicked();
 }
 

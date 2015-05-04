@@ -28,16 +28,6 @@
     <widget class="XmlFileDetailView" name="listView"/>
    </item>
    <item>
-    <widget class="GUI_Tags" name="tag" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>10</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Select</string>
@@ -51,11 +41,6 @@
    <class>XmlFileDetailView</class>
    <extends>QListView</extends>
    <header>GUI/xmlFileDetail/view/xmlfiledetailview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>GUI_Tags</class>
-   <extends>QWidget</extends>
-   <header>GUI/GUI_Tags.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

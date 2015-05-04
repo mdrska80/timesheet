@@ -10,9 +10,11 @@
 const QString colorRed = "#72424e";
 const QString colorRedDark = "#2f3751";
 const QString colorRedPoison = "#ff0000";
+const QString colorBlack = "#000000";
 
 
 const QString colorGreen = "#42724e";
+const QString colorYellow = "#d2e24e";
 const QString colorGreenDark = "#372f51";
 
 

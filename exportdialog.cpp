@@ -3,6 +3,8 @@
 #include "Common/tscore.h"
 #include "Data/entry.h"
 #include "Common/helper.h"
+#include "Common/entriesanalyzer.h"
+
 
 ExportDialog::ExportDialog(QWidget *parent) :
     QDialog(parent),
@@ -22,6 +24,7 @@ void ExportDialog::on_pushButton_2_clicked()
     ui->textEdit->clear();
     ui->textEdit_2->clear();
     ui->textEdit_3->clear();
+    ui->textEdit_4->clear();
 
     int workingYear = TSCore::I().workingYear;
     int workingMonth =  TSCore::I().workingMonth;
@@ -36,6 +39,7 @@ void ExportDialog::on_pushButton_2_clicked()
     QString odchylkaZnamenko = "";
 
     bool overMidnightWorkDetected = false;
+    double celyFond = 0;
 
     for (int i = 1;i<=pocetDniVMesici;i++)
     {
@@ -58,6 +62,9 @@ void ExportDialog::on_pushButton_2_clicked()
         }
 
         bool ok = TSCore::I().entriesStorage.dochazka.GetFromToByDate(dtx, tFrom, tTo);
+        QTime roundedFromScan = Helper::RoundTimeUp(tFrom);
+        QTime roundedToScan = Helper::RoundTimeDown(tTo);
+        ui->textEdit_4->append(roundedFromScan.toString("hh:mm")+", "+roundedToScan.toString("hh:mm"));
 
         if (!ok)
             TSCore::I().entriesStorage.GetFromToByDate(dtx,tFrom,tTo);
@@ -72,10 +79,11 @@ void ExportDialog::on_pushButton_2_clicked()
         QString znamenko = "";
 
         QString line = "";
-        if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
+        //if (dtx.dayOfWeek() == 6 || dtx.dayOfWeek() == 7)
+        if (false)
         {
             line += ",,,,X";
-            mins = "-";
+            //mins = "-";
         }
         else
         {
@@ -92,9 +100,25 @@ void ExportDialog::on_pushButton_2_clicked()
             line += ",,,";
 
             if (overMidnightWorkDetected)
-                line += "<b>08:30</b>";
+                line += "<b>08:00</b>";
             else
-                line += "<b>"+Helper::GetSecsAshhmm(Helper::GetDuration(roundedFrom, roundedTo))+"</b>";
+            {
+                // 30 minutes*60 = in seconds
+                int halfHourInSecs = 30*60;
+                int sPodleFondu = Helper::GetDuration(roundedFrom, roundedTo)-halfHourInSecs;
+
+                // oba casy jsou nenulove!
+                if (sPodleFondu!=-halfHourInSecs)
+                celyFond += sPodleFondu;
+
+//                line += "<b>"+Helper::GetSecsAshhmm(sPodleFondu)+"</b>";
+
+                QString message = QString("<b>%1</b>")
+                        .arg(Helper::GetSecsAshhmm(sPodleFondu));
+                        //.arg(celyFond/3600);
+
+                line += message;
+            }
 
             int secs = 0;
 
@@ -153,5 +177,14 @@ void ExportDialog::on_pushButton_2_clicked()
 
         ui->textEdit->append(line);
         overMidnightWorkDetected = false;
+
     }
+
+    EntryFileInfo efi;
+    EntriesAnalyzer an = EntriesAnalyzer(&TSCore::I().entriesStorage.entries, &efi);
+
+    QString message = QString("<br/><br/><span style='font-weight:600; color:#ffff00;'>Pracovni fond: %1h</span>")
+            .arg(celyFond/3600);
+
+    ui->textEdit->append(message);
 }

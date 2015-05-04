@@ -22,6 +22,7 @@ public:
     CompaniesList   company;
     int             entryCount;
     double          workedHours;
+    double          workingFond;
     double          workingHours;
     bool            isValid;
     bool            isMissing;

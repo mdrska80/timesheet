@@ -86,6 +86,12 @@ void EntryItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem &op
             colorGreen + ";" +
             Helper::get_fg_color(highlight_val);
     }
+    if(md->title.toLower().contains("dovolená"))
+    {
+        style = QString("border: none; background-color: ") +
+            colorYellow + "; color:" +colorBlack;
+            //Helper::get_fg_color(highlight_val);
+    }
 
     //int y = rect.topLeft().y() +  _pl_entry->height() -1;
     _pl_entry->setStyleSheet(style);

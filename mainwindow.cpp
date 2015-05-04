@@ -138,7 +138,6 @@ void MainWindow::on_timeout()
         s->Load(true);
         ui->statusbar->showMessage("History loaded", 2000);
 
-
         QCompleter *completer = new QCompleter(TSCore::I().fiStorage.titles, this);
         completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->titleLineEdit->setCompleter(completer);
@@ -238,18 +237,6 @@ void MainWindow::on_descriptionChanged()
         {
             ui->urlLabel->setText("");
         }
-
-//        QStringList tags = e->GetTags();
-  //      foreach (QString s, tags) {
-    //        //handle tags
-      //      Tag* t = TSCore::I().GetTag(s);
-        //    if (t==NULL)
-          //  {
-            //    Tag* t = new Tag();
-              //  t->code = s;
-                //TSCore::I().entriesStorage.tags.append(t);
-//            }
-  //      }
     }
 
     UpdateStatusBar();
@@ -296,13 +283,13 @@ void MainWindow::UpdateStatusBar()
     QString message;
     if (efi.workedHours < 24)
     {
-        message = QString("Worked hours: %1")
+        message = QString("Odpracované hodiny(včetně půlhodiny na oběd): %1")
                 .arg(Helper::GetSecsAshhmm(efi.workedHours*60*60));
 
     }
     else
     {
-        message = QString("Worked hours: %1h")
+        message = QString("Odpracované hodiny(včetně půlhodiny na oběd): %1h")
                 .arg(efi.workedHours);
 
     }

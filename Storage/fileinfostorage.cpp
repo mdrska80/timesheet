@@ -55,7 +55,6 @@ void FileInfoStorage::ReadInfos(QDate start)
                 infos.append(efi);
         }
     }
-
 }
 
 EntryFileInfo* FileInfoStorage::ReadInfo(QString filename)

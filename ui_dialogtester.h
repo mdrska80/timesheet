@@ -18,7 +18,6 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
-#include "GUI/GUI_Tags.h"
 #include "GUI/xmlFileDetail/view/xmlfiledetailview.h"
 
 QT_BEGIN_NAMESPACE
@@ -29,7 +28,6 @@ public:
     QVBoxLayout *verticalLayout;
     QLineEdit *filterLineEdit;
     XmlFileDetailView *listView;
-    GUI_Tags *tag;
     QPushButton *pushButton;
 
     void setupUi(QDialog *DialogTester)
@@ -49,12 +47,6 @@ public:
         listView->setObjectName(QStringLiteral("listView"));
 
         verticalLayout->addWidget(listView);
-
-        tag = new GUI_Tags(DialogTester);
-        tag->setObjectName(QStringLiteral("tag"));
-        tag->setMinimumSize(QSize(0, 10));
-
-        verticalLayout->addWidget(tag);
 
         pushButton = new QPushButton(DialogTester);
         pushButton->setObjectName(QStringLiteral("pushButton"));

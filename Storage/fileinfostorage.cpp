@@ -17,7 +17,9 @@ void FileInfoStorage::Load(bool onlyActiveCompany)
     if (onlyActiveCompany)
     {
         Company *c = GetActiveCompany();
-        ReadInfos(c->from);
+
+        if (c!=NULL)
+            ReadInfos(c->from);
     }
     else
     {

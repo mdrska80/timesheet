@@ -1,11 +1,12 @@
 #include "style.h"
+#include <QDir>
 
 QString Style::get_style(bool dark)
 {
 
     QString style;
     //Helper::getSharePath();
-    QString share_path = Helper::getSharePath();
+    QString share_path = QDir::currentPath()+"/Data/";
 
     if(!dark)
         Helper::read_file_into_str(share_path + "standard.css", &style);

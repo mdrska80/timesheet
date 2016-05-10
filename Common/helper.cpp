@@ -39,39 +39,12 @@ bool Helper::write_file(QString filename, QString content)
         return false;
     }
 
-
     QTextStream out(&file);
     out.setCodec("UTF-8");
     out << content;
     file.close();
 
     return true;
-}
-
-QString Helper::getSharePath()
-{
-
-    QString path;
-    QString executablePth = QDir::currentPath();
-
-#ifndef Q_OS_WIN
-
-    if(QFile::exists(_install_path + "/share/timesheet")) path = _install_path + "/share/timesheet/";
-    //else if(QFile::exists("/usr/share/sayonara")) path = "/usr/share/sayonara/";
-    else if(QFile::exists(executablePth+"/share")) path = executablePth+"/share/";
-    else path = "";
-#else
-    path = QDir::homePath() + QString("\\.timesheet\\images\\");
-    if(QFile::exists(path)){
-        return path;
-    }
-    else if(QFile::exists(executablePth+"/share")) path = executablePth+"/share/";
-    else
-        path = "";
-#endif
-
-    return path;
-
 }
 
 QTime Helper::ConstructTime(QString time)
